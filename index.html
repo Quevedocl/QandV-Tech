@@ -774,35 +774,62 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     transform: none !important;
     display: flex;
     flex-direction: column;
+    gap: 40px;
+    padding: 20px 16px;
   }
   .section {
     height: auto !important;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 80px 20px;
-    box-sizing: border-box;
+    min-height: auto !important;
+    padding: 20px 0;
+    overflow: visible !important;
+  }
+  .reveal > *, .stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
   }
   .hero {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 40px 10px;
+    padding: 10px 0;
     height: auto;
   }
   .hero-right {
     order: -1;
+    margin-bottom: 10px;
   }
   .card3d {
-    width: 210px;
-    height: 280px;
+    width: 220px;
+    height: 300px;
+    margin: 0 auto;
   }
-  .dots, .scroll-hint {
+  .dots, .scroll-hint, .cursor-light {
     display: none !important;
   }
   .genie {
-    display: none !important;
+    position: static !important;
+    margin: 20px auto 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 320px;
+    border-radius: 20px !important;
+    padding: 16px !important;
+    box-shadow: 0 10px 25px rgba(27,67,50,0.15) !important;
+  }
+  .genie.is-logo {
+    display: flex !important;
+    justify-content: center;
+    background: rgba(255,255,255,0.85) !important;
+    border: 1.5px solid rgba(82,183,136,0.3) !important;
+  }
+  .genie.is-logo img {
+    width: 50px !important;
   }
   .content {
-    padding: 20px 10px;
+    padding: 0 !important;
+    height: auto;
+  }
+  .closing {
+    padding: 20px 0;
     height: auto;
   }
 }
@@ -985,13 +1012,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
         <h2 style="text-align: left; max-width: 100%; font-size: clamp(1.4rem, 2.4vw, 2.1rem);">Todos tus canales, en un solo lugar.</h2>
       </div>
       <div class="pills stagger" style="justify-content: flex-start;">
-        <span class="pill"><span class="pill-icon-wrap"><img src="Whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="facebook.png" alt="Facebook" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Facebook</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Google_Maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Pagina_Web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="google_maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="pagina_web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="correo.png" alt="Correo" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Correo</span>
       </div>
       <div style="margin-top: 1.2rem; text-align: left;">
@@ -1139,6 +1166,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     '</a>';
 
   function updateGeniePosition(prevIndex, nextIndex){
+    if (window.innerWidth <= 980) return;
     genie.classList.remove('reveal-wa');
     genie.classList.toggle('ask', nextIndex > 0 && nextIndex < total - 1);
     genie.classList.toggle('contact', nextIndex === total - 1);
@@ -1176,6 +1204,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   }
 
   function updateIndicator(prevIndex, nextIndex){
+    if (window.innerWidth <= 980) return;
     var nextDot = dots[nextIndex];
     if (!nextDot) return;
 
@@ -1267,10 +1296,14 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     });
   });
   document.querySelectorAll('[data-goto]').forEach(function(b){
-    b.addEventListener('click', function(){ goTo(parseInt(b.dataset.goto, 10)); });
+    b.addEventListener('click', function(){
+      if (window.innerWidth <= 980) return;
+      goTo(parseInt(b.dataset.goto, 10));
+    });
   });
 
   function showWa(){
+    if (window.innerWidth <= 980) return;
     if (current === total - 1) {
       genie.classList.add('reveal-wa');
       genie.style.left = '50%';
@@ -1282,6 +1315,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   }
 
   function hideWa(){
+    if (window.innerWidth <= 980) return;
     if (current === total - 1) {
       if (!genie.classList.contains('reveal-wa')) return;
       genie.classList.remove('reveal-wa');
@@ -1324,14 +1358,15 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     }, 140);
   });
 
-  updateGeniePosition(0, 0);
-  if (dots[0]) {
-    var initY = dots[0].offsetTop + (dots[0].offsetHeight / 2);
-    if (neonLineFill) neonLineFill.style.height = initY + 'px';
-    dots[0].classList.add('is-current');
+  if (window.innerWidth > 980) {
+    updateGeniePosition(0, 0);
+    if (dots[0]) {
+      var initY = dots[0].offsetTop + (dots[0].offsetHeight / 2);
+      if (neonLineFill) neonLineFill.style.height = initY + 'px';
+      dots[0].classList.add('is-current');
+    }
   }
 })();
 </script>
 </body>
 </html>
-```[cite: 8]
