@@ -617,18 +617,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 }
 .card-tap strong{display:block;color:#fff;font-family:var(--display);font-size:.92rem;margin-bottom:2px;font-weight:600;}
 
-@media (max-width:980px){
-  .hero{grid-template-columns:1fr;gap:1.8rem;padding:clamp(104px,17vh,140px) 8vw 40px;align-content:center;overflow-y:auto;}
-  .hero-right{order:-1;}
-  .card3d{width:190px;height:250px;}
-  .face{padding:1.2rem 1rem;border-radius:16px;}
-  .card-logo{width:30px;height:30px;}
-  .card-brand{font-size:.9rem;}
-  .chip{width:34px;height:25px;}
-  .card-tap{font-size:.72rem;padding:6px 8px;}
-  .slogan-box h1{max-width:18ch;}
-}
-
 /* ==========================================================
    6. SECCIONES DE CONTENIDO
    ========================================================== */
@@ -748,13 +736,6 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   display: block;
 }
 
-@media (max-width:980px){
-  .content{padding:clamp(104px,16vh,140px) 8vw 70px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-  .grid{gap:.9rem;}
-  .card{padding:1.2rem 1.1rem;border-radius:15px;}
-  .pill{padding:.45rem .85rem;font-size:.82rem;}
-}
-
 /* ==========================================================
    7. SECCIÓN DE CIERRE
    ========================================================== */
@@ -779,6 +760,52 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 .scroll-hint svg{width:18px;height:18px;animation:hintBounce 1.9s ease-in-out infinite;}
 @keyframes hintBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
 @media (max-width:720px){.scroll-hint{bottom:14px;font-size:.72rem;}}
+
+/* ==========================================================
+   8. ADAPTACIÓN RESPONSIVE PARA TELÉFONOS (MÓVIL)
+   ========================================================== */
+@media (max-width: 980px) {
+  html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  .sections-wrap {
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .section {
+    height: auto !important;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 80px 20px;
+    box-sizing: border-box;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 40px 10px;
+    height: auto;
+  }
+  .hero-right {
+    order: -1;
+  }
+  .card3d {
+    width: 210px;
+    height: 280px;
+  }
+  .dots, .scroll-hint {
+    display: none !important;
+  }
+  .genie {
+    display: none !important;
+  }
+  .content {
+    padding: 20px 10px;
+    height: auto;
+  }
+}
 </style>
 </head>
 <body>
@@ -958,13 +985,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
         <h2 style="text-align: left; max-width: 100%; font-size: clamp(1.4rem, 2.4vw, 2.1rem);">Todos tus canales, en un solo lugar.</h2>
       </div>
       <div class="pills stagger" style="justify-content: flex-start;">
-        <span class="pill"><span class="pill-icon-wrap"><img src="Whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="facebook.png" alt="Facebook" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Facebook</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Google_Maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Pagina_Web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="google_maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="pagina_web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="correo.png" alt="Correo" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Correo</span>
       </div>
       <div style="margin-top: 1.2rem; text-align: left;">
@@ -1163,11 +1190,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   }
 
   function moveWrap(){
+    if (window.innerWidth <= 980) return;
     var unit = CSS.supports('height','100dvh') ? 'dvh' : 'vh';
     wrap.style.transform = 'translate3d(0,-' + (current * 100) + unit + ',0)';
   }
 
   function goTo(index){
+    if (window.innerWidth <= 980) return;
     var next = ((index % total) + total) % total;
     if (isAnimating || next === current) return;
     isAnimating = true;
@@ -1191,6 +1220,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 
   var wheelLock = false;
   window.addEventListener('wheel', function(e){
+    if (window.innerWidth <= 980) return;
     if (Math.abs(e.deltaY) < 6) return;
     if (wheelLock || isAnimating) return;
     wheelLock = true;
@@ -1199,6 +1229,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   }, { passive:true });
 
   window.addEventListener('keydown', function(e){
+    if (window.innerWidth <= 980) return;
     var k = e.key;
     if (k === 'ArrowDown' || k === 'PageDown' || k === ' '){ e.preventDefault(); goTo(current + 1); }
     else if (k === 'ArrowUp' || k === 'PageUp'){ e.preventDefault(); goTo(current - 1); }
@@ -1208,10 +1239,12 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 
   var touchY = null, touchX = null;
   window.addEventListener('touchstart', function(e){
+    if (window.innerWidth <= 980) return;
     touchY = e.touches[0].clientY; touchX = e.touches[0].clientX;
   }, { passive:true });
 
   window.addEventListener('touchend', function(e){
+    if (window.innerWidth <= 980) return;
     if (touchY === null) return;
     var dy = touchY - e.changedTouches[0].clientY;
     var dx = touchX - e.changedTouches[0].clientX;
@@ -1267,6 +1300,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   document.addEventListener('click', function(e){ if (!genie.contains(e.target) && current === total - 1) hideWa(); });
 
   setInterval(function(){
+    if (window.innerWidth <= 980) return;
     idleSeconds++;
     if (idleSeconds >= 60 && current < total - 1){ goTo(current + 1); }
   }, 1000);
@@ -1279,6 +1313,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   window.addEventListener('resize', function(){
     clearTimeout(rt);
     rt = setTimeout(function(){
+      if (window.innerWidth <= 980) return;
       wrap.style.transition = 'none';
       moveWrap(); updateGeniePosition(current, current);
       if (dots[current]) {
@@ -1299,3 +1334,4 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 </script>
 </body>
 </html>
+```[cite: 8]
