@@ -7,11 +7,11 @@
 <meta name="theme-color" content="#1b4332">
 <link rel="icon" href="logo.jpg">
 <link rel="apple-touch-icon" href="logo.jpg">
-
+ 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+ 
 <style>
 :root{
   --white:#ffffff;
@@ -44,7 +44,7 @@ a{color:inherit;text-decoration:none;}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
 }
-
+ 
 /* ================= FONDO ANIMADO (idéntico al sitio) ================= */
 .bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
@@ -75,7 +75,7 @@ a{color:inherit;text-decoration:none;}
 .t4{animation:slide 58s linear infinite;} .t5{animation:slide 42s linear infinite;} .t6{animation:slide 48s linear infinite;} .t7{animation:slide 34s linear infinite;}
 @keyframes slide{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
 .bg-veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.8) 0%, rgba(255,255,255,.5) 55%, rgba(255,255,255,.18) 100%);}
-
+ 
 /* ================= CONTENIDO ================= */
 main.wrap{
   position:relative;z-index:1;
@@ -83,7 +83,7 @@ main.wrap{
   display:flex;align-items:center;justify-content:center;
   padding:44px 18px 34px;
 }
-
+ 
 @keyframes bounceIn{
   0%{opacity:0;transform:scale(.4) translateY(36px);}
   55%{opacity:1;transform:scale(1.04) translateY(-8px);}
@@ -106,7 +106,7 @@ main.wrap{
   border-radius:0 4px 4px 0;
   background:linear-gradient(var(--green-bright),var(--green-mid));
 }
-
+ 
 .avatar-ring{
   width:104px;height:104px;border-radius:30px;margin:0 auto 20px;
   padding:4px;
@@ -121,7 +121,7 @@ main.wrap{
 }
 .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 .avatar span{font-family:var(--display);font-weight:800;font-size:2.5rem;color:#fff;}
-
+ 
 h1#bizName{
   font-size:clamp(1.4rem,5vw,1.7rem);font-weight:800;text-align:center;color:var(--green-dark);
   margin-bottom:5px;
@@ -138,7 +138,7 @@ h1#bizName{
   padding:7px 16px;border-radius:999px;
   animation:bounceIn .8s cubic-bezier(.215,.61,.355,1) .24s both;
 }
-
+ 
 .links{display:flex;flex-direction:column;gap:12px;}
 .links .btn{opacity:0;transform:scale(.4) translateY(36px);animation:bounceIn .7s cubic-bezier(.215,.61,.355,1) forwards;}
 .links .btn:nth-child(1){animation-delay:.28s;}
@@ -147,7 +147,7 @@ h1#bizName{
 .links .btn:nth-child(4){animation-delay:.49s;}
 .links .btn:nth-child(5){animation-delay:.56s;}
 .links .btn:nth-child(6){animation-delay:.63s;}
-
+ 
 .btn{
   display:flex;align-items:center;gap:13px;
   width:100%;padding:15px 18px;border-radius:18px;
@@ -165,7 +165,7 @@ h1#bizName{
 }
 .btn .ic svg{width:19px;height:19px;fill:currentColor;}
 .btn .label small{display:block;font-weight:500;color:var(--muted);font-size:.76rem;margin-top:1px;}
-
+ 
 .btn.primary{
   background:linear-gradient(135deg,#52b788 0%,#2d6a4f 100%);
   color:#fff;border-color:transparent;
@@ -177,9 +177,9 @@ h1#bizName{
 }
 .btn.primary .ic{background:rgba(255,255,255,.2);}
 .btn.primary .label small{color:rgba(255,255,255,.8);}
-
+ 
 .empty{text-align:center;color:var(--muted);padding:34px 6px;font-size:.95rem;line-height:1.5;}
-
+ 
 footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
 .badge{
   display:inline-flex;align-items:center;gap:7px;
@@ -189,7 +189,7 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
 }
 .badge img{width:15px;height:15px;border-radius:4px;object-fit:cover;}
 .badge b{color:var(--green-dark);}
-
+ 
 @media (max-width:380px){
   .btn{padding:13px 14px;font-size:.92rem;}
   .btn .ic{width:34px;height:34px;}
@@ -197,7 +197,7 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
 </style>
 </head>
 <body>
-
+ 
 <div class="bg" aria-hidden="true">
   <span class="orb orb-1"></span>
   <span class="orb orb-2"></span>
@@ -209,22 +209,22 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
   <div class="streaks" id="streaks"></div>
 </div>
 <div class="bg-veil" aria-hidden="true"></div>
-
+ 
 <main class="wrap">
   <div class="card">
     <div class="avatar-ring"><div class="avatar" id="avatar"><span id="avatarLetter">Q</span></div></div>
     <h1 id="bizName">Cargando…</h1>
     <div class="subtitle" id="bizCity"></div>
     <div class="hours-pill" id="hoursPill" style="display:none;"></div>
-
+ 
     <div class="links" id="links"></div>
   </div>
 </main>
-
+ 
 <footer>
   <span class="badge"><img src="logo.jpg" alt="" onerror="this.style.display='none'">Tarjeta NFC por <b>Q&amp;V Tech</b></span>
 </footer>
-
+ 
 <script>
 /* ---------- fondo: mismos trazos diagonales del sitio ---------- */
 (function(){
@@ -249,27 +249,17 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
     host.appendChild(track);
   }
 })();
-
+ 
 /* ---------- perfil dinámico ---------- */
 (function(){
   'use strict';
-
-  function b64DecodeUnicode(str){
-    return decodeURIComponent(atob(str).split('').map(function(c){
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-  }
-
-  function getData(){
-    var params = new URLSearchParams(window.location.search);
-    var raw = params.get('d');
-    if(!raw) return null;
-    try{
-      var json = b64DecodeUnicode(decodeURIComponent(raw));
-      return JSON.parse(json);
-    }catch(e){ console.error('No se pudo leer el perfil', e); return null; }
-  }
-
+ 
+  /* Claves públicas de Supabase (es seguro que estén aquí) */
+  var SUPABASE_URL = 'https://rzhkzrjijfsadkzsusgd.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_Jw1lkEwn2tpPi8HxI3N1mg_0bBE4HRr';
+ 
+  var linksBox = document.getElementById('links');
+ 
   var ICONS = {
     whatsapp: '<svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>',
     instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15c.53.53.9 1.08 1.15 1.77.17.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.23 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.17-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.23-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.17-.46-.35-1.26-.4-2.43C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.23-1.97.4-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.55 1.8c.46-.16 1.26-.34 2.43-.39C9.25 1.35 9.63 1.34 12 1.34zm0 3.36a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 10.72a4.22 4.22 0 1 1 0-8.44 4.22 4.22 0 0 1 0 8.44zm6.76-10.98a1.52 1.52 0 1 1-3.04 0 1.52 1.52 0 0 1 3.04 0z"/></svg>',
@@ -278,63 +268,176 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
     website: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm7.93 9h-3.02c-.13-2.16-.68-4.1-1.5-5.53A8.02 8.02 0 0 1 19.93 11zM12 4.06c1 0 2.28 2.1 2.6 5.94H9.4C9.72 6.16 11 4.06 12 4.06zM4.07 13h3.02c.13 2.16.68 4.1 1.5 5.53A8.02 8.02 0 0 1 4.07 13zm0-2A8.02 8.02 0 0 1 8.59 5.47C7.77 6.9 7.22 8.84 7.09 11H4.07zM12 19.94c-1 0-2.28-2.1-2.6-5.94h5.2c-.32 3.84-1.6 5.94-2.6 5.94zm3.41-.41c.82-1.43 1.37-3.37 1.5-5.53h3.02a8.02 8.02 0 0 1-4.52 5.53z"/></svg>',
     maps: '<svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>'
   };
-
+ 
+  /* Solo se permiten links http(s): evita "javascript:" y similares */
+  function safeUrl(u){
+    try{
+      var x = new URL(u, window.location.href);
+      return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : null;
+    }catch(e){ return null; }
+  }
+ 
   function makeBtn(opts){
+    var href = safeUrl(opts.href);
+    if(!href) return null;
     var a = document.createElement('a');
     a.className = 'btn' + (opts.primary ? ' primary' : '');
-    a.href = opts.href; a.target = '_blank'; a.rel = 'noopener';
-    a.innerHTML =
-      '<span class="ic">' + (ICONS[opts.icon] || ICONS.website) + '</span>' +
-      '<span class="label">' + opts.label + (opts.sub ? '<small>' + opts.sub + '</small>' : '') + '</span>';
+    a.href = href; a.target = '_blank'; a.rel = 'noopener';
+ 
+    var ic = document.createElement('span');
+    ic.className = 'ic';
+    ic.innerHTML = ICONS[opts.icon] || ICONS.website;   /* SVG fijo, no viene de datos */
+ 
+    var label = document.createElement('span');
+    label.className = 'label';
+    label.appendChild(document.createTextNode(opts.label));
+    if(opts.sub){
+      var small = document.createElement('small');
+      small.textContent = opts.sub;
+      label.appendChild(small);
+    }
+    a.appendChild(ic); a.appendChild(label);
     return a;
   }
-
-  var data = getData();
-  var linksBox = document.getElementById('links');
-
-  if(!data){
-    document.getElementById('bizName').textContent = 'Perfil no encontrado';
-    document.getElementById('avatarLetter').textContent = '?';
+ 
+  function showMessage(title, msg, letter){
+    document.getElementById('pageTitle').textContent = title + ' — Q&V Tech';
+    document.getElementById('bizName').textContent = title;
+    document.getElementById('bizCity').textContent = '';
+    document.getElementById('avatarLetter').textContent = letter || '?';
+    document.getElementById('hoursPill').style.display = 'none';
+    linksBox.innerHTML = '';
     var p = document.createElement('div');
     p.className = 'empty';
-    p.textContent = 'Este link no tiene un perfil válido. Contacta a Q&V Tech para generar tu tarjeta.';
+    p.textContent = msg;
     linksBox.appendChild(p);
-    return;
   }
-
-  document.getElementById('pageTitle').textContent = (data.n || 'Perfil') + ' — Q&V Tech';
-  document.getElementById('bizName').textContent = data.n || 'Negocio';
-  if(data.city){ document.getElementById('bizCity').textContent = data.city; }
-
-  if(data.l){
-    var img = document.createElement('img');
-    img.src = data.l; img.alt = data.n || '';
-    document.getElementById('avatar').innerHTML = '';
-    document.getElementById('avatar').appendChild(img);
+ 
+  /* d: { name, city, logo_url, whatsapp, hours, instagram, tiktok, facebook, website, address, maps_url } */
+  function render(d){
+    var name = d.name || 'Negocio';
+    document.getElementById('pageTitle').textContent = name + ' — Q&V Tech';
+    document.getElementById('bizName').textContent = name;
+    if(d.city){ document.getElementById('bizCity').textContent = d.city; }
+ 
+    var logo = d.logo_url ? safeUrl(d.logo_url) : null;
+    if(logo){
+      var img = document.createElement('img');
+      img.src = logo; img.alt = name;
+      img.onerror = function(){
+        document.getElementById('avatar').innerHTML = '';
+        var sp = document.createElement('span');
+        sp.textContent = name.trim().charAt(0).toUpperCase();
+        document.getElementById('avatar').appendChild(sp);
+      };
+      document.getElementById('avatar').innerHTML = '';
+      document.getElementById('avatar').appendChild(img);
+    } else {
+      document.getElementById('avatarLetter').textContent = name.trim().charAt(0).toUpperCase();
+    }
+ 
+    if(d.hours){
+      var hp = document.getElementById('hoursPill');
+      hp.textContent = d.hours; hp.style.display = 'block';
+    }
+ 
+    linksBox.innerHTML = '';
+    function add(btn){ if(btn) linksBox.appendChild(btn); }
+ 
+    if(d.whatsapp){
+      var digits = String(d.whatsapp).replace(/\D/g,'');
+      if(digits){
+        var msg = encodeURIComponent('Hola ' + name + ', te escribo desde tu perfil Q&V Tech');
+        add(makeBtn({icon:'whatsapp', href:'https://wa.me/' + digits + '?text=' + msg, label:'WhatsApp', sub:'Escríbenos directo', primary:true}));
+      }
+    }
+    if(d.instagram){
+      var ig = String(d.instagram).replace('@','');
+      add(makeBtn({icon:'instagram', href:'https://instagram.com/' + encodeURIComponent(ig), label:'Instagram', sub:'@' + ig}));
+    }
+    if(d.facebook){
+      var fb = String(d.facebook);
+      add(makeBtn({icon:'facebook', href: fb.indexOf('http') === 0 ? fb : 'https://facebook.com/' + encodeURIComponent(fb), label:'Facebook'}));
+    }
+    if(d.tiktok){
+      var tt = String(d.tiktok);
+      var ttUser = tt.replace('@','');
+      add(makeBtn({icon:'tiktok', href: tt.indexOf('http') === 0 ? tt : 'https://tiktok.com/@' + encodeURIComponent(ttUser), label:'TikTok', sub: tt.indexOf('http') === 0 ? '' : '@' + ttUser}));
+    }
+    if(d.website){
+      var w = String(d.website);
+      add(makeBtn({icon:'website', href: w.indexOf('http') === 0 ? w : 'https://' + w, label:'Sitio web'}));
+    }
+    if(d.maps_url){
+      add(makeBtn({icon:'maps', href:d.maps_url, label:'Cómo llegar', sub:d.address || ''}));
+    }
+ 
+    if(!linksBox.children.length){
+      var p2 = document.createElement('div');
+      p2.className = 'empty';
+      p2.textContent = 'Este negocio aún no cargó sus links.';
+      linksBox.appendChild(p2);
+    }
+  }
+ 
+  /* ---- Links antiguos (?d=...): se siguen mostrando para no romper tarjetas ya programadas ---- */
+  function b64DecodeUnicode(str){
+    return decodeURIComponent(atob(str).split('').map(function(c){
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }
+  function readLegacy(raw){
+    try{
+      var o = JSON.parse(b64DecodeUnicode(decodeURIComponent(raw)));
+      return {
+        name:o.n, city:o.city, logo_url:o.l, whatsapp:o.w, hours:o.h,
+        instagram:o.ig, tiktok:o.tt, facebook:o.fb, website:o.web, address:o.addr, maps_url:o.map
+      };
+    }catch(e){ return null; }
+  }
+ 
+  /* ---- Links nuevos (?id=...): los datos se leen desde Supabase ---- */
+  var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+ 
+  function loadById(id){
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 12000) : null;
+    fetch(SUPABASE_URL + '/rest/v1/rpc/get_public_profile', {
+      method:'POST',
+      headers:{ 'apikey':SUPABASE_KEY, 'Content-Type':'application/json' },
+      body: JSON.stringify({ p_id:id }),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function(res){
+      if(timer) clearTimeout(timer);
+      if(!res.ok) throw new Error('http ' + res.status);
+      return res.json();
+    }).then(function(data){
+      if(!data){
+        showMessage('Perfil no encontrado', 'Este link no tiene un perfil válido. Contacta a Q&V Tech para generar tu tarjeta.', '?');
+      } else if(data.active === false){
+        showMessage('Perfil no disponible', 'Este perfil está temporalmente desactivado. Si eres el dueño del negocio, contacta a Q&V Tech.', '!');
+      } else {
+        render(data);
+      }
+    }).catch(function(){
+      if(timer) clearTimeout(timer);
+      showMessage('No se pudo cargar', 'Revisa tu conexión e intenta abrir el link de nuevo en unos segundos.', '…');
+    });
+  }
+ 
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  var legacy = params.get('d');
+ 
+  if(id){
+    if(UUID_RE.test(id)){ loadById(id); }
+    else { showMessage('Perfil no encontrado', 'Este link no tiene un perfil válido. Contacta a Q&V Tech para generar tu tarjeta.', '?'); }
+  } else if(legacy){
+    var d = readLegacy(legacy);
+    if(d && d.name){ render(d); }
+    else { showMessage('Perfil no encontrado', 'Este link no tiene un perfil válido. Contacta a Q&V Tech para generar tu tarjeta.', '?'); }
   } else {
-    document.getElementById('avatarLetter').textContent = (data.n || 'Q').trim().charAt(0).toUpperCase();
-  }
-
-  if(data.h){
-    var hp = document.getElementById('hoursPill');
-    hp.textContent = data.h; hp.style.display = 'block';
-  }
-
-  if(data.w){
-    var msg = encodeURIComponent('Hola ' + (data.n || '') + ', te escribo desde tu perfil Q&V Tech');
-    linksBox.appendChild(makeBtn({icon:'whatsapp', href:'https://wa.me/' + data.w.replace(/\D/g,'') + '?text=' + msg, label:'WhatsApp', sub:'Escríbenos directo', primary:true}));
-  }
-  if(data.ig){ linksBox.appendChild(makeBtn({icon:'instagram', href:'https://instagram.com/' + data.ig.replace('@',''), label:'Instagram', sub:'@' + data.ig.replace('@','')})); }
-  if(data.fb){ linksBox.appendChild(makeBtn({icon:'facebook', href:data.fb.indexOf('http')===0 ? data.fb : 'https://facebook.com/' + data.fb, label:'Facebook'})); }
-  if(data.tt){ linksBox.appendChild(makeBtn({icon:'tiktok', href:data.tt.indexOf('http')===0 ? data.tt : 'https://tiktok.com/@' + data.tt.replace('@',''), label:'TikTok', sub:'@' + data.tt.replace('@','')})); }
-  if(data.web){ linksBox.appendChild(makeBtn({icon:'website', href:data.web.indexOf('http')===0 ? data.web : 'https://' + data.web, label:'Sitio web'})); }
-  if(data.map){ linksBox.appendChild(makeBtn({icon:'maps', href:data.map, label:'Cómo llegar', sub:data.addr || ''})); }
-
-  if(!linksBox.children.length){
-    var p2 = document.createElement('div');
-    p2.className = 'empty';
-    p2.textContent = 'Este negocio aún no cargó sus links.';
-    linksBox.appendChild(p2);
+    showMessage('Perfil no encontrado', 'Este link no tiene un perfil válido. Contacta a Q&V Tech para generar tu tarjeta.', '?');
   }
 })();
 </script>
