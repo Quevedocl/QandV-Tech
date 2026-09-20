@@ -114,6 +114,7 @@ input,select,textarea,button{font:inherit;}
   transition:background .2s var(--ease);
 }
 .btn-ghost:hover{background:rgba(149,213,178,.25);}
+.btn-ghost.small{width:auto;padding:9px 14px;margin-top:0;font-size:.82rem;}
 .error{color:#b3261e;font-size:.82rem;margin-top:12px;display:none;font-weight:600;}
  
 /* ---------- app ---------- */
@@ -164,11 +165,50 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
  
 .btn-main[disabled]{opacity:.6;cursor:not-allowed;}
  
+/* ---------- logo: subir o URL ---------- */
+.seg{display:inline-flex;background:rgba(27,67,50,.08);border-radius:12px;padding:3px;margin-bottom:12px;}
+.seg-btn{border:none;background:transparent;padding:8px 14px;border-radius:9px;font-weight:700;font-size:.8rem;color:var(--muted);cursor:pointer;transition:background .2s var(--ease), color .2s var(--ease);}
+.seg-btn.active{background:#fff;color:var(--green-dark);box-shadow:0 4px 10px -6px rgba(27,67,50,.5);}
+.logo-row{display:flex;gap:14px;align-items:center;}
+.logo-preview{
+  width:68px;height:68px;border-radius:16px;flex:none;overflow:hidden;
+  background:rgba(27,67,50,.06);border:1.5px dashed var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.66rem;color:var(--muted);text-align:center;padding:4px;
+}
+.logo-preview.has{border-style:solid;padding:0;background:#fff;}
+.logo-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+.logo-controls{flex:1;min-width:0;}
+.link-btn{background:none;border:none;color:#b3261e;font-weight:700;font-size:.75rem;cursor:pointer;margin-top:8px;padding:0;display:none;}
+.link-btn.show{display:inline-block;}
+.logo-status{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.4;}
+.logo-status.bad{color:#b3261e;font-weight:600;}
+.logo-status.ok{color:var(--green-mid);font-weight:600;}
+ 
+/* ---------- horario por día ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.chip{
+  border:1.5px solid var(--line);background:rgba(255,255,255,.7);color:var(--green-dark);
+  border-radius:999px;padding:6px 12px;font-size:.74rem;font-weight:700;cursor:pointer;
+  transition:background .2s var(--ease);
+}
+.chip:hover{background:rgba(149,213,178,.3);}
+.sched{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:15px;background:rgba(255,255,255,.6);}
+.sched-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);}
+.sched-row:last-child{border-bottom:none;}
+.sched-day{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.9rem;cursor:pointer;user-select:none;}
+.sched-day input{width:19px;height:19px;accent-color:var(--green-mid);cursor:pointer;}
+.sched-times{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted);}
+.sched-times input{width:auto;padding:7px 8px;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-size:.82rem;color:var(--ink);}
+.sched-times input:disabled{background:rgba(27,67,50,.05);color:#9aa8a1;}
+.sched-row.closed .sched-day span{color:var(--muted);font-weight:600;}
+.sched-row.closed .sched-times{opacity:.55;}
+ 
 .result{display:none;margin-top:20px;padding:18px;border-radius:16px;background:rgba(149,213,178,.14);border:1.5px dashed var(--green-bright);animation:fadeUp .5s var(--ease) both;}
 .result.show{display:block;}
 .result > div:first-child{font-weight:800;color:var(--green-dark);font-size:.92rem;}
 .result .url-box{display:flex;gap:8px;margin-top:10px;}
-.result .url-box input{flex:1;font-size:.76rem;background:#fff;}
+.result .url-box input{flex:1;font-size:.76rem;background:#fff;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;min-width:0;}
 .result .url-box button{
   background:var(--green-dark);color:#fff;border:none;border-radius:10px;padding:0 16px;cursor:pointer;font-weight:700;font-size:.8rem;
   transition:background .2s;
@@ -184,11 +224,12 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
 }
 .history-item:hover{box-shadow:0 10px 22px -14px rgba(27,67,50,.35);transform:translateY(-1px);}
 .history-avatar{
-  width:38px;height:38px;border-radius:10px;flex:none;
+  width:38px;height:38px;border-radius:10px;flex:none;overflow:hidden;
   background:linear-gradient(145deg,var(--green-mid),var(--green-dark));
   color:#fff;font-family:var(--display);font-weight:800;font-size:.95rem;
   display:flex;align-items:center;justify-content:center;
 }
+.history-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 .history-item .info{flex:1;min-width:0;}
 .history-item .info b{display:block;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .history-item .info span{font-size:.72rem;color:var(--muted);}
@@ -273,21 +314,47 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
           <input type="text" id="f_city" placeholder="Ej: Santiago">
         </div>
       </div>
+ 
       <div class="field">
-        <label>URL del logo (opcional)</label>
-        <input type="text" id="f_logo" placeholder="https://...">
+        <label>Logo (opcional)</label>
+        <div class="seg" role="tablist" aria-label="Origen del logo">
+          <button type="button" class="seg-btn active" id="modeUpload" role="tab">Subir imagen</button>
+          <button type="button" class="seg-btn" id="modeUrl" role="tab">Usar URL</button>
+        </div>
+        <div class="logo-row">
+          <div class="logo-preview" id="logoPreview"><span>Sin logo</span></div>
+          <div class="logo-controls">
+            <div id="logoUploadBox">
+              <input type="file" id="f_logo_file" accept="image/png,image/jpeg,image/webp" hidden>
+              <button type="button" class="btn-ghost small" id="pickLogoBtn">Elegir imagen…</button>
+            </div>
+            <div id="logoUrlBox" style="display:none;">
+              <input type="text" id="f_logo" placeholder="https://...">
+            </div>
+            <div class="logo-status" id="logoStatus">PNG, JPG o WEBP. Se ajusta y comprime automáticamente.</div>
+            <button type="button" class="link-btn" id="clearLogoBtn">Quitar logo</button>
+          </div>
+        </div>
       </div>
  
       <div class="section-label">Contacto</div>
-      <div class="grid2">
-        <div class="field">
-          <label>WhatsApp (con código país)</label>
-          <input type="text" id="f_wa" placeholder="56912345678">
-        </div>
-        <div class="field">
-          <label>Horario (opcional)</label>
-          <input type="text" id="f_hours" placeholder="Lun-Sáb 10:00-20:00">
-        </div>
+      <div class="field">
+        <label>WhatsApp (con código país)</label>
+        <input type="text" id="f_wa" placeholder="56912345678">
+      </div>
+ 
+      <div class="section-label">Horario de atención</div>
+      <div class="chips">
+        <button type="button" class="chip" data-preset="weekdays">Lun–Vie</button>
+        <button type="button" class="chip" data-preset="monsat">Lun–Sáb</button>
+        <button type="button" class="chip" data-preset="all">Todos los días</button>
+        <button type="button" class="chip" data-preset="none">Ninguno</button>
+        <button type="button" class="chip" data-preset="copy">Copiar horario del 1.º día marcado a los demás</button>
+      </div>
+      <div class="sched" id="scheduleBox"></div>
+      <div class="field">
+        <label>Nota de horario (opcional)</label>
+        <input type="text" id="f_hours" placeholder="Ej: Cerrado en feriados">
       </div>
  
       <div class="section-label">Redes sociales</div>
@@ -378,12 +445,17 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
   var SUPABASE_KEY = 'sb_publishable_Jw1lkEwn2tpPi8HxI3N1mg_0bBE4HRr';
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
  
+  var LOGO_BUCKET = 'client-logos';
+  var LOGO_MARKER = '/storage/v1/object/public/' + LOGO_BUCKET + '/';
+ 
   var loginScreen = document.getElementById('loginScreen');
   var app = document.getElementById('app');
   var loginBtn = document.getElementById('loginBtn');
   var loginError = document.getElementById('loginError');
   var profiles = [];        // filas cargadas desde la base de datos
   var editingId = null;     // id del perfil que se está editando
+  var pendingId = null;     // id reservado para un perfil nuevo (para guardar su logo antes de crearlo)
+  var uploading = false;
  
   function showLogin(msg){
     app.style.display = 'none';
@@ -470,7 +542,264 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     });
   }
  
-  /* ---------- historial (desde Supabase) ---------- */
+  function isHttpUrl(u){ return /^https?:\/\/\S+$/i.test(u); }
+ 
+  /* =====================================================================
+     LOGO: subir imagen o pegar URL
+     ===================================================================== */
+  var logoInput = document.getElementById('f_logo');
+  var logoStatus = document.getElementById('logoStatus');
+  var logoPreview = document.getElementById('logoPreview');
+  var clearLogoBtn = document.getElementById('clearLogoBtn');
+  var STATUS_DEFAULT = 'PNG, JPG o WEBP. Se ajusta y comprime automáticamente.';
+ 
+  function setLogoStatus(text, kind){
+    logoStatus.textContent = text;
+    logoStatus.className = 'logo-status' + (kind ? ' ' + kind : '');
+  }
+ 
+  function setLogoMode(mode){
+    var up = mode === 'upload';
+    document.getElementById('modeUpload').classList.toggle('active', up);
+    document.getElementById('modeUrl').classList.toggle('active', !up);
+    document.getElementById('logoUploadBox').style.display = up ? 'block' : 'none';
+    document.getElementById('logoUrlBox').style.display = up ? 'none' : 'block';
+  }
+  document.getElementById('modeUpload').addEventListener('click', function(){ setLogoMode('upload'); });
+  document.getElementById('modeUrl').addEventListener('click', function(){ setLogoMode('url'); });
+ 
+  function updateLogoPreview(){
+    var v = logoInput.value.trim();
+    logoPreview.innerHTML = '';
+    logoPreview.classList.remove('has');
+    clearLogoBtn.classList.toggle('show', !!v);
+    if(v && isHttpUrl(v)){
+      var img = document.createElement('img');
+      img.alt = 'Vista previa del logo';
+      img.onerror = function(){
+        logoPreview.innerHTML = '';
+        logoPreview.classList.remove('has');
+        var sp = document.createElement('span'); sp.textContent = 'No se pudo cargar';
+        logoPreview.appendChild(sp);
+      };
+      img.src = v;
+      logoPreview.classList.add('has');
+      logoPreview.appendChild(img);
+    } else {
+      var s = document.createElement('span');
+      s.textContent = v ? 'URL no válida' : 'Sin logo';
+      logoPreview.appendChild(s);
+    }
+  }
+  logoInput.addEventListener('input', updateLogoPreview);
+ 
+  clearLogoBtn.addEventListener('click', function(){
+    logoInput.value = '';
+    updateLogoPreview();
+    setLogoStatus(STATUS_DEFAULT);
+  });
+ 
+  document.getElementById('pickLogoBtn').addEventListener('click', function(){
+    document.getElementById('f_logo_file').click();
+  });
+  document.getElementById('f_logo_file').addEventListener('change', function(e){
+    var file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if(file) handleLogoFile(file);
+  });
+ 
+  /* Reduce la imagen a máx. 600px y la convierte a WEBP (o PNG si el navegador no soporta WEBP) */
+  function resizeImage(file, maxSide){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function(){
+        var ratio = Math.min(1, maxSide / Math.max(img.width, img.height));
+        var w = Math.max(1, Math.round(img.width * ratio));
+        var h = Math.max(1, Math.round(img.height * ratio));
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function(blob){
+          URL.revokeObjectURL(url);
+          blob ? resolve(blob) : reject(new Error('No se pudo procesar la imagen'));
+        }, 'image/webp', 0.88);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('Imagen no válida')); };
+      img.src = url;
+    });
+  }
+ 
+  async function handleLogoFile(file){
+    if(!/^image\/(png|jpe?g|webp)$/i.test(file.type)){
+      setLogoStatus('Formato no permitido. Usa PNG, JPG o WEBP.', 'bad'); return;
+    }
+    if(file.size > 15 * 1024 * 1024){
+      setLogoStatus('La imagen es demasiado grande (máx. 15 MB).', 'bad'); return;
+    }
+    uploading = true;
+    document.getElementById('pickLogoBtn').disabled = true;
+    setLogoStatus('Subiendo logo…');
+    try{
+      var blob = await resizeImage(file, 600);
+      var ext = blob.type === 'image/webp' ? 'webp' : (blob.type === 'image/jpeg' ? 'jpg' : 'png');
+      var id = editingId || pendingId || (pendingId = crypto.randomUUID());
+      var path = id + '/' + Date.now() + '.' + ext;
+      var up = await sb.storage.from(LOGO_BUCKET).upload(path, blob, {
+        contentType: blob.type, cacheControl: '31536000', upsert: false
+      });
+      if(up.error) throw up.error;
+      logoInput.value = sb.storage.from(LOGO_BUCKET).getPublicUrl(path).data.publicUrl;
+      updateLogoPreview();
+      setLogoStatus('Logo subido ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
+    }catch(err){
+      console.error(err);
+      setLogoStatus('No se pudo subir el logo. Prueba con otra imagen o usa la opción URL.', 'bad');
+    }finally{
+      uploading = false;
+      document.getElementById('pickLogoBtn').disabled = false;
+    }
+  }
+ 
+  /* Ruta del archivo dentro del bucket, si la URL es de nuestro almacenamiento */
+  function ownLogoPath(url){
+    var i = (url || '').indexOf(LOGO_MARKER);
+    if(i < 0) return null;
+    try{ return decodeURIComponent(url.slice(i + LOGO_MARKER.length).split('?')[0]); }
+    catch(e){ return null; }
+  }
+ 
+  /* Borra los archivos de la carpeta del perfil, salvo el que se sigue usando (mejor esfuerzo) */
+  async function cleanupLogos(id, keepUrl){
+    try{
+      var keepPath = ownLogoPath(keepUrl);
+      var list = await sb.storage.from(LOGO_BUCKET).list(id, { limit: 100 });
+      if(list.error || !list.data) return;
+      var remove = list.data
+        .map(function(f){ return id + '/' + f.name; })
+        .filter(function(p){ return p !== keepPath && p.indexOf(id + '/') === 0; });
+      if(remove.length) await sb.storage.from(LOGO_BUCKET).remove(remove);
+    }catch(e){ console.warn('No se pudo limpiar logos', e); }
+  }
+ 
+  function discardPending(){
+    if(pendingId){ cleanupLogos(pendingId, null); pendingId = null; }
+  }
+ 
+  /* =====================================================================
+     HORARIO POR DÍA
+     ===================================================================== */
+  var DAYS = [
+    ['mon','Lunes'], ['tue','Martes'], ['wed','Miércoles'], ['thu','Jueves'],
+    ['fri','Viernes'], ['sat','Sábado'], ['sun','Domingo']
+  ];
+  var scheduleBox = document.getElementById('scheduleBox');
+ 
+  function buildSchedule(){
+    scheduleBox.innerHTML = '';
+    DAYS.forEach(function(d){
+      var k = d[0];
+      var row = document.createElement('div');
+      row.className = 'sched-row closed';
+      row.id = 'sr_' + k;
+ 
+      var lab = document.createElement('label');
+      lab.className = 'sched-day';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.id = 'sd_' + k;
+      var nm = document.createElement('span'); nm.textContent = d[1];
+      lab.appendChild(cb); lab.appendChild(nm);
+ 
+      var times = document.createElement('div');
+      times.className = 'sched-times';
+      var from = document.createElement('input');
+      from.type = 'time'; from.id = 'sf_' + k; from.value = '09:00'; from.disabled = true;
+      var to = document.createElement('input');
+      to.type = 'time'; to.id = 'st_' + k; to.value = '18:00'; to.disabled = true;
+      times.appendChild(from);
+      times.appendChild(document.createTextNode('a'));
+      times.appendChild(to);
+ 
+      cb.addEventListener('change', function(){ applyDayState(k); });
+ 
+      row.appendChild(lab); row.appendChild(times);
+      scheduleBox.appendChild(row);
+    });
+  }
+ 
+  function applyDayState(k){
+    var on = document.getElementById('sd_' + k).checked;
+    document.getElementById('sf_' + k).disabled = !on;
+    document.getElementById('st_' + k).disabled = !on;
+    document.getElementById('sr_' + k).classList.toggle('closed', !on);
+  }
+ 
+  function setDayChecked(k, on){
+    document.getElementById('sd_' + k).checked = on;
+    applyDayState(k);
+  }
+ 
+  document.querySelectorAll('.chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var p = chip.getAttribute('data-preset');
+      var sets = {
+        weekdays: ['mon','tue','wed','thu','fri'],
+        monsat: ['mon','tue','wed','thu','fri','sat'],
+        all: DAYS.map(function(d){ return d[0]; }),
+        none: []
+      };
+      if(p === 'copy'){
+        var first = null;
+        DAYS.forEach(function(d){ if(!first && document.getElementById('sd_' + d[0]).checked) first = d[0]; });
+        if(!first){ alert('Marca primero al menos un día.'); return; }
+        var f = document.getElementById('sf_' + first).value, t = document.getElementById('st_' + first).value;
+        DAYS.forEach(function(d){
+          if(document.getElementById('sd_' + d[0]).checked){
+            document.getElementById('sf_' + d[0]).value = f;
+            document.getElementById('st_' + d[0]).value = t;
+          }
+        });
+        return;
+      }
+      DAYS.forEach(function(d){ setDayChecked(d[0], sets[p].indexOf(d[0]) >= 0); });
+    });
+  });
+ 
+  /* Devuelve null (sin horario), false (datos incompletos) o el objeto { mon:{o:1,f,t}, ... } */
+  function readSchedule(){
+    var any = false, out = {};
+    for(var i = 0; i < DAYS.length; i++){
+      var k = DAYS[i][0];
+      if(document.getElementById('sd_' + k).checked){
+        var f = document.getElementById('sf_' + k).value;
+        var t = document.getElementById('st_' + k).value;
+        if(!f || !t) return false;
+        out[k] = { o:1, f:f, t:t };
+        any = true;
+      } else {
+        out[k] = { o:0 };
+      }
+    }
+    return any ? out : null;
+  }
+ 
+  function setSchedule(sch){
+    DAYS.forEach(function(d){
+      var k = d[0], v = sch && sch[k];
+      var on = !!(v && v.o === 1);
+      setDayChecked(k, on);
+      document.getElementById('sf_' + k).value = (on && v.f) || '09:00';
+      document.getElementById('st_' + k).value = (on && v.t) || '18:00';
+    });
+  }
+ 
+  buildSchedule();
+  setLogoMode('upload');
+  updateLogoPreview();
+ 
+  /* =====================================================================
+     HISTORIAL (desde Supabase)
+     ===================================================================== */
   async function renderHistory(){
     var box = document.getElementById('historyList');
     var res = await sb.from('client_profiles').select('*').order('created_at', { ascending:false });
@@ -497,7 +826,16 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
  
       var avatar = document.createElement('div');
       avatar.className = 'history-avatar';
-      avatar.textContent = (item.name || '?').trim().charAt(0).toUpperCase();
+      var initial = (item.name || '?').trim().charAt(0).toUpperCase();
+      if(item.logo_url && isHttpUrl(item.logo_url)){
+        var im = document.createElement('img');
+        im.alt = '';
+        im.onerror = function(){ avatar.textContent = initial; };
+        im.src = item.logo_url;
+        avatar.appendChild(im);
+      } else {
+        avatar.textContent = initial;
+      }
  
       var info = document.createElement('div');
       info.className = 'info';
@@ -536,9 +874,14 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
   }
  
   function loadIntoForm(item){
+    discardPending();
     Object.keys(FIELDS).forEach(function(k){
       document.getElementById(FIELDS[k]).value = item[k] || '';
     });
+    setSchedule(item.schedule);
+    setLogoMode(item.logo_url && !ownLogoPath(item.logo_url) ? 'url' : 'upload');
+    updateLogoPreview();
+    setLogoStatus(STATUS_DEFAULT);
     editingId = item.id;
     document.getElementById('formTitle').textContent = 'Editando: ' + (item.name || '');
     document.getElementById('result').classList.remove('show');
@@ -560,12 +903,18 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     if(!confirm('¿Borrar el perfil "' + (item.name || '') + '"? Se eliminan sus datos y su link dejará de funcionar para siempre. Esta acción no se puede deshacer.')) return;
     var res = await sb.from('client_profiles').delete().eq('id', item.id);
     if(res.error){ alert('No se pudo borrar. Intenta de nuevo.'); return; }
+    await cleanupLogos(item.id, null);   /* borra también su logo subido */
     if(editingId === item.id) resetForm();
     await renderHistory();
   }
  
   function resetForm(){
+    discardPending();
     Object.keys(FIELDS).forEach(function(k){ document.getElementById(FIELDS[k]).value = ''; });
+    setSchedule(null);
+    setLogoMode('upload');
+    updateLogoPreview();
+    setLogoStatus(STATUS_DEFAULT);
     editingId = null;
     document.getElementById('formTitle').textContent = 'Nuevo perfil de cliente';
     document.getElementById('result').classList.remove('show');
@@ -575,14 +924,25 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
   /* ---------- generar y guardar ---------- */
   var generateBtn = document.getElementById('generateBtn');
   generateBtn.addEventListener('click', async function(){
+    if(uploading){ alert('Espera a que termine de subir el logo.'); return; }
     var data = readForm();
     if(!data.name){
       alert('El nombre del negocio es obligatorio.');
       return;
     }
-    var id = editingId || crypto.randomUUID();
+    if(data.logo_url && !isHttpUrl(data.logo_url)){
+      alert('La URL del logo no es válida. Debe empezar con https://');
+      return;
+    }
+    var sch = readSchedule();
+    if(sch === false){
+      alert('Completa la hora de apertura y de cierre de cada día marcado.');
+      return;
+    }
+ 
+    var id = editingId || pendingId || crypto.randomUUID();
     var url = profileUrl(id);
-    var row = Object.assign({}, data, { profile_url: url });
+    var row = Object.assign({}, data, { schedule: sch, profile_url: url });
  
     generateBtn.disabled = true; generateBtn.textContent = 'Guardando…';
     var res;
@@ -596,11 +956,14 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
  
     if(res.error){
       /* Sin guardado no hay perfil: el link no funcionaría, así que no lo mostramos */
+      console.error(res.error);
       alert('No se pudo guardar el perfil en la nube, por lo que el link no funcionaría. Revisa tu conexión e intenta de nuevo.');
       return;
     }
     editingId = res.data.id;
+    pendingId = null;
     document.getElementById('formTitle').textContent = 'Editando: ' + data.name;
+    cleanupLogos(id, data.logo_url);   /* elimina logos antiguos que ya no se usan */
  
     document.getElementById('resultUrl').value = url;
     document.getElementById('result').classList.add('show');
