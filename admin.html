@@ -7,11 +7,11 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1b4332">
 <link rel="icon" href="logo.jpg">
-
+ 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+ 
 <style>
 :root{
   --white:#ffffff;
@@ -34,7 +34,7 @@ input,select,textarea,button{font:inherit;}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
 }
-
+ 
 /* ================= FONDO ANIMADO (idéntico al sitio, más tenue) ================= */
 .bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
@@ -60,14 +60,14 @@ input,select,textarea,button{font:inherit;}
 .t4{animation:slide 58s linear infinite;} .t5{animation:slide 42s linear infinite;} .t6{animation:slide 48s linear infinite;} .t7{animation:slide 34s linear infinite;}
 @keyframes slide{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
 .bg-veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%, rgba(244,249,246,.85) 0%, rgba(244,249,246,.6) 55%, rgba(244,249,246,.3) 100%);}
-
+ 
 @keyframes bounceIn{
   0%{opacity:0;transform:scale(.5) translateY(28px);}
   55%{opacity:1;transform:scale(1.02) translateY(-5px);}
   100%{opacity:1;transform:scale(1) translateY(0);}
 }
 @keyframes fadeUp{ 0%{opacity:0;transform:translateY(16px);} 100%{opacity:1;transform:translateY(0);} }
-
+ 
 /* ---------- login ---------- */
 #loginScreen{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-card{
@@ -115,7 +115,7 @@ input,select,textarea,button{font:inherit;}
 }
 .btn-ghost:hover{background:rgba(149,213,178,.25);}
 .error{color:#b3261e;font-size:.82rem;margin-top:12px;display:none;font-weight:600;}
-
+ 
 /* ---------- app ---------- */
 #app{display:none;min-height:100vh;position:relative;z-index:1;}
 header.top{
@@ -139,10 +139,10 @@ header.top button{
   transition:background .2s;
 }
 header.top button:hover{background:rgba(255,255,255,.24);}
-
+ 
 main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;grid-template-columns:1fr;}
 @media(min-width:880px){ main{grid-template-columns:1.15fr .85fr;align-items:start;} }
-
+ 
 .panel{
   background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1px solid rgba(82,183,136,.18);border-radius:22px;padding:24px;
@@ -151,19 +151,19 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
 }
 .panel h2{font-size:1.08rem;margin-bottom:4px;}
 .panel .sub{color:var(--muted);font-size:.82rem;margin-bottom:18px;}
-
+ 
 .section-label{
   font-size:.72rem;font-weight:800;color:var(--green-mid);text-transform:uppercase;letter-spacing:.06em;
   margin:18px 0 10px;display:flex;align-items:center;gap:8px;
 }
 .section-label:first-of-type{margin-top:0;}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line);}
-
+ 
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:480px){ .grid2{grid-template-columns:1fr;} }
-
+ 
 .btn-main[disabled]{opacity:.6;cursor:not-allowed;}
-
+ 
 .result{display:none;margin-top:20px;padding:18px;border-radius:16px;background:rgba(149,213,178,.14);border:1.5px dashed var(--green-bright);animation:fadeUp .5s var(--ease) both;}
 .result.show{display:block;}
 .result > div:first-child{font-weight:800;color:var(--green-dark);font-size:.92rem;}
@@ -176,7 +176,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
 .result .url-box button:hover{background:var(--green-mid);}
 .qr{margin-top:16px;text-align:center;}
 .qr img{width:160px;height:160px;border-radius:14px;border:1px solid var(--line);box-shadow:0 12px 26px -14px rgba(27,67,50,.4);background:#fff;padding:6px;}
-
+ 
 .history-item{
   display:flex;align-items:center;gap:12px;
   padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:rgba(255,255,255,.7);
@@ -201,7 +201,14 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
 .history-item .actions button.danger{background:#fde2e1;color:#b3261e;}
 .history-item .actions button.danger:hover{background:#fac9c7;}
 .empty-note{color:var(--muted);font-size:.85rem;text-align:center;padding:24px 0;}
-
+.history-item.off .history-avatar{background:linear-gradient(145deg,#9aa5a0,#6b7772);}
+.history-item.off .info b{color:var(--muted);}
+.state{display:inline-block;font-style:normal;font-size:.66rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle;}
+.state.on{background:rgba(82,183,136,.2);color:var(--green-mid);}
+.state.off{background:#fde2e1;color:#b3261e;}
+.history-item .actions button.warn{background:#fdf0cf;color:#8a5a00;}
+.history-item .actions button.warn:hover{background:#fae5a6;}
+ 
 .hint{font-size:.76rem;color:var(--muted);margin-top:8px;line-height:1.55;}
 .hint.callout{
   background:rgba(82,183,136,.1);border-radius:12px;padding:12px 14px;margin-bottom:18px;
@@ -209,7 +216,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
 </style>
 </head>
 <body>
-
+ 
 <div class="bg" aria-hidden="true">
   <span class="orb orb-1"></span>
   <span class="orb orb-2"></span>
@@ -217,7 +224,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
   <div class="streaks" id="streaks"></div>
 </div>
 <div class="bg-veil" aria-hidden="true"></div>
-
+ 
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-card">
@@ -236,7 +243,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     <div class="error" id="loginError">Correo o contraseña incorrectos.</div>
   </div>
 </div>
-
+ 
 <!-- APP -->
 <div id="app">
   <header class="top">
@@ -249,12 +256,12 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     </div>
     <button id="logoutBtn">Cerrar sesión</button>
   </header>
-
+ 
   <main>
     <section class="panel">
       <h2 id="formTitle">Nuevo perfil de cliente</h2>
       <div class="sub">Completa los datos y genera el link para la tarjeta NFC.</div>
-
+ 
       <div class="section-label">Datos del negocio</div>
       <div class="grid2">
         <div class="field">
@@ -270,7 +277,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
         <label>URL del logo (opcional)</label>
         <input type="text" id="f_logo" placeholder="https://...">
       </div>
-
+ 
       <div class="section-label">Contacto</div>
       <div class="grid2">
         <div class="field">
@@ -282,7 +289,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
           <input type="text" id="f_hours" placeholder="Lun-Sáb 10:00-20:00">
         </div>
       </div>
-
+ 
       <div class="section-label">Redes sociales</div>
       <div class="grid2">
         <div class="field">
@@ -302,7 +309,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
         <label>Sitio web</label>
         <input type="text" id="f_web" placeholder="minegocio.cl">
       </div>
-
+ 
       <div class="section-label">Ubicación</div>
       <div class="grid2">
         <div class="field">
@@ -314,10 +321,10 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
           <input type="text" id="f_maps" placeholder="https://maps.app.goo.gl/...">
         </div>
       </div>
-
+ 
       <button class="btn-main" id="generateBtn">Generar link de perfil</button>
       <button class="btn-ghost" id="resetBtn" type="button">Limpiar formulario / nuevo perfil</button>
-
+ 
       <div class="result" id="result">
         <div>Link listo para la tarjeta NFC</div>
         <div class="url-box">
@@ -325,10 +332,10 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
           <button id="copyBtn">Copiar</button>
         </div>
         <div class="qr" id="qrBox"></div>
-        <div class="hint">Programa este link en la tarjeta NFC del cliente. Si más adelante editan sus datos, genera un link nuevo aquí y reprograma la tarjeta.</div>
+        <div class="hint">Programa este link en la tarjeta NFC del cliente. El link es permanente: si editas los datos, los desactivas o los borras desde el historial, la página del cliente cambia al instante, sin reprogramar la tarjeta.</div>
       </div>
     </section>
-
+ 
     <section class="panel">
       <h2>Historial</h2>
       <div class="sub">Guardado en la nube · visible para ti y tu socio</div>
@@ -336,7 +343,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     </section>
   </main>
 </div>
-
+ 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 /* ---------- fondo: mismos trazos diagonales del sitio ---------- */
@@ -362,35 +369,35 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     host.appendChild(track);
   }
 })();
-
+ 
 (function(){
   'use strict';
-
+ 
   /* ---------- Supabase (claves públicas: es seguro que estén aquí) ---------- */
   var SUPABASE_URL = 'https://rzhkzrjijfsadkzsusgd.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_Jw1lkEwn2tpPi8HxI3N1mg_0bBE4HRr';
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+ 
   var loginScreen = document.getElementById('loginScreen');
   var app = document.getElementById('app');
   var loginBtn = document.getElementById('loginBtn');
   var loginError = document.getElementById('loginError');
   var profiles = [];        // filas cargadas desde la base de datos
   var editingId = null;     // id del perfil que se está editando
-
+ 
   function showLogin(msg){
     app.style.display = 'none';
     loginScreen.style.display = 'flex';
     if(msg){ loginError.textContent = msg; loginError.style.display = 'block'; }
   }
-
+ 
   async function showApp(email){
     loginScreen.style.display = 'none';
     app.style.display = 'block';
     document.getElementById('whoami').textContent = email + ' · privado';
     await renderHistory();
   }
-
+ 
   /* Verifica que la sesión sea de un admin autorizado */
   async function checkAdminAndEnter(session){
     if(!session){ showLogin(); return; }
@@ -402,10 +409,10 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     }
     await showApp(session.user.email);
   }
-
+ 
   /* Restaurar sesión al abrir la página */
   sb.auth.getSession().then(function(r){ checkAdminAndEnter(r.data.session); });
-
+ 
   loginBtn.addEventListener('click', async function(){
     var email = document.getElementById('loginUser').value.trim().toLowerCase();
     var pass = document.getElementById('loginPass').value;
@@ -429,24 +436,18 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
   document.getElementById('loginPass').addEventListener('keydown', function(e){
     if(e.key === 'Enter') loginBtn.click();
   });
-
+ 
   document.getElementById('logoutBtn').addEventListener('click', async function(){
     await sb.auth.signOut();
     location.reload();
   });
-
+ 
   /* ---------- utilidades ---------- */
-  function b64EncodeUnicode(str){
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(_, p1){
-      return String.fromCharCode('0x' + p1);
-    }));
-  }
-
   var FIELDS = {
     name:'f_name', city:'f_city', logo_url:'f_logo', whatsapp:'f_wa', hours:'f_hours',
     instagram:'f_ig', tiktok:'f_tt', facebook:'f_fb', website:'f_web', address:'f_addr', maps_url:'f_maps'
   };
-
+ 
   function readForm(){
     var o = {};
     Object.keys(FIELDS).forEach(function(k){
@@ -454,18 +455,13 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     });
     return o;
   }
-
-  /* Formato del link: idéntico al anterior, así perfil.html sigue funcionando igual */
-  function buildUrl(o){
-    var payload = {
-      n:o.name, city:o.city, l:o.logo_url, w:o.whatsapp, h:o.hours,
-      ig:o.instagram, tt:o.tiktok, fb:o.facebook, web:o.website, addr:o.address, map:o.maps_url
-    };
-    var encoded = encodeURIComponent(b64EncodeUnicode(JSON.stringify(payload)));
-    var base = new URL('perfil.html', window.location.href).href;
-    return base + '?d=' + encoded;
+ 
+  /* Link corto: solo lleva el id del perfil. Los datos se leen desde Supabase,
+     así que editar, desactivar o borrar el perfil cambia lo que ve el cliente al instante. */
+  function profileUrl(id){
+    return new URL('perfil.html', window.location.href).href + '?id=' + encodeURIComponent(id);
   }
-
+ 
   function copyText(text){
     navigator.clipboard.writeText(text).then(function(){
       alert('Link copiado');
@@ -473,7 +469,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
       prompt('Copia el link manualmente:', text);
     });
   }
-
+ 
   /* ---------- historial (desde Supabase) ---------- */
   async function renderHistory(){
     var box = document.getElementById('historyList');
@@ -495,40 +491,50 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
       return;
     }
     profiles.forEach(function(item){
+      var isActive = item.active !== false;
       var row = document.createElement('div');
-      row.className = 'history-item';
-
+      row.className = 'history-item' + (isActive ? '' : ' off');
+ 
       var avatar = document.createElement('div');
       avatar.className = 'history-avatar';
       avatar.textContent = (item.name || '?').trim().charAt(0).toUpperCase();
-
+ 
       var info = document.createElement('div');
       info.className = 'info';
       var b = document.createElement('b');
       b.textContent = item.name || 'Sin nombre';
       var s = document.createElement('span');
       s.textContent = new Date(item.created_at).toLocaleString('es-CL') + (item.created_by ? ' · ' + item.created_by : '');
-      info.appendChild(b); info.appendChild(s);
-
+      var pill = document.createElement('i');
+      pill.className = 'state ' + (isActive ? 'on' : 'off');
+      pill.textContent = isActive ? 'Activo' : 'Desactivado';
+      info.appendChild(b); info.appendChild(s); info.appendChild(pill);
+ 
       var actions = document.createElement('div');
       actions.className = 'actions';
-      [['Editar','edit',''],['Copiar','copy',''],['Borrar','del','danger']].forEach(function(a){
+      [
+        ['Editar','edit',''],
+        ['Copiar','copy',''],
+        [isActive ? 'Desactivar' : 'Activar','toggle', isActive ? 'warn' : ''],
+        ['Borrar','del','danger']
+      ].forEach(function(a){
         var btn = document.createElement('button');
         btn.textContent = a[0];
         if(a[2]) btn.className = a[2];
         btn.addEventListener('click', function(){
           if(a[1] === 'edit') loadIntoForm(item);
-          if(a[1] === 'copy') copyText(item.profile_url || buildUrl(item));
+          if(a[1] === 'copy') copyText(profileUrl(item.id));
+          if(a[1] === 'toggle') toggleProfile(item);
           if(a[1] === 'del') deleteProfile(item);
         });
         actions.appendChild(btn);
       });
-
+ 
       row.appendChild(avatar); row.appendChild(info); row.appendChild(actions);
       box.appendChild(row);
     });
   }
-
+ 
   function loadIntoForm(item){
     Object.keys(FIELDS).forEach(function(k){
       document.getElementById(FIELDS[k]).value = item[k] || '';
@@ -538,15 +544,26 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     document.getElementById('result').classList.remove('show');
     window.scrollTo({ top:0, behavior:'smooth' });
   }
-
+ 
+  async function toggleProfile(item){
+    var turnOn = item.active === false;
+    var msg = turnOn
+      ? '¿Activar el perfil "' + (item.name || '') + '"? Su link volverá a mostrar los datos.'
+      : '¿Desactivar el perfil "' + (item.name || '') + '"? Su link mostrará "perfil no disponible" hasta que lo actives de nuevo. Los datos no se borran.';
+    if(!confirm(msg)) return;
+    var res = await sb.from('client_profiles').update({ active: turnOn }).eq('id', item.id);
+    if(res.error){ alert('No se pudo cambiar el estado. Intenta de nuevo.'); return; }
+    await renderHistory();
+  }
+ 
   async function deleteProfile(item){
-    if(!confirm('¿Borrar el perfil "' + (item.name || '') + '"? Esta acción no se puede deshacer.')) return;
+    if(!confirm('¿Borrar el perfil "' + (item.name || '') + '"? Se eliminan sus datos y su link dejará de funcionar para siempre. Esta acción no se puede deshacer.')) return;
     var res = await sb.from('client_profiles').delete().eq('id', item.id);
     if(res.error){ alert('No se pudo borrar. Intenta de nuevo.'); return; }
     if(editingId === item.id) resetForm();
     await renderHistory();
   }
-
+ 
   function resetForm(){
     Object.keys(FIELDS).forEach(function(k){ document.getElementById(FIELDS[k]).value = ''; });
     editingId = null;
@@ -554,7 +571,7 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
     document.getElementById('result').classList.remove('show');
   }
   document.getElementById('resetBtn').addEventListener('click', resetForm);
-
+ 
   /* ---------- generar y guardar ---------- */
   var generateBtn = document.getElementById('generateBtn');
   generateBtn.addEventListener('click', async function(){
@@ -563,33 +580,36 @@ main{max-width:960px;margin:0 auto;padding:26px 18px 70px;display:grid;gap:24px;
       alert('El nombre del negocio es obligatorio.');
       return;
     }
-    var url = buildUrl(data);
+    var id = editingId || crypto.randomUUID();
+    var url = profileUrl(id);
     var row = Object.assign({}, data, { profile_url: url });
-
+ 
     generateBtn.disabled = true; generateBtn.textContent = 'Guardando…';
     var res;
     if(editingId){
       res = await sb.from('client_profiles').update(row).eq('id', editingId).select().single();
     } else {
+      row.id = id;
       res = await sb.from('client_profiles').insert(row).select().single();
     }
     generateBtn.disabled = false; generateBtn.textContent = 'Generar link de perfil';
-
+ 
     if(res.error){
-      alert('El link se generó, pero no se pudo guardar en la nube. Copia el link ahora para no perderlo.');
-    } else {
-      editingId = res.data.id;
-      document.getElementById('formTitle').textContent = 'Editando: ' + data.name;
+      /* Sin guardado no hay perfil: el link no funcionaría, así que no lo mostramos */
+      alert('No se pudo guardar el perfil en la nube, por lo que el link no funcionaría. Revisa tu conexión e intenta de nuevo.');
+      return;
     }
-
+    editingId = res.data.id;
+    document.getElementById('formTitle').textContent = 'Editando: ' + data.name;
+ 
     document.getElementById('resultUrl').value = url;
     document.getElementById('result').classList.add('show');
     document.getElementById('qrBox').innerHTML =
       '<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(url) + '" alt="QR del perfil">';
-
+ 
     await renderHistory();
   });
-
+ 
   document.getElementById('copyBtn').addEventListener('click', function(){
     copyText(document.getElementById('resultUrl').value);
   });
