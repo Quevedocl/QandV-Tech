@@ -769,6 +769,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
     height: auto !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    scroll-behavior: smooth;
   }
   .sections-wrap {
     transform: none !important;
@@ -872,7 +873,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
 <div class="sections-wrap" id="wrap">
 
   <!-- ============ PUNTO 0 · INICIO ============ -->
-  <section class="section is-active">
+  <section class="section is-active" id="sec-0">
     <div class="hero">
       <div class="reveal">
         <div class="slogan-box">
@@ -883,7 +884,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
               Pide la tuya por WhatsApp
             </a>
-            <button class="btn btn-ghost" data-goto="2">Ver cómo funciona</button>
+            <button class="btn btn-ghost" data-goto="2" id="btnHowItWorks">Ver cómo funciona</button>
           </div>
         </div>
       </div>
@@ -924,7 +925,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 1 · ¿Por qué pasarme a NFC? ============ -->
-  <section class="section">
+  <section class="section" id="sec-1">
     <div class="content">
       <div class="reveal">
         <h1 style="color: var(--green-dark);">Porque te diferencia del resto, optimiza la distribución de tu información y minimiza la dependencia de medios de impresión.</h1>
@@ -951,7 +952,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 2 · ¿Cómo funciona? ============ -->
-  <section class="section">
+  <section class="section" id="sec-2">
     <div class="content">
       <div class="reveal">
         <h2>Tu cliente acerca el teléfono y su perfil se abre solo.</h2>
@@ -978,7 +979,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 3 · ¿Qué incluye mi perfil? ============ -->
-  <section class="section">
+  <section class="section" id="sec-3">
     <div class="content">
       <div class="reveal">
         <h2>Tu identidad, tus enlaces y todo lo que quieras mostrar.</h2>
@@ -1005,20 +1006,20 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 4 · ¿Y mis redes? ============ -->
-  <section class="section">
+  <section class="section" id="sec-4">
     <div class="content" style="max-width: 960px;">
       <div style="text-align: left; margin-bottom: 1rem;">
         <p style="color: var(--green-mid); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem;">En la página digital</p>
         <h2 style="text-align: left; max-width: 100%; font-size: clamp(1.4rem, 2.4vw, 2.1rem);">Todos tus canales, en un solo lugar.</h2>
       </div>
       <div class="pills stagger" style="justify-content: flex-start;">
-        <span class="pill"><span class="pill-icon-wrap"><img src="Whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="facebook.png" alt="Facebook" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Facebook</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Google_Maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Pagina_Web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="google_maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="pagina_web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
+        <span class="pill"><span class="pill-icon-wrap"><img src="telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
         <span class="pill"><span class="pill-icon-wrap"><img src="correo.png" alt="Correo" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Correo</span>
       </div>
       <div style="margin-top: 1.2rem; text-align: left;">
@@ -1028,7 +1029,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 5 · Preguntas Frecuentes ============ -->
-  <section class="section">
+  <section class="section" id="sec-5">
     <div class="content">
       <div class="reveal">
         <h2>Estas son las que más nos preguntan.</h2>
@@ -1060,7 +1061,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   </section>
 
   <!-- ============ PUNTO 6 · ¿Conversamos? ============ -->
-  <section class="section">
+  <section class="section" id="sec-6">
     <div class="closing reveal">
       <h2>¿Te convencimos? Aprovecha y hazte socio junto a nosotros.</h2>
       <p>Cuéntanos el nombre de tu negocio y qué quieres mostrar. Te respondemos con una propuesta y el valor exacto.</p>
@@ -1069,7 +1070,7 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
           +56 9 6528 2117
         </a>
-        <button class="btn btn-ghost" data-goto="0">Volver al inicio</button>
+        <button class="btn btn-ghost" data-goto="0" id="btnBackHome">Volver al inicio</button>
       </div>
       <small>© <span id="year">2026</span> Q&amp;V Tech · Tarjetas NFC para negocios</small>
     </div>
@@ -1225,7 +1226,13 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   }
 
   function goTo(index){
-    if (window.innerWidth <= 980) return;
+    if (window.innerWidth <= 980) {
+      var targetSec = document.getElementById('sec-' + index);
+      if (targetSec) {
+        targetSec.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
     var next = ((index % total) + total) % total;
     if (isAnimating || next === current) return;
     isAnimating = true;
@@ -1297,8 +1304,8 @@ button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
   });
   document.querySelectorAll('[data-goto]').forEach(function(b){
     b.addEventListener('click', function(){
-      if (window.innerWidth <= 980) return;
-      goTo(parseInt(b.dataset.goto, 10));
+      var idx = parseInt(b.dataset.goto, 10);
+      goTo(idx);
     });
   });
 
