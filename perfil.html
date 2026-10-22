@@ -46,36 +46,6 @@ a{color:inherit;text-decoration:none;}
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
 }
  
-/* ================= FONDO ANIMADO (idéntico al sitio) ================= */
-.bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  background-color:#ffffff;
-  background-image: repeating-linear-gradient(-35deg, transparent, transparent 12px, rgba(45,106,79,0.03) 12px, rgba(45,106,79,0.03) 14px);
-}
-.orb{position:absolute;border-radius:50%;}
-.orb-1{width:46vmax;height:46vmax;top:-18vmax;right:-14vmax;background:radial-gradient(circle at 38% 38%, rgba(82,183,136,.18), rgba(149,213,178,.08) 60%, transparent 72%);animation:orbFloat 26s ease-in-out infinite;}
-.orb-2{width:32vmax;height:32vmax;bottom:-13vmax;left:-10vmax;background:radial-gradient(circle at 55% 45%, rgba(45,106,79,.14), rgba(82,183,136,.06) 58%, transparent 74%);animation:orbFloat 34s ease-in-out infinite reverse;}
-.orb-3{width:15vmax;height:15vmax;top:26%;left:34%;background:radial-gradient(circle at 42% 40%, rgba(82,183,136,.15), transparent 70%);animation:orbFloat 21s ease-in-out infinite;}
-@keyframes orbFloat{0%,100%{transform:translate3d(0,0,0) scale(1);}50%{transform:translate3d(-3vmax,3vmax,0) scale(1.07);}}
-.decor-circle{position:absolute;border-radius:50%;border:2px dashed rgba(82,183,136,.25);pointer-events:none;z-index:0;}
-.decor-circle-top{width:180px;height:180px;top:-50px;right:10%;background:radial-gradient(circle, rgba(82,183,136,0.08) 0%, transparent 70%);animation:orbFloat 15s ease-in-out infinite;}
-.decor-circle-bottom{width:240px;height:240px;bottom:-80px;left:8%;background:radial-gradient(circle, rgba(45,106,79,0.06) 0%, transparent 70%);animation:orbFloat 22s ease-in-out infinite reverse;}
-.halftone{position:absolute;background-image:radial-gradient(rgba(45,106,79,.25) 1.6px, transparent 1.7px);background-size:13px 13px;animation:dotDrift 18s linear infinite;}
-.ht-1{width:34vmax;height:30vmax;right:-4vmax;bottom:6vh;transform:rotate(-40deg);-webkit-mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);opacity:.45;}
-.ht-2{width:22vmax;height:20vmax;left:-3vmax;top:8vh;transform:rotate(-40deg);-webkit-mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);opacity:.35;}
-@keyframes dotDrift{0%{background-position:0 0;}100%{background-position:52px 52px;}}
-.streaks{position:absolute;width:260%;height:260%;left:-80%;top:-80%;transform:rotate(-35deg);display:flex;flex-direction:column;justify-content:center;gap:3.5vmax;}
-.track{display:flex;align-items:center;gap:3.5vmax;width:max-content;will-change:transform;}
-.track i{display:block;height:5.5vmax;min-height:42px;border-radius:999px;flex:none;}
-.track i.solid{background:#52b788;opacity:.45;}
-.track i.pale{background:#2d6a4f;opacity:.45;}
-.track i.line{background:#95d5b2;opacity:.4;}
-.track i.dark{background:#1b4332;opacity:.5;}
-.track i.dot{height:5.5vmax;min-height:42px;width:5.5vmax;min-width:42px;border-radius:50%;background:#2d6a4f;opacity:.45;}
-.t1{animation:slide 38s linear infinite;} .t2{animation:slide 50s linear infinite;} .t3{animation:slide 32s linear infinite;}
-.t4{animation:slide 58s linear infinite;} .t5{animation:slide 42s linear infinite;} .t6{animation:slide 48s linear infinite;} .t7{animation:slide 34s linear infinite;}
-@keyframes slide{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
-.bg-veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.8) 0%, rgba(255,255,255,.5) 55%, rgba(255,255,255,.18) 100%);}
  
 /* ================= CONTENIDO ================= */
 main.wrap{
@@ -196,6 +166,8 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
   .btn .ic{width:34px;height:34px;}
 }
 </style>
+<link rel="stylesheet" href="css/02-fondo.css"><link rel="stylesheet" href="css/16-rendimiento.css">
+<script src="js/fondo.js" defer></script>
 </head>
 <body>
  
@@ -227,30 +199,6 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
 </footer>
  
 <script>
-/* ---------- fondo: mismos trazos diagonales del sitio ---------- */
-(function(){
-  var host = document.getElementById('streaks');
-  var styles = ['solid','pale','line','solid','dark','pale','dot','solid','pale','line'];
-  var widths = [28,15,36,10,22,46,13,1,32,18,40,9,26,16,52,12];
-  for (var r = 0; r < 7; r++){
-    var track = document.createElement('div');
-    track.className = 'track t' + (r + 1);
-    var half = document.createElement('span');
-    half.style.display = 'flex'; half.style.alignItems = 'center'; half.style.gap = '3.5vmax';
-    for (var i = 0; i < 12; i++){
-      var bar = document.createElement('i');
-      var kind = styles[(i + r * 3) % styles.length];
-      bar.className = kind;
-      if (kind !== 'dot'){ bar.style.width = widths[(i + r * 5) % widths.length] + 'vmin'; }
-      half.appendChild(bar);
-    }
-    track.appendChild(half);
-    track.appendChild(half.cloneNode(true));
-    track.style.animationDelay = (-r * 5) + 's';
-    host.appendChild(track);
-  }
-})();
- 
 /* ---------- perfil dinámico ---------- */
 (function(){
   'use strict';

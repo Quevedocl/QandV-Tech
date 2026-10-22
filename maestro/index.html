@@ -10,14 +10,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/02-fondo.css">
+  <link rel="stylesheet" href="../css/16-rendimiento.css">
   <link rel="stylesheet" href="../css/30-maestro.css">
   <script src="../js/qv-config.js" defer></script>
   <script src="../js/qv-core.js" defer></script>
   <script src="../js/qv-datos.js" defer></script>
+  <script src="../js/fondo.js" defer></script>
   <script src="../js/maestro.js" defer></script>
 </head>
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    <span class="decor-circle decor-circle-top"></span>
+    <span class="decor-circle decor-circle-bottom"></span>
+    <span class="halftone ht-1"></span>
+    <span class="halftone ht-2"></span>
+    <div class="streaks" id="streaks"></div>
+  </div>
+  <div class="bg-veil" aria-hidden="true"></div>
   <header class="top" id="top" hidden>
     <a class="marca" href="./" aria-label="Panel maestro"><img src="../images/logo.jpg" alt="Q&V Tech"><span>Panel maestro</span></a>
     <div class="usuario"><span id="quien"></span><button class="btn ghost sm" id="salir" type="button">Salir</button></div>
