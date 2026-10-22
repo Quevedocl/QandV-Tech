@@ -56,7 +56,7 @@
     function cfgDe(v) { return v === 'auto' ? { modo: 'auto' } : (v === 'normal' ? { modo: 'normal' } : { modo: 'manual', tema: v }); }
     function vivo(cfg) {
       var id = QVTemas.resolver(cfg);
-      pill.textContent = 'En vivo: ' + (id === 'normal' ? 'Normal' : T[id].nombre) + (cfg && cfg.modo === 'auto' ? ' (auto)' : '');
+      pill.textContent = (id === 'normal' ? 'Normal' : T[id].nombre) + (cfg && cfg.modo === 'auto' ? ' · auto' : '');
       pill.className = 'tema-pill on';
     }
     var tiles = OPC.map(function (o) {
@@ -78,12 +78,19 @@
       save.disabled = !elegido || elegido === guardado;
     }
     D.obtenerTema().then(function (cfg) { guardado = elegido = valor(cfg); vivo(cfg); pintar(); }).catch(function (x) { pill.textContent = 'Sin conexión'; msg.textContent = x.message; });
-    return h('div', { class: 'panel tema-card' }, [
-      h('div', { class: 'tema-head' }, [h('h2', { class: 'sec', text: 'Tema de la página' }), pill]),
+    var abierto = false; try { abierto = localStorage.getItem('qv_tema_abierto') === '1'; } catch (e) {}
+    var card = h('div', { class: 'panel tema-card' + (abierto ? ' abierto' : '') });
+    var head = h('button', { class: 'tema-head', type: 'button', 'aria-expanded': abierto ? 'true' : 'false', onclick: function () {
+      abierto = !abierto; card.classList.toggle('abierto', abierto); head.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      try { localStorage.setItem('qv_tema_abierto', abierto ? '1' : '0'); } catch (e) {}
+    } }, [h('span', { class: 'sec', text: 'Tema de la página' }), pill, h('span', { class: 'tema-flecha', 'aria-hidden': 'true' })]);
+    card.appendChild(head);
+    card.appendChild(h('div', { class: 'tema-body' }, [h('div', { class: 'tema-inner' }, [
       h('p', { class: 'hint tema-sub', text: 'Adornos y colores de la web por festividad.' }),
       h('div', { class: 'tema-grid', role: 'radiogroup', 'aria-label': 'Tema de la página' }, tiles), msg,
       h('div', { class: 'tema-acc' }, [save, prev])
-    ]);
+    ])]));
+    return card;
   }
 
   function editor(s, c) {

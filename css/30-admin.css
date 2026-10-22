@@ -62,3 +62,19 @@ html,body{touch-action:manipulation;-webkit-touch-callout:none;}
 .tema-op{justify-content:flex-start}
 .tema-head{flex-wrap:wrap;gap:6px 10px}
 .tema-pill{max-width:100%;font-size:.72rem}
+
+/* ---- Panel de festividades plegable (cerrado por defecto) ---- */
+.tema-card{padding:6px 18px}
+.tema-head{display:flex;align-items:center;gap:10px;width:100%;padding:12px 0;text-align:left;background:none;border:0;cursor:pointer;margin:0;flex-wrap:nowrap}
+.tema-head .sec{margin:0;flex:1;min-width:0;white-space:nowrap;font-size:1.05rem}
+.tema-flecha{flex:none;width:9px;height:9px;border-right:2.5px solid var(--green-dark);border-bottom:2.5px solid var(--green-dark);transform:rotate(45deg) translateY(-2px);transition:transform .3s}
+.tema-card.abierto .tema-flecha{transform:rotate(-135deg) translateY(-2px)}
+.tema-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.tema-card.abierto .tema-body{grid-template-rows:1fr}
+.tema-inner{overflow:hidden;min-height:0;opacity:0;transition:opacity .25s}
+.tema-card.abierto .tema-inner{opacity:1;padding-bottom:12px}
+.tema-pill{font-size:.7rem;padding:.3rem .65rem}
+
+.tema-head .sec{font-family:var(--display);font-weight:700;color:var(--green-dark);letter-spacing:-.01em}
+.tema-head .tema-pill{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tema-head .sec{overflow:hidden;text-overflow:ellipsis;font-size:1rem}
