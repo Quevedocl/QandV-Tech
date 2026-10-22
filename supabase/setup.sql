@@ -52,3 +52,19 @@ drop policy if exists "admins delete logos" on storage.objects;
 create policy "admins delete logos" on storage.objects for delete to authenticated using (bucket_id = 'client-logos' and (select public.is_admin()));
 drop policy if exists "admins list logos" on storage.objects;
 create policy "admins list logos" on storage.objects for select to authenticated using (bucket_id = 'client-logos' and (select public.is_admin()));
+
+-- ============ Tema de la página principal (Halloween, Navidad, etc.) ============
+-- El público LEE el tema; solo los admins lo pueden cambiar. Se puede ejecutar varias veces.
+create table if not exists public.site_config (
+  key text primary key,
+  value jsonb not null default '{}'::jsonb,
+  updated_at timestamptz default now()
+);
+alter table public.site_config enable row level security;
+drop policy if exists "publico lee config" on public.site_config;
+create policy "publico lee config" on public.site_config for select to anon, authenticated using (true);
+drop policy if exists "admins crean config" on public.site_config;
+create policy "admins crean config" on public.site_config for insert to authenticated with check ((select public.is_admin()));
+drop policy if exists "admins editan config" on public.site_config;
+create policy "admins editan config" on public.site_config for update to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+insert into public.site_config (key, value) values ('tema', '{"modo":"auto"}'::jsonb) on conflict do nothing;

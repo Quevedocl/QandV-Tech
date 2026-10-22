@@ -29,3 +29,11 @@ crea tu usuario en **Authentication → Users**, desactiva **Allow new users to 
 - `js/acceso-oculto.js`: los 5 toques secretos al logo de la esquina.
 - `perfil.html`: formato anterior (`?id=...`, tabla `client_profiles`). Los enlaces antiguos `?d=...` están apagados por seguridad (se activan con `PERMITIR_ENLACES_ANTIGUOS` dentro del archivo).
 - `supabase/setup.sql`: tablas y reglas de seguridad.
+
+## Temas de festividad (Halloween, Navidad, Año Nuevo, Fiestas Patrias)
+1. **Una sola vez:** en Supabase → SQL Editor, ejecuta el bloque final de `supabase/setup.sql` ("Tema de la página principal"). Crea la tabla `site_config`.
+2. Entra al panel (`/admin`). Arriba verás la tarjeta **Tema de la página**.
+3. Elige **Automático** (se enciende solo en las fechas), **Normal** (apagado) o una festividad, y pulsa **Guardar tema**.
+4. **Probar en mi pantalla** abre la página con ese tema solo para ti (`index.html?tema=navidad`), sin cambiar nada para los visitantes.
+- Fechas del modo automático: Fiestas Patrias 10–20 sep · Halloween 24 oct–1 nov · Navidad 1–26 dic · Año Nuevo 27 dic–3 ene (editables en `js/temas.js`).
+- Estilos de cada tema: `css/40-temas.css`.

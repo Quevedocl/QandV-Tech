@@ -53,6 +53,20 @@
         .then(function (a) { return a[0] || null; });
     },
 
+    /* Tema de festividad de la página principal (tabla site_config, clave "tema") */
+    obtenerTema: function () {
+      if (!remoto) { try { return Promise.resolve(JSON.parse(localStorage.getItem('qv_demo_tema') || '{"modo":"normal"}')); } catch (e) { return Promise.resolve({ modo: 'normal' }); } }
+      return fetch(URL_ + '/rest/v1/site_config?select=value&key=eq.tema&limit=1', { headers: { apikey: KEY } })
+        .then(function (r) { if (!r.ok) throw new Error('Falta crear la tabla site_config en Supabase (ver supabase/setup.sql).'); return r.json(); })
+        .then(function (a) { return (a[0] && a[0].value) || { modo: 'normal' }; });
+    },
+    guardarTema: function (cfg) {
+      if (!remoto) { localStorage.setItem('qv_demo_tema', JSON.stringify(cfg)); return Promise.resolve(cfg); }
+      return api('/rest/v1/site_config?on_conflict=key', { method: 'POST', headers: { 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify({ key: 'tema', value: cfg, updated_at: new Date().toISOString() }) })
+        .then(function (r) { return r.ok ? r.json() : fallo(r); }).then(function () { return cfg; });
+    },
+
     /* Acceso del dueño */
     sesion: function () { var s = ses(); return Promise.resolve(s ? { email: s.email } : null); },
     entrar: function (email, pass) {

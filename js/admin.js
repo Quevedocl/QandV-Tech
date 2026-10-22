@@ -23,6 +23,7 @@
   function panel(s) {
     limpiar(); app.appendChild(cabecera(s));
     var box = h('div', { class: 'lista' });
+    app.appendChild(temaCard());
     app.appendChild(h('div', { class: 'acc', style: 'margin:0 0 14px' }, [h('button', { class: 'btn2', text: 'Nuevo cliente', onclick: function () { editor(s, { activo: true, horarios: QV.horariosBase() }); } })]));
     app.appendChild(box);
     D.listar().then(function (a) {
@@ -39,6 +40,35 @@
           ])]));
       });
     }).catch(function (x) { box.appendChild(h('div', { class: 'panel vacioad', text: x.message })); });
+  }
+
+  /* Tarjeta "Tema de la página": solo se ve con sesión iniciada */
+  function temaCard() {
+    var T = (window.QVTemas && QVTemas.lista) || {}, sel = h('select', { id: 'tema-sel' }), estado = h('p', { class: 'hint' }), msg = h('p', { class: 'err' });
+    sel.appendChild(h('option', { value: 'auto', text: 'Automático (según la fecha)' }));
+    sel.appendChild(h('option', { value: 'normal', text: 'Normal (sin tema)' }));
+    Object.keys(T).forEach(function (k) { sel.appendChild(h('option', { value: k, text: T[k].nombre })); });
+    function valor(cfg) { return !cfg || cfg.modo === 'normal' ? 'normal' : (cfg.modo === 'auto' ? 'auto' : (cfg.tema || 'normal')); }
+    function cfgDe(v) { return v === 'auto' ? { modo: 'auto' } : (v === 'normal' ? { modo: 'normal' } : { modo: 'manual', tema: v }); }
+    function ver(cfg) {
+      var id = QVTemas.resolver(cfg), n = id === 'normal' ? 'Normal' : T[id].nombre;
+      estado.textContent = 'Ahora mismo los visitantes ven: ' + n + (cfg && cfg.modo === 'auto' ? ' (automático)' : '') + '.';
+    }
+    var prev = h('button', { class: 'btn2 g', type: 'button', text: 'Probar en mi pantalla', onclick: function () {
+      var v = sel.value, id = v === 'auto' ? QVTemas.resolver({ modo: 'auto' }) : v;
+      window.open(new URL('index.html?tema=' + id, location.href).href, '_blank', 'noopener');
+    } });
+    var save = h('button', { class: 'btn2', type: 'button', text: 'Guardar tema', onclick: function () {
+      msg.textContent = ''; var cfg = cfgDe(sel.value); save.disabled = true;
+      D.guardarTema(cfg).then(function () { toast('Tema guardado'); ver(cfg); }).catch(function (x) { msg.textContent = x.message; }).then(function () { save.disabled = false; });
+    } });
+    D.obtenerTema().then(function (cfg) { sel.value = valor(cfg); ver(cfg); }).catch(function (x) { msg.textContent = x.message; });
+    return h('div', { class: 'panel tema-card' }, [
+      h('h2', { class: 'sec', text: 'Tema de la página', style: 'margin-top:0' }),
+      h('p', { class: 'hint', text: 'Cambia los adornos y colores de acento de la página principal por una festividad. Los visitantes lo ven al instante.' }),
+      h('label', {}, ['Festividad', sel]), estado, msg,
+      h('div', { class: 'acc', style: 'margin-top:12px' }, [save, prev])
+    ]);
   }
 
   function editor(s, c) {

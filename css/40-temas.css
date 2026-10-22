@@ -1,0 +1,95 @@
+/* =====================================================
+   TEMAS DE FESTIVIDAD — solo suman detalles sobre la página normal.
+   Se activan con <html data-tema="halloween|navidad|anio-nuevo|fiestas-patrias"> (js/temas.js)
+   ===================================================== */
+
+/* ----- Cartelito y capa de adornos (comunes) ----- */
+.qv-tema-pill{
+  position:fixed;left:50%;top:max(12px,env(safe-area-inset-top));transform:translateX(-50%);z-index:85;
+  padding:7px 16px;border-radius:999px;background:var(--green-dark);color:#fff;font-weight:700;font-size:.82rem;line-height:1;
+  white-space:nowrap;pointer-events:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
+  animation:qvPillIn .7s cubic-bezier(.22,1,.36,1) both;transition:opacity .8s,transform .8s;
+}
+.qv-tema-pill.out{opacity:0;transform:translate(-50%,-14px);}
+@keyframes qvPillIn{from{opacity:0;transform:translate(-50%,-20px) scale(.9);}}
+@media (max-width:720px){.qv-tema-pill{left:auto;right:56px;transform:none;font-size:.74rem;padding:6px 12px;}
+  .qv-tema-pill.out{transform:translateY(-14px);} @keyframes qvPillIn{from{opacity:0;transform:translateY(-16px);}}}
+
+.qv-tema-layer{position:fixed;left:0;top:0;right:0;height:100vh;height:100lvh;z-index:70;pointer-events:none;overflow:hidden;contain:strict;}
+.qv-p{position:absolute;left:var(--x);top:0;font-size:var(--s);line-height:1;opacity:.9;will-change:transform;user-select:none;
+  text-shadow:0 1px 3px rgba(0,0,0,.12);animation-duration:var(--d);animation-delay:var(--dl);animation-iteration-count:infinite;animation-timing-function:linear;}
+.qv-p.fall{animation-name:qvFall;}
+.qv-p.fly{top:var(--y);left:0;animation-name:qvFly;animation-timing-function:ease-in-out;opacity:.85;}
+.qv-p.rise{animation-name:qvRise;opacity:.8;}
+@keyframes qvFall{from{transform:translate3d(0,-10vh,0) rotate(0);}to{transform:translate3d(var(--dr),112vh,0) rotate(var(--rot));}}
+@keyframes qvFly{0%{transform:translate3d(-14vw,0,0);}50%{transform:translate3d(50vw,var(--dy),0) rotate(6deg);}100%{transform:translate3d(114vw,0,0);}}
+@keyframes qvRise{from{transform:translate3d(0,108vh,0) rotate(-6deg);}50%{transform:translate3d(var(--dr),48vh,0) rotate(6deg);}to{transform:translate3d(0,-14vh,0) rotate(-6deg);}}
+html.qv-pausa .qv-tema-layer *{animation-play-state:paused !important;}
+@media (prefers-reduced-motion:reduce){.qv-tema-layer{display:none;}}
+
+/* ----- HALLOWEEN: naranja y morado ----- */
+html[data-tema="halloween"]{--green-bright:#ff8a1f;--green-mid:#c25a06;--green-soft:#ffc27a;--green-glow:rgba(255,138,31,.5);}
+html[data-tema="halloween"] .qv-tema-pill{background:#2a1245;}
+html[data-tema="halloween"] .track i.solid{background:rgba(255,138,31,.38);}
+html[data-tema="halloween"] .track i.pale{background:rgba(110,60,160,.34);}
+html[data-tema="halloween"] .track i.line{background:rgba(255,194,122,.45);}
+html[data-tema="halloween"] .track i.dark{background:rgba(42,18,69,.42);}
+html[data-tema="halloween"] .track i.dot{background:rgba(110,60,160,.38);}
+html[data-tema="halloween"] .orb-1{background:radial-gradient(circle at 38% 38%,rgba(255,138,31,.20),rgba(255,194,122,.08) 60%,transparent 72%);}
+html[data-tema="halloween"] .orb-2{background:radial-gradient(circle at 55% 45%,rgba(110,60,160,.16),rgba(150,90,200,.06) 58%,transparent 74%);}
+html[data-tema="halloween"] .orb-3{background:radial-gradient(circle at 42% 40%,rgba(255,138,31,.16),transparent 70%);}
+html[data-tema="halloween"] .dot.nav-dot{background:#fff0e0 !important;}
+html[data-tema="halloween"] .dot.nav-dot.is-reached,html[data-tema="halloween"] .nav-orb i{background:var(--green-bright) !important;}
+
+/* ----- NAVIDAD: rojo y verde ----- */
+html[data-tema="navidad"]{--green-bright:#d6342c;--green-mid:#a3231d;--green-soft:#ff9d96;--green-glow:rgba(214,52,44,.45);}
+html[data-tema="navidad"] .qv-tema-pill{background:#a3231d;}
+html[data-tema="navidad"] .track i.solid{background:rgba(214,52,44,.36);}
+html[data-tema="navidad"] .track i.pale{background:rgba(29,107,47,.42);}
+html[data-tema="navidad"] .track i.line{background:rgba(255,157,150,.42);}
+html[data-tema="navidad"] .track i.dark{background:rgba(15,61,30,.48);}
+html[data-tema="navidad"] .track i.dot{background:rgba(214,52,44,.38);}
+html[data-tema="navidad"] .orb-1{background:radial-gradient(circle at 38% 38%,rgba(214,52,44,.18),rgba(255,157,150,.08) 60%,transparent 72%);}
+html[data-tema="navidad"] .dot.nav-dot{background:#ffe9e7 !important;}
+html[data-tema="navidad"] .dot.nav-dot.is-reached,html[data-tema="navidad"] .nav-orb i{background:var(--green-bright) !important;}
+
+/* ----- AÑO NUEVO: dorado y azul noche ----- */
+html[data-tema="anio-nuevo"]{--green-bright:#d9a400;--green-mid:#a67c00;--green-soft:#f2d36b;--green-glow:rgba(217,164,0,.5);}
+html[data-tema="anio-nuevo"] .qv-tema-pill{background:#1b2740;color:#f2d36b;}
+html[data-tema="anio-nuevo"] .track i.solid{background:rgba(217,164,0,.38);}
+html[data-tema="anio-nuevo"] .track i.pale{background:rgba(27,39,64,.36);}
+html[data-tema="anio-nuevo"] .track i.line{background:rgba(242,211,107,.46);}
+html[data-tema="anio-nuevo"] .track i.dark{background:rgba(27,39,64,.46);}
+html[data-tema="anio-nuevo"] .track i.dot{background:rgba(217,164,0,.4);}
+html[data-tema="anio-nuevo"] .orb-1{background:radial-gradient(circle at 38% 38%,rgba(217,164,0,.2),rgba(242,211,107,.08) 60%,transparent 72%);}
+html[data-tema="anio-nuevo"] .dot.nav-dot{background:#fff6d6 !important;}
+html[data-tema="anio-nuevo"] .dot.nav-dot.is-reached,html[data-tema="anio-nuevo"] .nav-orb i{background:var(--green-bright) !important;}
+
+/* ----- FIESTAS PATRIAS (Chile): rojo, azul y blanco ----- */
+html[data-tema="fiestas-patrias"]{--green-bright:#d52b1e;--green-mid:#0039a6;--green-soft:#8fb2ff;--green-glow:rgba(213,43,30,.45);}
+html[data-tema="fiestas-patrias"] .qv-tema-pill{background:#0039a6;}
+html[data-tema="fiestas-patrias"] .track i.solid{background:rgba(213,43,30,.34);}
+html[data-tema="fiestas-patrias"] .track i.pale{background:rgba(0,57,166,.34);}
+html[data-tema="fiestas-patrias"] .track i.line{background:rgba(143,178,255,.42);}
+html[data-tema="fiestas-patrias"] .track i.dark{background:rgba(0,40,120,.42);}
+html[data-tema="fiestas-patrias"] .track i.dot{background:rgba(213,43,30,.36);}
+html[data-tema="fiestas-patrias"] .orb-1{background:radial-gradient(circle at 38% 38%,rgba(213,43,30,.18),rgba(143,178,255,.08) 60%,transparent 72%);}
+html[data-tema="fiestas-patrias"] .orb-2{background:radial-gradient(circle at 55% 45%,rgba(0,57,166,.16),rgba(143,178,255,.06) 58%,transparent 74%);}
+html[data-tema="fiestas-patrias"] .dot.nav-dot{background:#e8eefc !important;}
+html[data-tema="fiestas-patrias"] .dot.nav-dot.is-reached,html[data-tema="fiestas-patrias"] .nav-orb i{background:var(--green-bright) !important;}
+
+/* ----- Título y botón principal con los colores del tema (antes quedaban verdes) ----- */
+html[data-tema] .slogan-box h1,html[data-tema] .closing h2{
+  background:linear-gradient(120deg,var(--t-dark) 0%,var(--green-mid) 55%,var(--green-bright) 100%) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;-webkit-text-fill-color:transparent !important;
+}
+html[data-tema="halloween"]{--t-dark:#2a1245;}
+html[data-tema="navidad"]{--t-dark:#0f3d1e;}
+html[data-tema="anio-nuevo"]{--t-dark:#1b2740;}
+html[data-tema="fiestas-patrias"]{--t-dark:#0b2a6b;}
+html[data-tema] .hero .btn-primary,html[data-tema] .closing .btn-primary{animation-name:waRingTema;}
+@keyframes waRingTema{
+  0%{box-shadow:0 14px 34px -8px var(--green-glow),0 0 0 0 var(--green-glow)}
+  70%,100%{box-shadow:0 14px 34px -8px var(--green-glow),0 0 0 18px transparent}
+}
+html[data-tema] .eyebrow{color:var(--green-mid);}
