@@ -47,3 +47,5 @@ html,body{height:auto;overflow:auto;min-height:100%}
 @keyframes anillo{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.35)}}
 @keyframes brillo{to{left:130%}}@keyframes fadeIn{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){.splash,.page{transition:none}.tile.sel{animation:none;transform:scale(1.06)}}
+
+html,body{touch-action:manipulation;}

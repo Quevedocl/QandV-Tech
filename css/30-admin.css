@@ -23,3 +23,7 @@ input:focus,textarea:focus{outline:2px solid var(--green-bright);border-color:tr
 .acc{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;background:var(--green-dark);color:#fff;padding:.7rem 1.1rem;border-radius:12px;font-size:.88rem;transition:.35s;z-index:9;pointer-events:none}.toast.on{opacity:1;transform:translate(-50%,0)}
 @media(max-width:620px){.grid2{grid-template-columns:1fr}.fila{flex-wrap:wrap}.fila .ac{width:100%;justify-content:flex-start}.dia{grid-template-columns:96px 1fr 1fr}}
+
+/* ---- App instalada: sin zoom con doble toque y sin zoom al enfocar campos ---- */
+html,body{touch-action:manipulation;-webkit-touch-callout:none;}
+@media (pointer:coarse){input[type=text],input[type=email],input[type=password],input[type=time],input[type=url],input[type=tel],input[type=number],textarea,select{font-size:16px;}}

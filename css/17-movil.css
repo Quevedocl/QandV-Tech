@@ -148,3 +148,35 @@
 
 /* Tablets/laptops angostos: un poco más de aire entre tarjetas de canales (la rotación de 3D las acercaba ~2px) */
 @media (min-width:721px) and (max-width:1100px){ .ch-grid{gap:.85rem;} }
+
+/* =====================================================
+   CELULAR (vertical) — portada ordenada y completa
+   Todo cabe en una sola pantalla: sin recortes abajo (barra del navegador),
+   sin que los puntos laterales toquen el recuadro y sin tarjeta gigante.
+   ===================================================== */
+@media (max-width:720px) and (orientation:portrait){
+  .section{height:100dvh;}
+  .hero{
+    justify-content:center;gap:8px;
+    padding:calc(env(safe-area-inset-top) + 64px) 46px calc(env(safe-area-inset-bottom) + 28px) 16px;
+  }
+  .hero::before,.hero::after{display:none;}
+  .hero-right{margin-left:0 !important;order:-1;flex:none;}
+  .qv-stage{--w:84px;height:calc(var(--h) + 8px);}
+  .qv-aura{width:min(220px,100%);}
+  .qv-shadow{display:none;}
+  .slogan-box{padding:1rem 1rem 1rem 1.2rem;border-radius:22px;}
+  .slogan-box h1{font-size:clamp(1.3rem,6.2vw,1.55rem);line-height:1.12;max-width:none;}
+  .slogan-box p{font-size:.86rem;line-height:1.42;margin-top:.5rem;}
+  .eyebrow{margin-bottom:.65rem;padding:5px 11px;font-size:.68rem;}
+  .hero-actions{margin-top:.85rem;gap:8px;}
+  .hero-actions .btn,.hero .btn-primary{min-height:44px;padding:12px 16px !important;font-size:.95rem !important;}
+  .hero-badges{display:none;}
+
+  /* resto de secciones: no pasan por debajo de los puntos laterales */
+  .content,.sec-channels .ch-content,.closing{padding-right:46px;padding-bottom:calc(env(safe-area-inset-bottom) + 90px);}
+}
+@media (max-width:720px) and (orientation:portrait) and (max-height:700px){
+  .qv-stage{--w:54px;}
+  .slogan-box p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+}

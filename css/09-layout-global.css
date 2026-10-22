@@ -53,3 +53,16 @@ p {
   transition: transform 0.1s ease-out, background-color .35s, border-color .35s, width .35s, height .35s, box-shadow .35s;
 }
 
+
+/* ----- Esferas de navegación: sin cruz al acercar el cursor -----
+   La línea guía (vertical) se veía a través de las esferas huecas (fondo translúcido) y,
+   junto con el borde/etiqueta, dibujaba una cruz. Ahora cada esfera tiene relleno sólido
+   (mismo tono menta de antes) y la guía queda detrás; además se ocultan los pseudo-elementos
+   que no se usan mientras no haya animación. */
+.dot.nav-dot{background:#e4fbe9 !important;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
+.dot.nav-dot.is-reached{background:var(--green-bright) !important;}
+.dot.nav-dot.is-current{background:#fff !important;}
+.dot.nav-dot:focus,.dot.nav-dot:focus-visible{outline:none;}
+.dot.nav-dot:not(.pulse)::before{display:none;}
+.dot.nav-dot:hover{border-color:inherit;}
+.nav-orb i{background:var(--green-bright) !important;}

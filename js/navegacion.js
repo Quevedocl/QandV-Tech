@@ -64,11 +64,8 @@
     var t = 1 / (1 + 0.3275911 * x);
     return 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
   }
-  function lensDisp(y){
-    if (dock.amt < 0.001) return 0;
-    var d = y - dock.cy;
-    return (d < 0 ? -1 : 1) * dock.amt * LENS_MAX * LENS_SIGMA * 0.8862 * erf(Math.abs(d) / LENS_SIGMA);
-  }
+  /* Solo zoom: las esferas vecinas ya NO se separan al acercar el cursor (desplazamiento = 0). */
+  function lensDisp(y){ return 0; }
   function lensScale(y){ var d = (y - dock.cy) / LENS_SIGMA; return 1 + LENS_MAX * Math.exp(-d * d); }
 
   function renderNav(){

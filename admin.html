@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="es-CL"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><title>Panel Q&V</title>
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="images/logo.jpg">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+<link rel="manifest" href="admin.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Panel Q&V"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/01-base.css"><link rel="stylesheet" href="css/02-fondo.css"><link rel="stylesheet" href="css/30-admin.css">
-<script src="js/qv-config.js"></script><script src="js/qv-core.js"></script><script src="js/qv-datos.js"></script><script src="js/admin.js" defer></script>
+<link rel="stylesheet" href="css/01-base.css"><link rel="stylesheet" href="css/02-fondo.css"><link rel="stylesheet" href="css/16-rendimiento.css"><link rel="stylesheet" href="css/30-admin.css">
+<script src="js/qv-config.js"></script><script src="js/qv-core.js"></script><script src="js/qv-datos.js"></script><script src="js/sin-zoom.js"></script><script src="js/fondo.js" defer></script><script src="js/admin.js" defer></script>
 </head><body>
-<div class="bg" aria-hidden="true"><span class="orb orb-1"></span><span class="orb orb-2"></span></div>
+<div class="bg" aria-hidden="true">
+  <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+  <span class="decor-circle decor-circle-top"></span><span class="decor-circle decor-circle-bottom"></span>
+  <span class="halftone ht-1"></span><span class="halftone ht-2"></span>
+  <div class="streaks" id="streaks"></div>
+</div>
+<div class="bg-veil" aria-hidden="true"></div>
 <div id="app" class="ad"></div><div id="toast" class="toast" role="status"></div>
 </body></html>
