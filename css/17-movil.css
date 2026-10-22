@@ -128,3 +128,14 @@
 @media (max-width:340px){
   .hero-actions .btn{font-size:.86rem;gap:7px;padding-inline:10px;}
 }
+
+/* ---- Laptops y tablets horizontales de poca altura (1024×768, 1366×768…) ----
+   La burbuja de preguntas (abajo a la izquierda) tapaba el final del contenido
+   y la tarjeta 3D se veía enorme junto al texto. */
+@media (min-width:981px) and (max-height:820px){
+  .content{padding-bottom:104px;padding-top:18px;}
+  .content h2{font-size:clamp(1.4rem,2.3vw,2rem);}
+  .content .sub{margin-bottom:1.1rem;}
+  .card{padding:1.2rem 1.2rem;}
+  .qv-stage{--w:min(300px,31vh);}
+}
