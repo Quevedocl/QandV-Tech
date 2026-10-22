@@ -1,0 +1,130 @@
+/* =====================================================
+   VERSIÓN CELULAR
+   Se carga al final para ordenar la portada en pantallas chicas:
+   - tarjeta 3D del tamaño correcto (antes medía 320px y tapaba todo)
+   - textos y botones visibles y fáciles de tocar
+   - el contenido nunca queda bajo el logo, la burbuja ni los puntos laterales
+   - cada sección se desplaza por dentro si no cabe en la pantalla
+   ===================================================== */
+@media (max-width:720px){
+
+  /* ---- Logo (arriba) y burbuja de preguntas (abajo) más compactos ---- */
+  .genie.is-logo{left:14px !important;top:max(12px,env(safe-area-inset-top)) !important;}
+  .genie.is-logo img,.clone-traveler img{width:56px !important;}
+  .genie:not(.is-logo){
+    left:14px !important;right:auto !important;top:auto !important;
+    bottom:max(14px,env(safe-area-inset-bottom)) !important;transform:none !important;
+    max-width:calc(100vw - 28px);padding:9px 16px 9px 10px;gap:9px;
+    border-radius:22px 22px 22px 7px;
+  }
+  .genie .q-mark{width:26px;height:26px;font-size:.95rem;}
+  .genie-text{font-size:.9rem;white-space:normal;line-height:1.2;}
+
+  /* ---- Puntos laterales más pequeños (no tapan el texto) ---- */
+  .dots{right:5px;gap:10px;padding:0 3px;}
+  .dot{width:11px;height:11px;}
+  .dot.is-current{width:15px;height:15px;}
+  .nav-orb{width:22px;height:22px;margin:-11px 0 0 -11px;}
+
+  /* ---- Portada (hero): apilada y centrada, sin recortes ---- */
+  .hero{
+    display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+    gap:10px;padding:66px 34px 88px 18px;height:100%;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;
+  }
+  .hero::before,.hero::after{content:'';flex:1 0 0;}   /* centra si cabe; si no, se desplaza desde arriba */
+  .hero-right{order:-1;flex:none;}
+  .qv-stage{--w:96px;height:calc(var(--h) + 22px);}
+  .qv-shadow{top:calc(50% + var(--h)/2 + 12px);height:18px;}
+  .qv-aura{width:min(300px,100%);}
+  .slogan-box{padding:1.15rem 1.1rem 1.1rem 1.3rem;border-radius:22px;}
+  .slogan-box h1{font-size:clamp(1.45rem,6.8vw,1.75rem);max-width:none;line-height:1.12;}
+  .slogan-box p{font-size:.92rem;margin-top:.65rem;max-width:none;line-height:1.5;}
+  .hero-actions{flex-direction:column;gap:10px;margin-top:1rem;}
+  .hero-actions .btn{width:100%;min-height:46px;font-size:.96rem;white-space:nowrap;}
+  .hero-badges{display:flex;flex-wrap:wrap;gap:.3rem .8rem;margin-top:.8rem;font-size:.78rem;}
+  .scroll-hint{display:none;}
+
+  /* ---- Secciones de contenido ---- */
+  .content{
+    padding:72px 34px 96px 18px;height:100%;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;
+  }
+  .content h2{font-size:clamp(1.35rem,6.2vw,1.65rem);margin-bottom:.5rem;}
+  .content .sub{font-size:.94rem;margin-bottom:1.1rem;}
+  .grid,.sec-how .grid,.sec-reviews .grid,.sec-faq .grid{grid-template-columns:1fr !important;gap:.8rem;}
+  .card{padding:1rem 1.05rem;}
+  .card p{font-size:.9rem;}
+  .card h3{font-size:1rem;}
+  .card:hover{transform:none;}
+  .sec-channels .ch-content{padding:72px 34px 96px 18px;}
+  .ch-title{font-size:clamp(1.55rem,7.4vw,2rem);}
+  .ch-grid{transform:none;gap:.6rem;}
+  .ch-tile{min-height:96px;}
+  .closing{
+    justify-content:flex-start;padding:72px 34px 96px 18px;height:100%;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;
+  }
+  .closing::before,.closing::after{content:'';flex:1 0 0;}
+  .closing h2{font-size:clamp(1.55rem,7vw,1.9rem);}
+  .closing .hero-actions{width:100%;}
+  .btn{min-height:46px;}
+}
+
+@media (max-width:340px){
+  .ch-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+
+/* ---- Celular acostado (poca altura): vuelve a dos columnas, todo compacto ---- */
+@media (max-height:520px) and (max-width:980px){
+  .genie.is-logo{left:12px !important;top:10px !important;}
+  .genie.is-logo img,.clone-traveler img{width:44px !important;}
+  .genie:not(.is-logo){left:12px !important;right:auto !important;top:auto !important;bottom:10px !important;transform:none !important;padding:6px 12px 6px 8px;max-width:50vw;}
+  .genie .q-mark{width:22px;height:22px;font-size:.8rem;}
+  .genie-text{font-size:.78rem;white-space:normal;line-height:1.15;}
+  .dots{right:8px;gap:8px;}
+  .dot{width:10px;height:10px;} .dot.is-current{width:14px;height:14px;}
+  .nav-orb{width:20px;height:20px;margin:-10px 0 0 -10px;}
+  .scroll-hint{display:none;}
+
+  .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;padding:14px 44px 14px 70px;align-content:center;overflow-y:auto;}
+  .hero::before,.hero::after{content:none;}
+  .hero-right{order:0;}
+  .qv-stage{--w:23vh;height:calc(var(--h) + 20px);}
+  .slogan-box{padding:.9rem 1.1rem;}
+  .slogan-box h1{font-size:1.35rem;}
+  .slogan-box p{font-size:.82rem;margin-top:.4rem;}
+  .hero-actions{margin-top:.7rem;gap:8px;}
+  .hero-actions .btn{padding:9px 14px;font-size:.85rem;min-height:40px;}
+  .hero-badges{display:none;}
+
+  .content,.sec-channels .ch-content{padding:14px 44px 56px 70px;}
+  .content h2{font-size:1.25rem;margin-bottom:.3rem;}
+  .content .sub{margin-bottom:.7rem;font-size:.85rem;}
+  .grid{gap:.6rem;}
+  .card{padding:.7rem .85rem;}
+  .card p{font-size:.82rem;}
+  .closing{padding:14px 44px 56px 70px;}
+}
+
+/* ---- Celulares de pantalla corta (ej. iPhone SE): todo más compacto para ver el botón sin desplazarse ---- */
+@media (max-width:720px) and (max-height:640px){
+  .qv-stage{--w:72px;height:calc(var(--h) + 18px);}
+  .hero{padding-top:58px;gap:6px;}
+  .slogan-box{padding:.95rem 1rem .95rem 1.15rem;}
+  .slogan-box h1{font-size:1.4rem;}
+  .slogan-box p{font-size:.86rem;margin-top:.5rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+  .hero-actions{margin-top:.8rem;}
+  .hero-actions .btn{min-height:44px;}
+  .hero-badges{display:none;}
+}
+
+/* ---- Tablet vertical ---- */
+@media (min-width:721px) and (max-width:980px) and (min-height:521px){
+  .qv-stage{--w:130px;height:calc(var(--h) + 24px);}
+  .hero{gap:1rem;padding-top:100px;padding-bottom:70px;}
+}
+
+@media (max-width:340px){
+  .hero-actions .btn{font-size:.86rem;gap:7px;padding-inline:10px;}
+}

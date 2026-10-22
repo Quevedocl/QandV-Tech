@@ -240,26 +240,31 @@
   });
 
   /* ---------- Gesto de deslizar en pantallas táctiles ---------- */
-  var touchY = null, touchX = null, touchEl = null;
+  var touchY = null, touchX = null, scroller = null, startTop = true, startBottom = true;
+  function scrollableParent(el){
+    while (el && el !== document.body){
+      if (el.scrollHeight > el.clientHeight + 2 && /(auto|scroll)/.test(getComputedStyle(el).overflowY)) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
   window.addEventListener('touchstart', function(e){
     var t = e.touches[0];
-    touchY = t.clientY; touchX = t.clientX; touchEl = e.target;
+    touchY = t.clientY; touchX = t.clientX;
+    /* Se anota si el contenido YA estaba en su borde al empezar el gesto:
+       así un deslizamiento largo que solo hace scroll no cambia de sección por accidente. */
+    scroller = scrollableParent(e.target);
+    startTop    = !scroller || scroller.scrollTop <= 24;   /* margen: un desborde pequeño no atrapa al usuario */
+    startBottom = !scroller || scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 24;
   }, { passive:true });
   window.addEventListener('touchend', function(e){
     if (touchY === null) return;
     var t = e.changedTouches[0];
     var dy = touchY - t.clientY, dx = touchX - t.clientX;
-    var el = touchEl;
-    touchY = touchX = null; touchEl = null;
-    if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx)) return;
-    // Si el contenido de la sección tiene scroll propio, solo cambiar de sección al llegar al borde
-    while (el && el !== document.body){
-      if (el.scrollHeight > el.clientHeight + 2 && /(auto|scroll)/.test(getComputedStyle(el).overflowY)){
-        if (dy > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 2) return;
-        if (dy < 0 && el.scrollTop > 2) return;
-      }
-      el = el.parentElement;
-    }
+    touchY = touchX = null;
+    if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.2) return;
+    if (dy > 0 && !startBottom) return;   /* deslizó hacia abajo en contenido que aún tenía más por ver */
+    if (dy < 0 && !startTop) return;
     goTo(current + (dy > 0 ? 1 : -1));
   }, { passive:true });
 
