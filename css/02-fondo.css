@@ -2,7 +2,7 @@
    FONDO: orbes, medios tonos y franjas animadas
    ===================================================== */
 .bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict;
+  position:fixed;left:0;top:0;right:0;height:100vh;height:100lvh;z-index:0;pointer-events:none;overflow:hidden;contain:strict;
   background-color:#ffffff;
   background-image: repeating-linear-gradient(
     -35deg,
@@ -89,7 +89,7 @@
   display:flex;flex-direction:column;justify-content:center;
 }
 /* El espacio entre piezas va dentro de cada mitad (ver fondo.js): así -50% es exacto y el bucle no salta */
-.track{display:flex;align-items:center;width:max-content;flex:none;will-change:transform;animation:slide 60s linear infinite;backface-visibility:hidden;}
+.track{display:flex;align-items:center;width:max-content;flex:none;will-change:transform;animation:slide 60s linear infinite;}
 .track .half{display:flex;align-items:center;flex:none;}
 .track i{
   display:block;
@@ -99,16 +99,15 @@
   flex:none;
 }
 
-.track i.solid{background:#3fae58; opacity:0.45;}
-.track i.pale{background:#1d6b2f; opacity:0.45;}
-.track i.line{background:#8fe79a; opacity:0.4;}
-.track i.dark{background:#0f3d1e; opacity:0.5;}
+.track i.solid{background:rgba(63,174,88,.45);}
+.track i.pale{background:rgba(29,107,47,.45);}
+.track i.line{background:rgba(143,231,154,.4);}
+.track i.dark{background:rgba(15,61,30,.5);}
 .track i.dot{
   height:5.5vmax;min-height:42px;
   width:5.5vmax;min-width:42px;
   border-radius:50%;
-  background:#1d6b2f;
-  opacity:0.45;
+  background:rgba(29,107,47,.45);
 }
 
 @keyframes slide{
@@ -117,7 +116,7 @@
 }
 
 .bg-veil{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+  position:fixed;left:0;top:0;right:0;height:100vh;height:100lvh;z-index:0;pointer-events:none;
   background:radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.75) 0%, rgba(255,255,255,.4) 60%, rgba(255,255,255,.1) 100%);
 }
 

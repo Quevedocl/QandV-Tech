@@ -101,3 +101,13 @@
 #dots.traveling .nav-orb{filter:drop-shadow(0 0 5px rgba(63,174,88,.95));}
 #dots .nav-orb i{transform-origin:center;}
 
+
+/* ----- Efecto dock tipo macOS (lo mueve js/navegacion.js) -----
+   La guía gris sigue a los extremos cuando la lente desplaza los círculos, y la etiqueta
+   ("Inicio", "Tus canales"…) no crece junto con el círculo: solo se aparta para no taparlo. */
+.dots::before{top:var(--rt,0px);bottom:var(--rb,0px);}
+.dot.nav-dot::after{
+  right:calc(100% + 10px / var(--s,1));
+  transform-origin:right center;
+  scale:calc(1 / var(--s,1));
+}

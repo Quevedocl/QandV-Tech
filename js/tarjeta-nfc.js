@@ -15,7 +15,7 @@
   for(var i=-5;i<=5;i++){
     var l=document.createElement('div');
     l.className='qv-layer';
-    l.style.transform='translateZ('+i+'px)';
+    l.style.transform='translateZ(calc(var(--w) * '+(i/330).toFixed(5)+'))';   /* grosor proporcional al tamaño de la tarjeta */
     if(i===0) l.style.boxShadow='0 0 14px rgba(109,255,122,.55)'; /* solo una capa brilla: 11 sombras era carísimo */
     card.insertBefore(l,card.firstChild);
   }

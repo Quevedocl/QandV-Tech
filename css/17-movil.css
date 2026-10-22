@@ -139,3 +139,12 @@
   .card{padding:1.2rem 1.2rem;}
   .qv-stage{--w:min(300px,31vh);}
 }
+
+/* ---- Canales: las tarjetas ya no se pisan ----
+   Cada tarjeta flotaba hasta ±19px en sentidos opuestos al vecino, pero entre ellas
+   solo hay 10–16px de espacio, así que se montaban (y tapaban el texto, p. ej. "Mensajes").
+   Se mantiene el mismo flote, pero con una amplitud que nunca llega a tocar a la vecina. */
+@keyframes chFloat{0%,100%{translate:0 0}50%{translate:0 calc(var(--amp,-8px) * .4)}}
+
+/* Tablets/laptops angostos: un poco más de aire entre tarjetas de canales (la rotación de 3D las acercaba ~2px) */
+@media (min-width:721px) and (max-width:1100px){ .ch-grid{gap:.85rem;} }

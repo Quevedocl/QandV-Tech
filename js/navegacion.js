@@ -50,16 +50,31 @@
     return 1 + DOCK_MAX * Math.pow(Math.max(0, 1 - u / DOCK_RANGE), 1.5);
   }
 
+  /* ---------- Efecto dock tipo macOS ----------
+     Al acercar el mouse a los círculos, los más cercanos al cursor se agrandan y los vecinos
+     se apartan para hacerles lugar (como el dock del Mac). Es una "lente" continua:
+       tamaño(d)        = 1 + LENS_MAX · e^-(d/σ)²
+       desplazamiento   = LENS_MAX · σ · (√π/2) · erf(d/σ)   (con el signo de d)
+     donde d es la distancia vertical al cursor. La zona de activación es más ancha que los
+     círculos: empieza a crecer apenas te acercas y se relaja suave al alejarte. */
+  var LENS_MAX = 0.95, LENS_SIGMA = 46, LENS_ZONE = 150, LENS_CORE = 40;
+  var dock = { cy:0, cyT:0, amt:0, amtT:0, raf:0 };
+
+  function erf(x){                                   /* aproximación de Abramowitz-Stegun */
+    var t = 1 / (1 + 0.3275911 * x);
+    return 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+  }
+  function lensDisp(y){
+    if (dock.amt < 0.001) return 0;
+    var d = y - dock.cy;
+    return (d < 0 ? -1 : 1) * dock.amt * LENS_MAX * LENS_SIGMA * 0.8862 * erf(Math.abs(d) / LENS_SIGMA);
+  }
+  function lensScale(y){ var d = (y - dock.cy) / LENS_SIGMA; return 1 + LENS_MAX * Math.exp(-d * d); }
+
   function renderNav(){
-    var y = NAV.y, top = ys[0];
-    var hov = navHost.classList.contains('hovering');
-    navOrb.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
-    navCore.style.transform = 'scale(' + NAV.sx.toFixed(3) + ',' + NAV.sy.toFixed(3) + ')';
+    var y = NAV.y, amt = dock.amt, n = dots.length;
 
-    neonLineFill.style.top = top + 'px';
-    neonLineFill.style.height = Math.max(0, y - top).toFixed(2) + 'px';
-
-    for (var i = 0; i < dots.length; i++){
+    for (var i = 0; i < n; i++){
       var want = ys[i] <= y + 6;
       if (want !== reached[i]){
         reached[i] = want;
@@ -71,12 +86,38 @@
           })(dots[i]);
         }
       }
-      if (!hov){
-        var sc = 'scale(' + dockScale(y, i).toFixed(3) + ')';
-        if (dots[i]._sc !== sc){ dots[i]._sc = sc; dots[i].style.transform = sc; }
+      var rest = dockScale(y, i), sc, dy = 0;
+      if (amt < 0.001){ sc = rest; }
+      else { sc = rest * (1 - amt) + lensScale(ys[i]) * amt; dy = lensDisp(ys[i]); }
+      var tr = dy ? 'translate3d(0,' + dy.toFixed(2) + 'px,0) scale(' + sc.toFixed(3) + ')' : 'scale(' + sc.toFixed(3) + ')';
+      if (dots[i]._sc !== tr){
+        dots[i]._sc = tr; dots[i].style.transform = tr;
+        dots[i].style.setProperty('--s', sc.toFixed(3));     /* el CSS lo usa para que la etiqueta no crezca */
       }
     }
+
+    /* El orbe y la línea siguen a su círculo aunque la lente lo mueva */
+    var oy = y + lensDisp(y), top = ys[0] + lensDisp(ys[0]);
+    var os = amt < 0.001 ? 1 : (1 - amt) + lensScale(y) * amt;
+    navOrb.style.transform = 'translate3d(0,' + oy.toFixed(2) + 'px,0)';
+    navCore.style.transform = 'scale(' + (NAV.sx * os).toFixed(3) + ',' + (NAV.sy * os).toFixed(3) + ')';
+    neonLineFill.style.top = top.toFixed(2) + 'px';
+    neonLineFill.style.height = Math.max(0, oy - top).toFixed(2) + 'px';
+    /* la guía gris también se estira con los extremos */
+    navHost.style.setProperty('--rt', (lensDisp(ys[0])).toFixed(2) + 'px');
+    navHost.style.setProperty('--rb', (-lensDisp(ys[n - 1])).toFixed(2) + 'px');
   }
+
+  function dockLoop(){
+    dock.cy  += (dock.cyT  - dock.cy)  * 0.30;
+    dock.amt += (dock.amtT - dock.amt) * 0.20;
+    var still = Math.abs(dock.cyT - dock.cy) < 0.3 && Math.abs(dock.amtT - dock.amt) < 0.004;
+    if (still){ dock.cy = dock.cyT; dock.amt = dock.amtT; }
+    renderNav();
+    if (still && dock.amt === 0){ dock.raf = 0; return; }
+    dock.raf = still ? 0 : requestAnimationFrame(dockLoop);
+  }
+  function dockKick(){ if (!dock.raf) dock.raf = requestAnimationFrame(dockLoop); }
 
   function ringAt(i){
     var d = dots[i]; if (!d || reduce) return;
@@ -214,30 +255,25 @@
     });
   });
 
-  /* ---------- Efecto dock al pasar el mouse por los círculos ---------- */
-  var settleTimer = 0;
-  navHost.addEventListener('mousemove', function(e){
-    if (reduce || NAV.running) return;
-    clearTimeout(settleTimer);
-    navHost.classList.remove('settling');
-    navHost.classList.add('hovering');
-    measure();
-    var my = e.clientY - navHost.getBoundingClientRect().top;
-    for (var i = 0; i < dots.length; i++){
-      var u = Math.abs(my - ys[i]) / spacing();
-      var sc = 'scale(' + (1 + DOCK_MAX * Math.pow(Math.max(0, 1 - u / DOCK_RANGE), 1.5)).toFixed(3) + ')';
-      dots[i]._sc = sc;
-      dots[i].style.transform = sc;
-    }
-  });
-  navHost.addEventListener('mouseleave', function(){
-    if (!navHost.classList.contains('hovering')) return;
-    navHost.classList.remove('hovering');
-    navHost.classList.add('settling');
-    dots.forEach(function(d){ d._sc = null; });
-    renderNav();
-    settleTimer = setTimeout(function(){ navHost.classList.remove('settling'); }, 400);
-  });
+  /* ---------- Efecto dock: reacciona cuando el mouse se ACERCA a los círculos ---------- */
+  if (!reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    window.addEventListener('pointermove', function(e){
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      var r = navHost.getBoundingClientRect();
+      var dx = Math.abs(e.clientX - (r.left + r.width / 2));
+      var cy = e.clientY - r.top;                              /* mismas coordenadas que ys[] */
+      var hz = dx <= LENS_CORE ? 1 : clamp01(1 - (dx - LENS_CORE) / (LENS_ZONE - LENS_CORE));
+      hz = hz * hz * (3 - 2 * hz);                             /* entrada suave */
+      var out = Math.max(0, ys[0] - cy, cy - ys[ys.length - 1]);
+      var vz = clamp01(1 - out / 90);
+      dock.amtT = hz * vz;
+      dock.cyT = Math.min(ys[ys.length - 1] + 30, Math.max(ys[0] - 30, cy));
+      if (dock.amt < 0.001 && dock.amtT > 0) dock.cy = dock.cyT;   /* al entrar, la lente nace bajo el cursor */
+      dockKick();
+    }, { passive:true });
+    document.documentElement.addEventListener('mouseleave', function(){ dock.amtT = 0; dockKick(); });
+    window.addEventListener('blur', function(){ dock.amtT = 0; dockKick(); });
+  }
 
   /* ---------- Gesto de deslizar en pantallas táctiles ---------- */
   var touchY = null, touchX = null, scroller = null, startTop = true, startBottom = true;
