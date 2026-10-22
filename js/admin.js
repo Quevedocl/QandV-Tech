@@ -44,30 +44,45 @@
 
   /* Tarjeta "Tema de la página": solo se ve con sesión iniciada */
   function temaCard() {
-    var T = (window.QVTemas && QVTemas.lista) || {}, sel = h('select', { id: 'tema-sel' }), estado = h('p', { class: 'hint' }), msg = h('p', { class: 'err' });
-    sel.appendChild(h('option', { value: 'auto', text: 'Automático (según la fecha)' }));
-    sel.appendChild(h('option', { value: 'normal', text: 'Normal (sin tema)' }));
-    Object.keys(T).forEach(function (k) { sel.appendChild(h('option', { value: k, text: T[k].nombre })); });
+    var T = (window.QVTemas && QVTemas.lista) || {}, MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    var EMO = { halloween: '🎃', navidad: '🎄', 'anio-nuevo': '🎆', 'fiestas-patrias': '★' };
+    var COL = { halloween: '#ff8a1f,#6e3ca0', navidad: '#d6342c,#1d6b2f', 'anio-nuevo': '#f2c94c,#1b2740', 'fiestas-patrias': '#d52b1e,#0039a6' };
+    function fe(x) { var q = x.split('-'); return (+q[1]) + ' ' + MES[+q[0] - 1]; }
+    var OPC = [{ v: 'auto', n: 'Automático', s: 'Según la fecha', i: '🗓️', c: '#8fe79a,#3fae58' }, { v: 'normal', n: 'Normal', s: 'Sin adornos', i: '🌿', c: '#3fae58,#0f3d1e' }]
+      .concat(Object.keys(T).map(function (k) { return { v: k, n: T[k].nombre, s: fe(T[k].desde) + ' – ' + fe(T[k].hasta), i: EMO[k], c: COL[k] }; }));
+    var guardado = null, elegido = null, msg = h('p', { class: 'err' });
+    var pill = h('span', { class: 'tema-pill', text: 'Cargando…' });
     function valor(cfg) { return !cfg || cfg.modo === 'normal' ? 'normal' : (cfg.modo === 'auto' ? 'auto' : (cfg.tema || 'normal')); }
     function cfgDe(v) { return v === 'auto' ? { modo: 'auto' } : (v === 'normal' ? { modo: 'normal' } : { modo: 'manual', tema: v }); }
-    function ver(cfg) {
-      var id = QVTemas.resolver(cfg), n = id === 'normal' ? 'Normal' : T[id].nombre;
-      estado.textContent = 'Ahora mismo los visitantes ven: ' + n + (cfg && cfg.modo === 'auto' ? ' (automático)' : '') + '.';
+    function vivo(cfg) {
+      var id = QVTemas.resolver(cfg);
+      pill.textContent = 'En vivo: ' + (id === 'normal' ? 'Normal' : T[id].nombre) + (cfg && cfg.modo === 'auto' ? ' (auto)' : '');
+      pill.className = 'tema-pill on';
     }
-    var prev = h('button', { class: 'btn2 g', type: 'button', text: 'Probar en mi pantalla', onclick: function () {
-      var v = sel.value, id = v === 'auto' ? QVTemas.resolver({ modo: 'auto' }) : v;
+    var tiles = OPC.map(function (o) {
+      var b = h('button', { class: 'tema-op', type: 'button', role: 'radio', 'aria-checked': 'false', onclick: function () { elegido = o.v; pintar(); } }, [
+        h('span', { class: 'ic', style: 'background:linear-gradient(145deg,' + o.c + ')', text: o.i }),
+        h('b', { text: o.n }), h('small', { text: o.s })]);
+      b._v = o.v; return b;
+    });
+    var save = h('button', { class: 'btn2', type: 'button', text: 'Guardar', disabled: true, onclick: function () {
+      msg.textContent = ''; var cfg = cfgDe(elegido); save.disabled = true;
+      D.guardarTema(cfg).then(function () { guardado = elegido; vivo(cfg); toast('Tema guardado'); pintar(); }).catch(function (x) { msg.textContent = x.message; pintar(); });
+    } });
+    var prev = h('button', { class: 'btn2 g', type: 'button', text: 'Vista previa', onclick: function () {
+      if (!elegido) return; var id = elegido === 'auto' ? QVTemas.resolver({ modo: 'auto' }) : elegido;
       window.open(new URL('index.html?tema=' + id, location.href).href, '_blank', 'noopener');
     } });
-    var save = h('button', { class: 'btn2', type: 'button', text: 'Guardar tema', onclick: function () {
-      msg.textContent = ''; var cfg = cfgDe(sel.value); save.disabled = true;
-      D.guardarTema(cfg).then(function () { toast('Tema guardado'); ver(cfg); }).catch(function (x) { msg.textContent = x.message; }).then(function () { save.disabled = false; });
-    } });
-    D.obtenerTema().then(function (cfg) { sel.value = valor(cfg); ver(cfg); }).catch(function (x) { msg.textContent = x.message; });
+    function pintar() {
+      tiles.forEach(function (b) { var on = b._v === elegido; b.classList.toggle('sel', on); b.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      save.disabled = !elegido || elegido === guardado;
+    }
+    D.obtenerTema().then(function (cfg) { guardado = elegido = valor(cfg); vivo(cfg); pintar(); }).catch(function (x) { pill.textContent = 'Sin conexión'; msg.textContent = x.message; });
     return h('div', { class: 'panel tema-card' }, [
-      h('h2', { class: 'sec', text: 'Tema de la página', style: 'margin-top:0' }),
-      h('p', { class: 'hint', text: 'Cambia los adornos y colores de acento de la página principal por una festividad. Los visitantes lo ven al instante.' }),
-      h('label', {}, ['Festividad', sel]), estado, msg,
-      h('div', { class: 'acc', style: 'margin-top:12px' }, [save, prev])
+      h('div', { class: 'tema-head' }, [h('h2', { class: 'sec', text: 'Tema de la página' }), pill]),
+      h('p', { class: 'hint tema-sub', text: 'Adornos y colores de la web por festividad.' }),
+      h('div', { class: 'tema-grid', role: 'radiogroup', 'aria-label': 'Tema de la página' }, tiles), msg,
+      h('div', { class: 'tema-acc' }, [save, prev])
     ]);
   }
 

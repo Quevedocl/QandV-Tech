@@ -31,3 +31,34 @@ html,body{touch-action:manipulation;-webkit-touch-callout:none;}
 /* ---- Tarjeta "Tema de la página" ---- */
 .tema-card{margin-bottom:16px}
 .tema-card select{font:inherit;font-weight:400;padding:.65rem .8rem;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--ink);width:100%}
+
+/* ---- Tarjeta "Tema de la página" (versión pulida) ---- */
+.tema-card{padding:18px}
+.tema-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.tema-head .sec{margin:0 0 2px;font-size:1.1rem}
+.tema-head .hint{margin:0}
+.tema-pill{flex:none;display:inline-flex;align-items:center;gap:7px;padding:.38rem .75rem;border-radius:99px;font-size:.74rem;font-weight:700;background:rgba(15,61,30,.06);color:var(--muted);white-space:nowrap}
+.tema-pill.on{background:rgba(63,174,88,.14);color:var(--green-mid)}
+.tema-pill.on::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 0 0 var(--green-glow);animation:pulso 2s infinite}
+.tema-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tema-op{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 6px 11px;border-radius:16px;background:#fff;border:1.5px solid var(--line);text-align:center;transition:border-color .2s,box-shadow .2s,transform .15s;-webkit-tap-highlight-color:transparent}
+.tema-op:active{transform:scale(.97)}
+.tema-op .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:1.25rem;color:#fff;margin-bottom:5px;box-shadow:0 8px 16px -8px rgba(15,61,30,.45)}
+.tema-op b{font-family:var(--display);font-size:.82rem;color:var(--green-dark);line-height:1.15}
+.tema-op small{font-size:.66rem;color:var(--muted);line-height:1.2}
+.tema-op.sel{border-color:var(--green-bright);background:rgba(63,174,88,.07);box-shadow:0 0 0 3px rgba(63,174,88,.16)}
+.tema-op.sel::after{content:'✓';position:absolute;top:7px;right:7px;width:17px;height:17px;border-radius:50%;background:var(--green-bright);color:#fff;font-size:.62rem;font-weight:700;display:grid;place-items:center}
+.tema-acc{display:flex;gap:10px;margin-top:14px}
+.tema-acc .btn2{flex:1;text-align:center}
+.tema-acc .btn2:disabled{opacity:.45;box-shadow:none;transform:none}
+.tema-card .err:empty{display:none}
+
+/* ---- Lista de clientes: nada se sale de la pantalla ---- */
+.lista{grid-template-columns:minmax(0,1fr)}
+.fila{min-width:0}
+.tema-head{align-items:center;margin-bottom:4px}
+.tema-head .sec{white-space:nowrap;font-size:1.05rem}
+.tema-sub{margin:0 0 14px}
+.tema-op{justify-content:flex-start}
+.tema-head{flex-wrap:wrap;gap:6px 10px}
+.tema-pill{max-width:100%;font-size:.72rem}
