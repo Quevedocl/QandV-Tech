@@ -1,0 +1,129 @@
+/* =====================================================
+   FONDO: orbes, medios tonos y franjas animadas
+   ===================================================== */
+.bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict;
+  background-color:#ffffff;
+  background-image: repeating-linear-gradient(
+    -35deg,
+    transparent,
+    transparent 12px,
+    rgba(29,107,47,0.03) 12px,
+    rgba(29,107,47,0.03) 14px
+  );
+}
+
+.orb{position:absolute;border-radius:50%;}
+.orb-1{
+  width:46vmax;height:46vmax;top:-18vmax;right:-14vmax;
+  background:radial-gradient(circle at 38% 38%, rgba(63,174,88,.18), rgba(143,231,154,.08) 60%, transparent 72%);
+  animation:orbFloat 26s ease-in-out infinite;
+}
+.orb-2{
+  width:32vmax;height:32vmax;bottom:-13vmax;left:-10vmax;
+  background:radial-gradient(circle at 55% 45%, rgba(29,107,47,.14), rgba(63,174,88,.06) 58%, transparent 74%);
+  animation:orbFloat 34s ease-in-out infinite reverse;
+}
+.orb-3{
+  width:15vmax;height:15vmax;top:26%;left:34%;
+  background:radial-gradient(circle at 42% 40%, rgba(63,174,88,.15), transparent 70%);
+  animation:orbFloat 21s ease-in-out infinite;
+}
+@keyframes orbFloat{
+  0%,100%{transform:translate3d(0,0,0) scale(1);}
+  50%{transform:translate3d(-3vmax,3vmax,0) scale(1.07);}
+}
+
+.decor-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed rgba(63,174,88, 0.25);
+  pointer-events: none;
+  z-index: 0;
+}
+.decor-circle-top {
+  width: 180px; height: 180px; top: -50px; right: 10%;
+  background: radial-gradient(circle, rgba(63,174,88,0.08) 0%, transparent 70%);
+  animation: orbFloat 15s ease-in-out infinite;
+}
+.decor-circle-bottom {
+  width: 240px; height: 240px; bottom: -80px; left: 8%;
+  background: radial-gradient(circle, rgba(29,107,47,0.06) 0%, transparent 70%);
+  animation: orbFloat 22s ease-in-out infinite reverse;
+}
+
+.halftone{
+  position:absolute;overflow:hidden;
+}
+.halftone::before{
+  content:'';position:absolute;inset:-52px;
+  background-image:radial-gradient(rgba(29,107,47,.25) 1.6px, transparent 1.7px);
+  background-size:13px 13px;
+  animation:dotDrift 18s linear infinite;
+  will-change:transform;
+}
+.ht-1{
+  width:34vmax;height:30vmax;right:-4vmax;bottom:6vh;
+  transform:rotate(-40deg);
+  -webkit-mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);
+  mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);
+  opacity:.45;
+}
+.ht-2{
+  width:22vmax;height:20vmax;left:-3vmax;top:8vh;
+  transform:rotate(-40deg);
+  -webkit-mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);
+  mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);
+  opacity:.35;
+}
+@keyframes dotDrift{
+  0%{transform:translate3d(0,0,0);}
+  100%{transform:translate3d(52px,52px,0);}
+}
+
+.streaks{
+  position:absolute;
+  width:260%;height:260%;
+  left:-80%;top:-80%;
+  transform:rotate(-35deg);
+  display:flex;flex-direction:column;justify-content:center;
+  gap:3.5vmax;
+}
+.track{display:flex;align-items:center;gap:3.5vmax;width:max-content;will-change:transform;}
+.track i{
+  display:block;
+  height:5.5vmax;
+  min-height:42px;
+  border-radius:999px;
+  flex:none;
+}
+
+.track i.solid{background:#3fae58; opacity:0.45;}
+.track i.pale{background:#1d6b2f; opacity:0.45;}
+.track i.line{background:#8fe79a; opacity:0.4;}
+.track i.dark{background:#0f3d1e; opacity:0.5;}
+.track i.dot{
+  height:5.5vmax;min-height:42px;
+  width:5.5vmax;min-width:42px;
+  border-radius:50%;
+  background:#1d6b2f;
+  opacity:0.45;
+}
+
+.t1{animation:slide 38s linear infinite;}
+.t2{animation:slide 50s linear infinite;}
+.t3{animation:slide 32s linear infinite;}
+.t4{animation:slide 58s linear infinite;}
+.t5{animation:slide 42s linear infinite;}
+.t6{animation:slide 48s linear infinite;}
+.t7{animation:slide 34s linear infinite;}
+@keyframes slide{
+  from{transform:translate3d(0,0,0);}
+  to{transform:translate3d(-50%,0,0);}
+}
+
+.bg-veil{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.75) 0%, rgba(255,255,255,.4) 60%, rgba(255,255,255,.1) 100%);
+}
+

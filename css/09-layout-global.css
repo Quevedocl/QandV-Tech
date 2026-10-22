@@ -1,0 +1,55 @@
+/* =====================================================
+   LAYOUT GLOBAL Y EFECTO DOCK
+   ===================================================== */
+/* =====================================================
+   ESTILOS QUE ANTES ESTABAN DENTRO DEL HTML
+   (mismo orden que tenían, para no alterar la cascada)
+   ===================================================== */
+
+/* ----- AJUSTES DE ESCALABILIDAD Y LAYOUT GLOBAL ----- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%; /* Previene que iOS/Safari cambie el tamaño del texto al rotar o hacer zoom */
+}
+
+/* Ajuste de fuentes e imágenes escalables */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+p {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+/* ----- EFECTO DOCK EN LA NAVEGACIÓN ----- */
+#dots {
+  padding: 40px 10px;
+}
+.dot.nav-dot {
+  transition: transform .45s cubic-bezier(.25,1,.5,1), background-color .35s, border-color .35s, width .35s, height .35s, box-shadow .35s;
+  will-change: transform;
+  transform-origin: center;
+  position: relative;
+}
+#dots.hovering .dot.nav-dot {
+  transition: transform 0.1s ease-out, background-color .35s, border-color .35s, width .35s, height .35s, box-shadow .35s;
+}
+

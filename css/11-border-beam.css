@@ -1,0 +1,37 @@
+/* =====================================================
+   EFECTO BORDER BEAM
+   ===================================================== */
+/* ----- EFECTO BORDER BEAM ----- */
+@property --bb-angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
+
+.pill{position:relative;}
+
+.bb-beam{
+  --bb-width:2px;
+  --bb-dur:5s;
+  position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;
+  padding:var(--bb-width);
+  background:conic-gradient(from var(--bb-angle),
+    transparent 0deg,
+    transparent 255deg,
+    rgba(63,174,88,.15) 285deg,
+    var(--green-bright) 328deg,
+    var(--green-soft) 350deg,
+    #ffffff 358deg,
+    transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  filter:drop-shadow(0 0 4px var(--green-glow)) drop-shadow(0 0 9px rgba(63,174,88,.55));
+  animation:bbSpin var(--bb-dur) linear infinite;
+  animation-delay:var(--bb-delay,0s);
+}
+@keyframes bbSpin{to{--bb-angle:360deg;}}
+
+.pill > .bb-beam{--bb-width:1.5px;--bb-dur:3.4s;}
+.slogan-box > .bb-beam{--bb-width:2.5px;--bb-dur:6.5s;}
+
+@media (prefers-reduced-motion:reduce){
+  .bb-beam{animation:none;--bb-angle:300deg;opacity:.7;}
+}
+

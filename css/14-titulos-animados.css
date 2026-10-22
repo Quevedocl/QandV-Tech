@@ -1,0 +1,48 @@
+/* =====================================================
+   RENDIMIENTO, TÍTULOS VERDES ANIMADOS Y TÍTULO 'POR QUÉ NFC'
+   ===================================================== */
+/* ----- RENDIMIENTO + TÍTULOS VERDES ANIMADOS ----- */
+/* Animaciones infinitas solo corren en la sección visible */
+.section:not(.is-active) *,
+.section:not(.is-active) *::before,
+.section:not(.is-active) *::after{animation-play-state:paused !important;}
+
+/* Títulos y subtítulos: verde con brillo en movimiento */
+:root{--tg-a:#0c5a26;--tg-b:#1e8f3e;--tg-c:#2fb85a;--tg-d:#6dff7a;}
+body .slogan-box h1,
+body .content h1,
+body .content h2,
+body .closing h2,
+body .ch-title span,
+body .ch-title em,
+body .content .sub{
+  background-image:linear-gradient(105deg,var(--tg-a) 0%,var(--tg-b) 22%,var(--tg-c) 41%,var(--tg-d) 50%,var(--tg-c) 59%,var(--tg-b) 78%,var(--tg-a) 100%) !important;
+  background-size:260% 100% !important;
+  background-repeat:no-repeat !important;
+  background-position:0% 50%;
+  -webkit-background-clip:text !important;background-clip:text !important;
+  color:transparent !important;-webkit-text-fill-color:transparent !important;
+  text-shadow:none !important;
+  animation:qvTitleShine 5.5s ease-in-out infinite alternate;
+}
+body .ch-title span,body .ch-title em{width:fit-content;}
+body .content .sub{--tg-c:#2aa84d;--tg-d:#47d673;}
+body .slogan-box h1,body .content h1,body .content h2,body .closing h2,body h2.ch-title{
+  filter:drop-shadow(0 0 10px rgba(63,255,122,.28));
+}
+@keyframes qvTitleShine{from{background-position:0% 50%;}to{background-position:100% 50%;}}
+@media (prefers-reduced-motion:reduce){
+  body .slogan-box h1,body .content h1,body .content h2,body .closing h2,
+  body .ch-title span,body .ch-title em,body .content .sub{animation:none;background-position:50% 50%;}
+}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){
+  body .slogan-box h1,body .content h1,body .content h2,body .closing h2,
+  body .ch-title span,body .ch-title em,body .content .sub{color:#1e8f3e !important;-webkit-text-fill-color:#1e8f3e !important;}
+}
+
+
+/* =====================================================
+   TÍTULO DE "POR QUÉ NFC" (antes era un style inline)
+   ===================================================== */
+.title-why{color:#0f3d1e;text-shadow:0 2px 24px rgba(22,188,44,.35);}
+

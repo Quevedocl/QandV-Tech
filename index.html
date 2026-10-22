@@ -1,1379 +1,480 @@
 <!DOCTYPE html>
+<!-- Definición del idioma del documento (Español de Chile) -->
 <html lang="es-CL">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Q&V Tech — Tarjetas NFC para tu negocio</title>
-<meta name="description" content="Tarjetas NFC inteligentes de Q&V Tech: tu cliente acerca el teléfono y abre tu perfil digital con WhatsApp, menú, redes y ubicación. Sin apps, sin reimprimir.">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="logo.jpg">
-<link rel="apple-touch-icon" href="logo.jpg">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Q&V Tech — Tarjetas NFC para tu negocio">
-<meta property="og:description" content="Un toque y tu cliente ve todo tu negocio: WhatsApp, menú, redes y ubicación.">
-<meta property="og:image" content="logo.jpg">
-<meta property="og:locale" content="es_CL">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --white:#ffffff;
-  --green-dark:#1b4332;
-  --green-mid:#2d6a4f;
-  --green-bright:#52b788;
-  --green-soft:#95d5b2;
-  --green-glow:rgba(82,183,136,.55);
-  --slate:#2f3e46;
-  --ink:#16211d;
-  --muted:#4c5a54;
-  --line:rgba(27,67,50,.13);
-
-  --display:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
-  --body:'Karla', ui-sans-serif, system-ui, -apple-system, sans-serif;
-
-  --ease:cubic-bezier(.65,0,.35,1);
-  --dur:.9s;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-html,body{
-  height:100%;
-  overflow:hidden;
-  background:var(--white);
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:17px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  -webkit-text-size-adjust:100%;
-}
-
-h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.1;font-weight:700;}
-::selection{background:var(--green-bright);color:#fff;}
-a{color:inherit;text-decoration:none;}
-button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
-:focus-visible{outline:2.5px solid var(--green-bright);outline-offset:4px;border-radius:6px;}
-
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
-}
-
-/* ==========================================================
-   1. FONDO CON TRAZOS DIAGONALES, ORBES Y LUZ DINÁMICA
-   ========================================================== */
-
-.bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  background-color:#ffffff;
-  background-image: repeating-linear-gradient(
-    -35deg,
-    transparent,
-    transparent 12px,
-    rgba(45,106,79,0.03) 12px,
-    rgba(45,106,79,0.03) 14px
-  );
-}
-
-.cursor-light {
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(82,183,136,0.18) 0%, rgba(82,183,136,0.03) 50%, transparent 75%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  transition: width 0.4s, height 0.4s;
-  mix-blend-mode: multiply;
-}
-
-.orb{position:absolute;border-radius:50%;}
-.orb-1{
-  width:46vmax;height:46vmax;top:-18vmax;right:-14vmax;
-  background:radial-gradient(circle at 38% 38%, rgba(82,183,136,.22), rgba(149,213,178,.08) 60%, transparent 72%);
-  animation:orbFloat 26s ease-in-out infinite;
-}
-.orb-2{
-  width:32vmax;height:32vmax;bottom:-13vmax;left:-10vmax;
-  background:radial-gradient(circle at 55% 45%, rgba(45,106,79,.16), rgba(82,183,136,.06) 58%, transparent 74%);
-  animation:orbFloat 34s ease-in-out infinite reverse;
-}
-.orb-3{
-  width:15vmax;height:15vmax;top:26%;left:34%;
-  background:radial-gradient(circle at 42% 40%, rgba(82,183,136,.18), transparent 70%);
-  animation:orbFloat 21s ease-in-out infinite;
-}
-@keyframes orbFloat{
-  0%,100%{transform:translate3d(0,0,0) scale(1);}
-  50%{transform:translate3d(-3vmax,3vmax,0) scale(1.08);}
-}
-
-.decor-circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px dashed rgba(82, 183, 136, 0.3);
-  pointer-events: none;
-  z-index: 0;
-  animation: spinSlow 40s linear infinite;
-}
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.decor-circle-top {
-  width: 180px; height: 180px; top: -50px; right: 10%;
-  background: radial-gradient(circle, rgba(82,183,136,0.1) 0%, transparent 70%);
-}
-.decor-circle-bottom {
-  width: 240px; height: 240px; bottom: -80px; left: 8%;
-  background: radial-gradient(circle, rgba(45,106,79,0.08) 0%, transparent 70%);
-  animation-direction: reverse;
-  animation-duration: 50s;
-}
-
-.halftone{
-  position:absolute;
-  background-image:radial-gradient(rgba(45,106,79,.25) 1.6px, transparent 1.7px);
-  background-size:13px 13px;
-  animation:dotDrift 18s linear infinite;
-}
-.ht-1{
-  width:34vmax;height:30vmax;right:-4vmax;bottom:6vh;
-  transform:rotate(-40deg);
-  -webkit-mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);
-  mask-image:radial-gradient(ellipse at 60% 50%, #000 15%, transparent 68%);
-  opacity:.45;
-}
-.ht-2{
-  width:22vmax;height:20vmax;left:-3vmax;top:8vh;
-  transform:rotate(-40deg);
-  -webkit-mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);
-  mask-image:radial-gradient(ellipse at 45% 50%, #000 10%, transparent 64%);
-  opacity:.35;
-}
-@keyframes dotDrift{
-  0%{background-position:0 0;}
-  100%{background-position:52px 52px;}
-}
-
-.streaks{
-  position:absolute;
-  width:260%;height:260%;
-  left:-80%;top:-80%;
-  transform:rotate(-35deg);
-  display:flex;flex-direction:column;justify-content:center;
-  gap:3.5vmax;
-}
-.track{display:flex;align-items:center;gap:3.5vmax;width:max-content;will-change:transform;}
-.track i{
-  display:block;
-  height:5.5vmax;
-  min-height:42px;
-  border-radius:999px;
-  flex:none;
-}
-
-.track i.solid{background:#52b788; opacity:0.45;}
-.track i.pale{background:#2d6a4f; opacity:0.45;}
-.track i.line{background:#95d5b2; opacity:0.4;}
-.track i.dark{background:#1b4332; opacity:0.5;}
-.track i.dot{
-  height:5.5vmax;min-height:42px;
-  width:5.5vmax;min-width:42px;
-  border-radius:50%;
-  background:#2d6a4f;
-  opacity:0.45;
-}
-
-.t1{animation:slide 38s linear infinite;}
-.t2{animation:slide 50s linear infinite;}
-.t3{animation:slide 32s linear infinite;}
-.t4{animation:slide 58s linear infinite;}
-.t5{animation:slide 42s linear infinite;}
-.t6{animation:slide 48s linear infinite;}
-.t7{animation:slide 34s linear infinite;}
-@keyframes slide{
-  from{transform:translate3d(0,0,0);}
-  to{transform:translate3d(-50%,0,0);}
-}
-
-.bg-veil{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.7) 0%, rgba(255,255,255,.3) 60%, rgba(255,255,255,0) 100%);
-}
-
-/* ==========================================================
-   2. ESTRUCTURA DE SECCIONES Y ANIMACIONES DE ENTRADA
-   ========================================================== */
-
-.sections-wrap{
-  position:relative;z-index:2;width:100%;
-  transition:transform var(--dur) var(--ease);
-  will-change:transform;
-}
-
-.section{
-  height:100vh;height:100dvh;width:100%;
-  position:relative;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  background:transparent;
-}
-
-@keyframes bounceIn {
-  0% { opacity: 0; transform: scale(0.3) translateY(40px); }
-  55% { opacity: 1; transform: scale(1.05) translateY(-12px); }
-  75% { transform: scale(0.96) translateY(6px); }
-  90% { transform: scale(1.02) translateY(-3px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.reveal > *{
-  opacity:0;
-  transform:scale(0.3) translateY(40px);
-}
-.section.is-active .reveal > *{
-  animation: bounceIn 0.85s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-}
-.section.is-active .reveal > *:nth-child(1){animation-delay:.15s;}
-.section.is-active .reveal > *:nth-child(2){animation-delay:.25s;}
-.section.is-active .reveal > *:nth-child(3){animation-delay:.35s;}
-.section.is-active .reveal > *:nth-child(4){animation-delay:.45s;}
-
-.stagger > *{
-  opacity:0;
-  transform:scale(0.3) translateY(40px);
-}
-.section.is-active .stagger > *{
-  animation: bounceIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-}
-.section.is-active .stagger > *:nth-child(1){animation-delay:.22s;}
-.section.is-active .stagger > *:nth-child(2){animation-delay:.29s;}
-.section.is-active .stagger > *:nth-child(3){animation-delay:.36s;}
-.section.is-active .stagger > *:nth-child(4){animation-delay:.43s;}
-.section.is-active .stagger > *:nth-child(5){animation-delay:.50s;}
-.section.is-active .stagger > *:nth-child(6){animation-delay:.57s;}
-.section.is-active .stagger > *:nth-child(7){animation-delay:.64s;}
-.section.is-active .stagger > *:nth-child(8){animation-delay:.71s;}
-
-@keyframes subtleBounceLoop {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-.section.is-active .stagger > .card,
-.section.is-active .stagger > .pill {
-  animation: bounceIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards, subtleBounceLoop 2.5s ease-in-out infinite;
-}
-.section.is-active .stagger > *:nth-child(1){ animation-delay: .22s, 0.8s; }
-.section.is-active .stagger > *:nth-child(2){ animation-delay: .29s, 1.0s; }
-.section.is-active .stagger > *:nth-child(3){ animation-delay: .36s, 1.2s; }
-.section.is-active .stagger > *:nth-child(4){ animation-delay: .43s, 1.4s; }
-.section.is-active .stagger > *:nth-child(5){ animation-delay: .50s, 1.6s; }
-.section.is-active .stagger > *:nth-child(6){ animation-delay: .57s, 1.8s; }
-
-/* ==========================================================
-   3. NAVEGACIÓN LATERAL (LÍNEA DE NEÓN Y DOTS)
-   ========================================================== */
-
-.dots{
-  position:fixed;right:30px;top:50%;
-  transform:translateY(-50%);
-  z-index:80;
-  display:flex;flex-direction:column;align-items:center;
-  gap:12px;padding:0 6px;
-}
-.dots::before{
-  content:'';position:absolute;top:0;bottom:0;left:50%;
-  width:2px;transform:translateX(-50%);
-  background:var(--slate);opacity:.35;z-index:-1;
-}
-
-.neon-line-fill {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 3px;
-  transform: translateX(-50%);
-  background: var(--green-bright);
-  box-shadow: 0 0 12px var(--green-bright), 0 0 22px var(--green-bright);
-  z-index: 0;
-  transition: height var(--dur) cubic-bezier(0.25, 1, 0.5, 1);
-  border-radius: 4px;
-}
-
-.dot{
-  position:relative;
-  width:16px;height:16px;border-radius:50%;
-  background:#fff;border:2px solid var(--slate);
-  transition:transform .35s var(--ease), border-color .35s var(--ease), background-color .35s var(--ease), width .35s var(--ease), height .35s var(--ease), box-shadow .35s var(--ease);
-  z-index: 2;
-}
-
-.dot.is-current {
-  width: 28px;
-  height: 28px;
-  background: var(--green-bright);
-  border-color: #ffffff;
-  box-shadow: 0 0 14px var(--green-bright), 0 0 26px var(--green-glow);
-}
-
-.dot.decor{
-  cursor:default;pointer-events:none;
-}
-.dot.nav-dot:hover{transform:scale(1.18);border-color:var(--green-mid);}
-
-.dot.nav-dot::after{
-  content:attr(data-label);
-  position:absolute;right:26px;top:50%;
-  transform:translateY(-50%) translateX(6px);
-  background:var(--green-dark);color:#fff;
-  font-size:.76rem;font-weight:600;line-height:1;
-  white-space:nowrap;padding:7px 11px;border-radius:999px;
-  opacity:0;pointer-events:none;
-  box-shadow: 0 8px 20px rgba(27,67,50,0.3);
-  transition:opacity .25s var(--ease), transform .25s var(--ease);
-}
-.dot.nav-dot:hover::after,.dot.nav-dot:focus-visible::after{opacity:1;transform:translateY(-50%) translateX(0);}
-
-@media (max-width:720px){
-  .dots{right:10px;gap:9px;}
-  .dot{width:16px;height:16px;}
-  .dot.is-current { width: 24px; height: 24px; }
-  .dot.nav-dot::after{display:none;}
-}
-
-/* ==========================================================
-   4. ELEMENTO CENTRAL FLOTANTE (GENIE / WIDGET)
-   ========================================================== */
-
-.genie{
-  position:fixed;
-  z-index:70;
-  background:#1b4332;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  box-shadow:0 20px 50px rgba(27,67,50,.4);
-  transform-origin:center center;
-  transition:
-    left 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-    top 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    bottom 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    width 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    height 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    border-radius 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    padding 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-    background-color .45s var(--ease),
-    box-shadow .45s var(--ease);
-}
-
-.genie.is-logo {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: 0 12px 30px rgba(27,67,50,.15) !important;
-  width: auto !important;
-  height: auto !important;
-  border-radius: 12px !important;
-  padding: 0 !important;
-}
-.genie.is-logo img {
-  width: 78px !important;
-  height: auto !important;
-  object-fit: contain;
-  border-radius: 10px;
-  display: block;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.genie.is-logo:hover img {
-  transform: scale(1.08) rotate(3deg);
-}
-
-.genie img{width:74%;height:74%;object-fit:contain;border-radius:14px;}
-.genie-fallback{font-family:var(--display);font-weight:800;color:#fff;font-size:1.35rem;letter-spacing:.4px;}
-
-.genie.ask{
-  background:linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
-  border: 1.5px solid rgba(82, 183, 136, 0.5);
-  border-radius:36px 36px 36px 10px;
-  padding:18px 26px 18px 22px;
-  gap:13px;
-  box-shadow: 0 15px 35px rgba(27,67,50,0.35);
-  left: 30px !important;
-  transform: translateY(-50%) !important;
-}
-
-.genie.ask:hover {
-  left: 50% !important;
-  transform: translateY(-50%) translateX(-50%) !important;
-}
-
-.genie .q-mark{
-  width:30px;height:30px;border-radius:50%;flex:none;
-  background:var(--green-bright);color:#08301f;
-  font-family:var(--display);font-weight:800;font-size:1.05rem;
-  display:grid;place-items:center;line-height:1;
-  box-shadow: 0 0 10px rgba(82,183,136,0.6);
-}
-.genie-text{
-  font-family:var(--display);
-  color:#ffffff;
-  font-size:1.05rem;font-weight:600;line-height:1.25;
-  text-align:left;
-  white-space:nowrap;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
-
-/* Sección de Cierre / Contacto fija abajo al centro */
-.genie.contact{
-  background:linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
-  border: 1.5px solid rgba(82, 183, 136, 0.5);
-  border-radius:36px;
-  padding:18px 26px 18px 22px;
-  gap:13px;
-  box-shadow: 0 15px 35px rgba(27,67,50,0.35);
-  cursor:pointer;
-  left: 50% !important;
-  top: auto !important;
-  bottom: 46px !important;
-  transform: translateX(-50%) !important;
-}
-
-.genie.contact.reveal-wa{
-  background:linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
-  box-shadow:0 20px 50px rgba(82,183,136,.55);
-  border-radius:36px;
-  left: 50% !important;
-  top: auto !important;
-  bottom: 46px !important;
-  transform: translateX(-50%) !important;
-  animation: none;
-}
-
-.genie.aladdin-travel {
-  animation: genieAladdinFlight 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
-}
-@keyframes genieAladdinFlight {
-  0%   { transform: scale(1, 1); }
-  30%  { transform: scale(0.35, 2.4); border-radius: 50px; }
-  70%  { transform: scale(1.6, 0.6); border-radius: 40px; }
-  100% { transform: scale(1, 1); }
-}
-
-.genie-wa{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  color:#fff;font-weight:700;font-size:1.02rem;white-space:nowrap;
-  font-family:var(--body);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-.genie-wa svg{width:22px;height:22px;flex:none;animation: pulseIcon 2s infinite;}
-@keyframes pulseIcon {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
-
-@media (max-width:900px){
-  .genie.ask{padding:13px 18px 13px 15px;gap:9px;border-radius:26px 26px 26px 8px; left: 15px !important;}
-  .genie.ask:hover { left: 50% !important; }
-  .genie.contact { bottom: 24px !important; padding: 13px 18px; }
-  .genie.contact.reveal-wa { bottom: 24px !important; }
-  .genie .q-mark{width:24px;height:24px;font-size:.9rem;}
-  .genie-text{font-size:.9rem;}
-  .genie.is-logo img { width: 64px !important; }
-}
-
-/* ==========================================================
-   5. SECCIÓN 0 — HERO
-   ========================================================== */
-
-.hero{
-  width:100%;height:100%;
-  display:grid;grid-template-columns:1.1fr .9fr;
-  align-items:center;gap:3vw;
-  padding:0 5vw 0 clamp(6vw,13vw,210px);
-}
-.slogan-box{
-  position:relative;
-  background:rgba(255,255,255,0.85);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(82, 183, 136, 0.3);
-  border-radius:28px;
-  padding:clamp(1.8rem,3vw,2.8rem) clamp(1.4rem,2.2vw,2.4rem);
-  box-shadow:0 30px 60px -20px rgba(27, 67, 50, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  overflow:hidden;
-}
-.slogan-box::before{
-  content:'';position:absolute;left:0;top:26px;bottom:26px;width:4px;
-  border-radius:0 4px 4px 0;
-  background:linear-gradient(var(--green-bright),var(--green-mid));
-}
-.slogan-box h1{font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:800;color:var(--green-dark);max-width:16ch;}
-.slogan-box p{margin-top:1.1rem;font-size:clamp(0.95rem,1.15vw,1.05rem);color:var(--muted);max-width:40ch;}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:1.7rem;}
-
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  padding:12px 22px;border-radius:999px;
-  font-weight:600;font-size:.93rem;line-height:1;
-  transition:transform .25s var(--ease), background-color .25s, color .25s, border-color .25s, box-shadow .3s;
-}
-.btn svg{width:18px;height:18px;flex:none;}
-
-.btn-primary{
-  background:linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
-  color:#ffffff;
-  box-shadow:0 10px 25px -5px rgba(82,183,136,0.65);
-}
-.btn-primary:hover{
-  background:linear-gradient(135deg, #61c99a 0%, #3a865f 100%);
-  transform:translateY(-3px) scale(1.02);
-  box-shadow:0 18px 35px -5px rgba(82,183,136,0.85);
-}
-
-.btn-ghost{
-  border:1.5px solid rgba(27,67,50,0.25);
-  color:var(--green-dark);
-  background:rgba(255,255,255,0.7);
-  backdrop-filter:blur(8px);
-}
-.btn-ghost:hover{
-  border-color:var(--green-bright);
-  color:var(--green-mid);
-  background:rgba(255,255,255,0.95);
-  transform:translateY(-2px);
-}
-
-.hero-right{display:flex;align-items:center;justify-content:center;perspective:1500px;}
-
-.card3d{
-  position:relative;width:280px;height:380px;
-  transform-style:preserve-3d;
-  animation:cardSpin 15s linear infinite;
-  filter: drop-shadow(0 25px 35px rgba(27,67,50,0.3));
-}
-.card3d:hover,.card3d:focus-within{animation-play-state:paused;}
-@keyframes cardSpin{
-  0%{transform:rotateY(0deg) rotateX(6deg);}
-  25%{transform:rotateY(90deg) rotateX(0deg);}
-  50%{transform:rotateY(180deg) rotateX(-6deg);}
-  75%{transform:rotateY(270deg) rotateX(0deg);}
-  100%{transform:rotateY(360deg) rotateX(6deg);}
-}
-
-.face{
-  position:absolute;inset:0;border-radius:24px;
-  background:linear-gradient(145deg, #1f2e35 0%, #121a20 60%, #0a0f13 100%);
-  border:1.5px solid rgba(82,183,136,0.5);
-  box-shadow:0 0 30px rgba(82,183,136,0.3), inset 0 0 25px rgba(82,183,136,0.2);
-  padding:2rem 1.6rem;
-  display:flex;flex-direction:column;justify-content:space-between;
-  backface-visibility:visible !important;
-  -webkit-backface-visibility:visible !important;
-  overflow:hidden;
-}
-
-.face.front{transform:rotateY(0deg);}
-.face.back{transform:rotateY(180deg);}
-
-.face .coil{position:absolute;inset:0;opacity:.45;pointer-events:none;}
-.face .coil rect{fill:none;stroke:var(--green-bright);stroke-width:1.3;filter: drop-shadow(0 0 6px var(--green-bright));}
-
-.card-head{position:relative;z-index:2;display:flex;align-items:center;gap:10px;}
-.card-logo{
-  width:38px;height:38px;border-radius:10px;flex:none;overflow:hidden;
-  background:#1d272c;border:1px solid rgba(82,183,136,.45);display:grid;place-items:center;
-}
-.card-logo img{width:100%;height:100%;object-fit:cover;}
-.card-logo span{font-family:var(--display);font-weight:800;font-size:.7rem;color:var(--green-bright);}
-.card-brand{font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--green-bright);letter-spacing:-.01em;text-shadow: 0 0 12px rgba(82,183,136,0.7);}
-
-.chip{
-  position:relative;z-index:2;width:44px;height:32px;border-radius:6px;
-  background:linear-gradient(135deg,var(--green-bright),var(--green-mid));
-  box-shadow:0 0 15px rgba(82,183,136,0.85), inset 0 0 0 1px rgba(255,255,255,0.4);
-  margin:auto 0;
-  animation: chipPulse 3s ease-in-out infinite;
-}
-@keyframes chipPulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.25); box-shadow: 0 0 20px rgba(82,183,136,1), inset 0 0 0 1px rgba(255,255,255,0.6); }
-}
-.chip::after{
-  content:'';position:absolute;inset:5px 7px;
-  background:
-    linear-gradient(to right, rgba(0,0,0,.25) 1px, transparent 1px) 0 0/8px 100%,
-    linear-gradient(to bottom, rgba(0,0,0,.25) 1px, transparent 1px) 0 0/100% 7px;
-}
-
-.card-tap{
-  position:relative;z-index:2;color:#cfe8db;font-size:.82rem;line-height:1.45;
-  background:rgba(0,0,0,0.5);padding:10px 12px;border-radius:12px;
-  border:1px solid rgba(82,183,136,0.5);
-  box-shadow: 0 0 15px rgba(82,183,136,0.2);
-  backdrop-filter: blur(5px);
-}
-.card-tap strong{display:block;color:#fff;font-family:var(--display);font-size:.92rem;margin-bottom:2px;font-weight:600;}
-
-/* ==========================================================
-   6. SECCIONES DE CONTENIDO
-   ========================================================== */
-
-.content{
-  width:100%;max-width:1140px;
-  padding:0 6vw 0 clamp(6vw,13vw,200px);
-  text-align:center;
-}
-.content h2{
-  font-size:clamp(1.5rem,2.7vw,2.3rem);
-  color:var(--green-dark);font-weight:700;
-  max-width:24ch;margin:0 auto .7rem;
-}
-.content .sub{margin:0 auto 1.8rem;max-width:52ch;color:var(--muted);font-size:.98rem;}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;}
-
-.card{
-  position:relative;
-  background:rgba(255,255,255,0.9);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border:1px solid rgba(82, 183, 136, 0.15);
-  border-radius:20px;
-  padding:1.6rem 1.4rem;
-  text-align:left;
-  box-shadow:0 15px 35px -15px rgba(27, 67, 50, 0.15);
-  transition:transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s;
-  overflow: hidden;
-}
-.card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 3px;
-  background: linear-gradient(90deg, transparent, var(--green-bright), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.card:hover{
-  transform:translateY(-8px) scale(1.02);
-  border-color:rgba(82,183,136,0.6);
-  box-shadow:0 30px 60px -20px rgba(45, 106, 79, 0.32);
-}
-.card:hover::after {
-  opacity: 1;
-}
-.card h3{color:var(--green-mid);font-size:1.04rem;margin-bottom:.5rem;font-weight:600;}
-.card p{font-size:.92rem;color:var(--muted);line-height:1.5;}
-.card .ico{
-  width:42px;height:42px;border-radius:12px;background:rgba(82,183,136,0.15);
-  display:grid;place-items:center;margin-bottom:.9rem;
-  transition: background 0.3s, transform 0.3s;
-}
-.card:hover .ico {
-  background: var(--green-bright);
-  transform: scale(1.1) rotate(5deg);
-}
-.card:hover .ico svg {
-  stroke: #fff;
-}
-.card .ico svg{width:20px;height:20px;stroke:var(--green-mid);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition: stroke 0.3s;}
-
-.pills{
-  display:flex;flex-wrap:wrap;justify-content:flex-start;gap:.65rem;max-width:960px;margin:0 auto;
-}
-.pill{
-  display:flex;align-items:center;gap:.55rem;
-  background:rgba(255,255,255,0.95);
-  border:1px solid rgba(82, 183, 136, 0.25);
-  border-radius:999px;
-  padding:.55rem 1.1rem;
-  font-size:.88rem;font-weight:600;color:var(--green-dark);
-  box-shadow:0 8px 20px -10px rgba(27, 67, 50, 0.15);
-  transition:all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.pill:hover{
-  background: var(--green-dark);
-  color: #ffffff;
-  border-color: var(--green-dark);
-  transform: translateY(-4px) scale(1.06);
-  box-shadow: 0 12px 25px -8px rgba(27,67,50,0.4);
-}
-.pill:hover .pill-icon-wrap {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.pill-icon-wrap {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(82, 183, 136, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  overflow: hidden;
-  transition: background 0.3s ease;
-}
-.pill-icon-wrap img {
-  width: 14px;
-  height: 14px;
-  object-fit: contain;
-}
-.pill-icon-wrap img:not([src]), .pill-icon-wrap img[src=""] {
-  display: none;
-}
-.pill-fallback-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green-mid);
-  display: none;
-}
-.pill-icon-wrap img:not([src]) ~ .pill-fallback-dot,
-.pill-icon-wrap img[src=""] ~ .pill-fallback-dot {
-  display: block;
-}
-
-/* ==========================================================
-   7. SECCIÓN DE CIERRE
-   ========================================================== */
-
-.closing{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:0 8vw;
-}
-.closing h2{color:var(--green-dark);font-size:clamp(1.7rem,3.4vw,2.8rem);font-weight:800;max-width:19ch;line-height:1.18;}
-.closing p{margin-top:1.1rem;color:var(--muted);max-width:44ch;}
-.closing .hero-actions{justify-content:center;margin-top:1.9rem;}
-.closing small{display:block;margin-top:1.5rem;color:#7d8d86;font-size:.82rem;}
-
-.scroll-hint{
-  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
-  z-index:60;display:flex;flex-direction:column;align-items:center;gap:6px;
-  color:var(--green-dark);font-size:.76rem;font-weight:600;
-  opacity:.75;transition:opacity .4s var(--ease);pointer-events:none;
-}
-.scroll-hint.hide{opacity:0;}
-.scroll-hint svg{width:18px;height:18px;animation:hintBounce 1.9s ease-in-out infinite;}
-@keyframes hintBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
-@media (max-width:720px){.scroll-hint{bottom:14px;font-size:.72rem;}}
-
-/* ==========================================================
-   8. ADAPTACIÓN RESPONSIVE PARA TELÉFONOS (MÓVIL)
-   ========================================================== */
-@media (max-width: 980px) {
-  html, body {
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    scroll-behavior: smooth;
-  }
-  .sections-wrap {
-    transform: none !important;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 20px 16px;
-  }
-  .section {
-    height: auto !important;
-    min-height: auto !important;
-    padding: 20px 0;
-    overflow: visible !important;
-  }
-  .reveal > *, .stagger > * {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 10px 0;
-    height: auto;
-  }
-  .hero-right {
-    order: -1;
-    margin-bottom: 10px;
-  }
-  .card3d {
-    width: 220px;
-    height: 300px;
-    margin: 0 auto;
-  }
-  .dots, .scroll-hint, .cursor-light {
-    display: none !important;
-  }
-  .genie {
-    position: static !important;
-    margin: 20px auto 0 !important;
-    transform: none !important;
-    width: 100% !important;
-    max-width: 320px;
-    border-radius: 20px !important;
-    padding: 16px !important;
-    box-shadow: 0 10px 25px rgba(27,67,50,0.15) !important;
-  }
-  .genie.is-logo {
-    display: flex !important;
-    justify-content: center;
-    background: rgba(255,255,255,0.85) !important;
-    border: 1.5px solid rgba(82,183,136,0.3) !important;
-  }
-  .genie.is-logo img {
-    width: 50px !important;
-  }
-  .content {
-    padding: 0 !important;
-    height: auto;
-  }
-  .closing {
-    padding: 20px 0;
-    height: auto;
-  }
-}
-</style>
+  <!-- ========================================== -->
+  <!-- CONFIGURACIÓN BÁSICA Y METADATOS           -->
+  <!-- ========================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Q&V Tech — Tarjetas NFC para tu negocio</title>
+  <meta name="description" content="Tarjetas NFC inteligentes de Q&V Tech: tu cliente acerca el teléfono y abre tu perfil digital con WhatsApp, menú, redes y ubicación. Sin apps, sin reimprimir.">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Iconos de la pestaña y dispositivos Apple -->
+  <link rel="preload" as="image" href="images/logo.jpg">
+  <link rel="icon" href="images/logo.jpg">
+  <link rel="apple-touch-icon" href="images/logo.jpg">
+
+  <!-- ========================================== -->
+  <!-- ETIQUETAS OPEN GRAPH (Para redes sociales) -->
+  <!-- ========================================== -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Q&V Tech — Tarjetas NFC para tu negocio">
+  <meta property="og:description" content="Un toque y tu cliente ve todo tu negocio: WhatsApp, menú, redes y ubicación.">
+  <meta property="og:image" content="images/logo.jpg">
+  <meta property="og:locale" content="es_CL">
+
+  <!-- ========================================== -->
+  <!-- FUENTES Y HOJAS DE ESTILO                  -->
+  <!-- ========================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Karla:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="css/01-base.css">
+  <link rel="stylesheet" href="css/02-fondo.css">
+  <link rel="stylesheet" href="css/03-secciones.css">
+  <link rel="stylesheet" href="css/04-navegacion.css">
+  <link rel="stylesheet" href="css/05-genie.css">
+  <link rel="stylesheet" href="css/06-hero.css">
+  <link rel="stylesheet" href="css/07-contenido.css">
+  <link rel="stylesheet" href="css/08-mejoras-visuales.css">
+  <link rel="stylesheet" href="css/09-layout-global.css">
+  <link rel="stylesheet" href="css/10-tarjeta-3d.css">
+  <link rel="stylesheet" href="css/11-border-beam.css">
+  <link rel="stylesheet" href="css/12-navegacion-logo-efectos.css">
+  <link rel="stylesheet" href="css/13-canales-y-ajustes.css">
+  <link rel="stylesheet" href="css/14-titulos-animados.css">
+  <link rel="stylesheet" href="css/15-resenas-faq.css">
+
+  <!-- Script principal -->
+  <script src="js/reloj.js" defer></script>
+  <script src="js/tarjeta-nfc.js" defer></script>
+  <script src="js/fondo.js" defer></script>
+  <script src="js/navegacion.js" defer></script>
+  <script src="js/logo-burbuja.js" defer></script>
+  <script src="js/efectos.js" defer></script>
+  <script src="js/acceso-oculto.js" defer></script>
 </head>
 <body>
 
-<div class="bg" aria-hidden="true">
-  <div class="cursor-light" id="cursorLight"></div>
-  <span class="orb orb-1"></span>
-  <span class="orb orb-2"></span>
-  <span class="orb orb-3"></span>
-  <span class="decor-circle decor-circle-top"></span>
-  <span class="decor-circle decor-circle-bottom"></span>
-  <span class="halftone ht-1"></span>
-  <span class="halftone ht-2"></span>
-  <div class="streaks" id="streaks"></div>
-</div>
-<div class="bg-veil" aria-hidden="true"></div>
+  <!-- ========================================== -->
+  <!-- FONDOS Y EFECTOS VISUALES                  -->
+  <!-- ========================================== -->
+  <div class="bg" aria-hidden="true">
+    <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i><b></b></div>
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    
+    <span class="decor-circle decor-circle-top"></span>
+    <span class="decor-circle decor-circle-bottom"></span>
+    
+    <span class="halftone ht-1"></span>
+    <span class="halftone ht-2"></span>
+    
+    <div class="streaks" id="streaks"></div>
+  </div>
+  
+  <div class="bg-veil" aria-hidden="true"></div>
 
-<!-- Barra de navegación lateral -->
-<nav class="dots" id="dots" aria-label="Navegación entre secciones">
-  <div class="neon-line-fill" id="neonLineFill" aria-hidden="true"></div>
-  <div class="dot decor" aria-hidden="true"></div>
-  <button class="dot nav-dot" data-index="0" data-label="Inicio" aria-label="Ir a Inicio"></button>
-  <button class="dot nav-dot" data-index="1" data-label="¿Por qué pasarme a NFC?" aria-label="Ir a ¿Por qué pasarme a NFC?"></button>
-  <button class="dot nav-dot" data-index="2" data-label="¿Cómo funciona?" aria-label="Ir a ¿Cómo funciona?"></button>
-  <button class="dot nav-dot" data-index="3" data-label="¿Qué incluye mi perfil?" aria-label="Ir a ¿Qué incluye mi perfil?"></button>
-  <button class="dot nav-dot" data-index="4" data-label="Tus canales" aria-label="Ir a Tus canales"></button>
-  <button class="dot nav-dot" data-index="5" data-label="Preguntas frecuentes" aria-label="Ir a Preguntas frecuentes"></button>
-  <button class="dot nav-dot" data-index="6" data-label="Contáctanos" aria-label="Ir a Contáctanos"></button>
-  <div class="dot decor" aria-hidden="true"></div>
-</nav>
+  <!-- ========================================== -->
+  <!-- NAVEGACIÓN LATERAL                         -->
+  <!-- ========================================== -->
+  <nav class="dots" id="dots" aria-label="Navegación entre secciones">
+    <div class="neon-line-fill" id="neonLineFill" aria-hidden="true"></div>
+    
+    <button class="dot nav-dot" data-index="0" data-label="Inicio" aria-label="Ir a Inicio"></button>
+    <button class="dot nav-dot" data-index="1" data-label="¿Por qué pasarme a NFC?" aria-label="Ir a ¿Por qué pasarme a NFC?"></button>
+    <button class="dot nav-dot" data-index="2" data-label="¿Cómo funciona?" aria-label="Ir a ¿Cómo funciona?"></button>
+    <button class="dot nav-dot" data-index="3" data-label="¿Qué incluye mi perfil?" aria-label="Ir a ¿Qué incluye mi perfil?"></button>
+    <button class="dot nav-dot" data-index="4" data-label="Tus canales" aria-label="Ir a Tus canales"></button>
+    <button class="dot nav-dot" data-index="5" data-label="Reseñas de clientes" aria-label="Ir a Reseñas de clientes"></button>
+    <button class="dot nav-dot" data-index="6" data-label="Preguntas frecuentes" aria-label="Ir a Preguntas frecuentes"></button>
+    <button class="dot nav-dot" data-index="7" data-label="Contáctanos" aria-label="Ir a Contáctanos"></button>
+  </nav>
 
-<!-- Elemento central / Widget interactivo -->
-<div class="genie is-logo" id="genie" aria-live="polite">
-  <img src="logo.jpg" alt="Q&V Tech" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'Q&V',className:'genie-fallback'}))">
-</div>
+  <div class="genie is-logo" id="genie" aria-live="polite">
+    <img src="images/logo.jpg" alt="Q&V Tech">
+  </div>
 
-<div class="sections-wrap" id="wrap">
+  <div class="sections-wrap" id="wrap">
 
-  <!-- ============ PUNTO 0 · INICIO ============ -->
-  <section class="section is-active" id="sec-0">
-    <div class="hero">
-      <div class="reveal">
-        <div class="slogan-box">
-          <h1>¿Quieres darle un nuevo aire a tu negocio?</h1>
-          <p>Con las tarjetas NFC de Q&amp;V Tech tu cliente acerca el teléfono y abre tu perfil digital al instante: WhatsApp, menú, redes y ubicación. Sin apps, sin descargas, sin fricción.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://wa.me/56965282117?text=Hola%20Q%26V%20Tech%2C%20quiero%20una%20tarjeta%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
-              Pide la tuya por WhatsApp
-            </a>
-            <button class="btn btn-ghost" data-goto="2" id="btnHowItWorks">Ver cómo funciona</button>
+    <!-- SECCIÓN 0: Inicio / Hero -->
+    <section class="section is-active" id="inicio">
+      <div class="hero">
+        <div class="reveal">
+          <div class="slogan-box">
+            <span class="eyebrow">Tarjetas NFC inteligentes</span>
+            <h1>Tu negocio en el celular de tu cliente, con un solo toque</h1>
+            <p>Con las tarjetas NFC de Q&amp;V Tech tu cliente acerca el teléfono y abre tu perfil digital al instante: WhatsApp, menú, redes y ubicación. Sin apps, sin descargas, sin fricción.</p>
+            
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://wa.me/56965282117?text=Hola%20Q%26V%20Tech%2C%20quiero%20una%20tarjeta%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
+                Pide la tuya por WhatsApp
+              </a>
+              <button class="btn btn-ghost" data-goto="resenas">Ver reseñas</button>
+            </div>
+            <ul class="hero-badges"><li>Sin apps</li><li>Sin permanencia</li><li>QR de respaldo</li></ul>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="qv-stage" id="qvStage" aria-label="Tarjeta NFC de Q&amp;V Tech">
+            <div class="qv-aura"></div>
+            <div class="qv-shadow" id="qvShadow"></div>
+            <div class="qv-float">
+              <div class="qv-card" id="qvCard">
+
+                <div class="qv-face qv-front" id="qvFront">
+                  <svg class="qv-circuit" viewBox="0 0 300 480" preserveAspectRatio="none" aria-hidden="true">
+                    <g id="qvC">
+                      <path d="M0 150 L96 54 L96 0"/>
+                      <path d="M0 125 L72 53 L72 0"/>
+                      <path d="M0 100 L52 48 L52 0"/>
+                      <path d="M16 190 L110 96 L110 64 L158 16 L168 0"/>
+                      <path class="pulse" d="M16 190 L110 96 L110 64 L158 16 L168 0"/>
+                      <path d="M0 220 L40 180"/>
+                      <circle cx="158" cy="16" r="3.2"/>
+                      <circle cx="40" cy="180" r="3.2"/>
+                    </g>
+                    <use href="#qvC" transform="rotate(180 150 240)"/>
+                    <path class="pulse b" d="M284 290 L190 384 L190 416 L142 464 L132 480"/>
+                  </svg>
+                  <div class="qv-logo"><span class="q">Q</span><span class="amp">&amp;</span><span class="v">V</span></div>
+                  <div class="qv-tech">TECH</div>
+                  <div class="qv-nfc"><i></i>
+                    <svg viewBox="0 0 24 24"><path d="M8 7c2.5 3 2.5 7 0 10"/><path d="M12 4.5c4 4 4 11 0 15"/><path d="M16 2c5.5 5.5 5.5 14.500 0 20"/></svg>
+                  <i></i></div>
+                </div>
+
+                <div class="qv-face qv-back" id="qvBack">
+                  <svg class="qv-circuit" viewBox="0 0 300 480" preserveAspectRatio="none" aria-hidden="true">
+                    <g id="qvD">
+                      <path d="M300 130 L204 54 L204 0"/>
+                      <path d="M300 100 L228 48 L228 0"/>
+                      <path d="M284 190 L190 96 L190 64 L142 16 L132 0"/>
+                      <path class="pulse" d="M284 190 L190 96 L190 64 L142 16 L132 0"/>
+                      <circle cx="142" cy="16" r="3.2"/>
+                    </g>
+                    <use href="#qvD" transform="rotate(180 150 240)"/>
+                  </svg>
+                  <div class="qv-mono">&amp;</div>
+                  <div class="qv-chip"></div>
+                  <div class="qv-brand-b">Q&amp;V TECH</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="hero-right">
-        <div class="card3d" tabindex="0" aria-label="Tarjeta NFC de Q&amp;V Tech">
-          <div class="face front">
-            <svg class="coil" viewBox="0 0 300 400" aria-hidden="true">
-              <rect x="16" y="16" width="268" height="368" rx="18"/>
-              <rect x="26" y="26" width="248" height="348" rx="15"/>
-              <rect x="36" y="36" width="228" height="328" rx="12"/>
+    <!-- SECCIÓN 1: ¿Por qué pasarme a NFC? -->
+    <section class="section" id="por-que-nfc">
+      <div class="content">
+        <div class="reveal">
+          <h1 class="title-why">Porque te diferencia del resto, optimiza la distribución de tu información y minimiza la dependencia de medios de impresión.</h1>
+          <p class="sub">El mismo gesto de siempre, con un resultado distinto.</p>
+        </div>
+        
+        <div class="grid stagger">
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg></span>
+            <h3>Impacto inmediato</h3>
+            <p>Te diferencias de la competencia desde el primer contacto con tu cliente.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <h3>Cero errores al compartir datos</h3>
+            <p>Tu información llega completa y correcta, sin números mal copiados ni nombres mal escritos.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></span>
+            <h3>Menos papel</h3>
+            <p>Reemplaza las tarjetas tradicionales por una solución reutilizable que no se moja ni se dobla.</p>
+          </div>
+        </div>
+        <p class="rubros-t">Pensado para negocios como</p>
+        <ul class="rubros"><li>Restaurantes y cafés</li><li>Peluquerías y estética</li><li>Profesionales independientes</li><li>Tiendas y emprendimientos</li></ul>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: ¿Cómo funciona? -->
+    <section class="section sec-how" id="como-funciona">
+      <div class="content">
+        <div class="reveal">
+          <h2>Tu cliente acerca el teléfono y su perfil se abre solo.</h2>
+          <p class="sub">Tres segundos entre tu tarjeta y su pantalla. Sin instalar nada.</p>
+        </div>
+        
+        <!-- Demo del teléfono con hora sincronizada en tiempo real -->
+        <div class="phone-demo" aria-hidden="true">
+          <div class="pd-card"><span>Q&amp;V</span><em></em></div>
+          <div class="pd-phone"><div class="pd-notch"></div>
+            <div class="pd-screen">
+              <div class="pd-time" id="liveClock">00:00<small id="liveDate">Cargando...</small></div>
+              <div class="pd-apps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="pd-notif"><b>Q&amp;V</b><span><strong>Q&amp;V Tech</strong>Toca para abrir tu perfil</span></div>
+              <u class="pd-tap"></u>
+              <div class="pd-page">
+                <div class="pd-head"><b>Q&amp;V</b><strong>Tu negocio</strong><small>Perfil digital</small></div>
+                <span class="pd-link"><img loading="lazy" decoding="async" src="images/WhatsApp.png" alt="">WhatsApp</span>
+                <span class="pd-link"><img loading="lazy" decoding="async" src="images/Instagram.png" alt="">Instagram</span>
+                <span class="pd-link"><img loading="lazy" decoding="async" src="images/Facebook.png" alt="">Facebook</span>
+                <span class="pd-link"><img loading="lazy" decoding="async" src="images/Google_Maps.png" alt="">Ubicación</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid stagger">
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+            <h3>Acerca el celular</h3>
+            <p>Tu cliente solo toca la tarjeta NFC con su teléfono. No descarga ninguna aplicación ni escribe direcciones.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/></svg></span>
+            <h3>Se abre tu perfil al instante</h3>
+            <p>Aparece un aviso en pantalla y, al tocarlo, se abre el perfil digital de tu negocio listo para explorar.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span>
+            <h3>Beneficio directo</h3>
+            <p>Generas contactos sin fricción y actualizas tu información cuando quieras, sin papel ni reimpresiones.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: ¿Qué incluye mi perfil? -->
+    <section class="section" id="perfil">
+      <div class="content">
+        <div class="reveal">
+          <h2>Tu identidad, tus enlaces y todo lo que quieras mostrar.</h2>
+          <p class="sub">No es una plantilla genérica: lo armamos con lo que de verdad usas.</p>
+        </div>
+        
+        <div class="grid stagger">
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4c0-4.4-4-8.2-9-8.2Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15.5" cy="7.5" r="1"/></svg></span>
+            <h3>Identidad visual propia</h3>
+            <p>Colores, logo y estilo de tu negocio reflejados en cada detalle del perfil.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span>
+            <h3>Enlaces directos de contacto</h3>
+            <p>WhatsApp, redes sociales, menú y ubicación, todo a un toque de distancia.</p>
+          </div>
+          <div class="card">
+            <span class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+            <h3>Funciona en cualquier teléfono</h3>
+            <p>Nativo en iPhone y Android con NFC activado. Además, cada tarjeta lleva un código QR de respaldo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: Tus canales -->
+    <section class="section sec-channels" id="canales">
+      <div class="content ch-content">
+        <div class="ch-layout">
+
+          <div class="ch-copy reveal">
+            <p class="ch-eyebrow">En la página digital</p>
+            <h2 class="ch-title"><span>Todos tus canales,</span> <em>en un solo lugar.</em></h2>
+            <p class="ch-note">Cada negocio tiene su propia configuración: se muestran solo los canales que ese negocio realmente usa.</p>
+          </div>
+
+          <div class="ch-stage">
+            <svg class="ch-orbit" viewBox="0 0 520 470" preserveAspectRatio="none" fill="none" aria-hidden="true">
+              <path id="chArc" d="M70 70C170 -4 380 -14 452 112c52 92 30 214-26 300" />
+              <path d="M26 190c-30 66-14 150 40 214" />
+              <g class="ch-sat">
+                <circle r="9" fill="#3fae58" opacity=".22"/>
+                <circle r="3.6" fill="#3fae58"/>
+                <animateMotion dur="9s" repeatCount="indefinite" calcMode="spline" keyPoints="0;1;0" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1">
+                  <mpath href="#chArc"/>
+                </animateMotion>
+              </g>
             </svg>
-            <div class="card-head">
-              <span class="card-brand">Q&amp;V Tech</span>
+            <svg class="ch-star" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4c1.6 14 7.4 21.4 26 26-18.6 4.6-24.4 12-26 26-1.6-14-7.4-21.4-26-26C22.6 25.4 28.4 18 30 4Z"/></svg>
+
+            <div class="ch-grid stagger">
+              <div class="ch-tile ch-fav">
+                <span class="ch-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="ch-ico"><svg viewBox="0 0 24 24" class="ch-spark" aria-hidden="true"><path d="M12 2c.8 5.4 3.2 8.2 9 10-5.8 1.8-8.2 4.6-9 10-.8-5.4-3.2-8.2-9-10 5.8-1.8 8.2-4.6 9-10Z"/></svg></span>
+                <span class="ch-name">Favoritos</span>
+                <span class="ch-sub">Tus canales más usados</span>
+              </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><img loading="lazy" decoding="async" src="images/WhatsApp.png" alt="WhatsApp"></span>
+              <span class="ch-badge">3</span>
+              <span class="ch-name">WhatsApp</span>
+              <span class="ch-sub">Mensajes</span>
             </div>
-            <div class="chip"></div>
-            <div class="card-tap">
-              <strong>Un toque y listo</strong>
-              Acerca tu teléfono para ver el perfil digital del negocio.
+            <div class="ch-tile">
+              <span class="ch-ico"><img loading="lazy" decoding="async" src="images/Instagram.png" alt="Instagram"></span>
+              <span class="ch-badge">12</span>
+              <span class="ch-name">Instagram</span>
+              <span class="ch-sub">Redes</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><img loading="lazy" decoding="async" src="images/Google_Maps.png" alt="Google Maps"></span>
+              <span class="ch-name">Google Maps</span>
+              <span class="ch-sub">Explora</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><img loading="lazy" decoding="async" src="images/Facebook.png" alt="Facebook"></span>
+              <span class="ch-badge">1</span>
+              <span class="ch-name">Facebook</span>
+              <span class="ch-sub">Comunidad</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><span class="ch-line"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3.2l1.6 4.2-2 1.3a11 11 0 0 0 5.7 5.7l1.3-2L19 14.8V18a2 2 0 0 1-2 2A13 13 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span></span>
+              <span class="ch-badge">1</span>
+              <span class="ch-name">Teléfono</span>
+              <span class="ch-sub">Llamadas</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><img loading="lazy" decoding="async" src="images/Tiktok.png" alt="TikTok"></span>
+              <span class="ch-name">TikTok</span>
+              <span class="ch-sub">Contenido</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><span class="ch-line"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.4 4 5.5 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.5-4-9s1.4-6.6 4-9Z"/></svg></span></span>
+              <span class="ch-name">Página web</span>
+              <span class="ch-sub">Sitios útiles</span>
+            </div>
+            <div class="ch-tile">
+              <span class="ch-ico"><span class="ch-line"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.8 7 8.2 6.2L20.2 7"/></svg></span></span>
+              <span class="ch-badge">2</span>
+              <span class="ch-name">Correo</span>
+              <span class="ch-sub">Gestión</span>
+            </div>
             </div>
           </div>
-          <div class="face back">
-            <svg class="coil" viewBox="0 0 300 400" aria-hidden="true">
-              <rect x="16" y="16" width="268" height="368" rx="18"/>
-              <rect x="26" y="26" width="248" height="348" rx="15"/>
-              <rect x="36" y="36" width="228" height="328" rx="12"/>
-            </svg>
-            <div class="card-head"><span class="card-brand">Tarjeta NFC</span></div>
-            <div class="chip"></div>
-            <div class="card-tap">
-              <strong>Siempre actualizada</strong>
-              Cambias tus datos las veces que quieras. La tarjeta sigue siendo la misma.
-            </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: Reseñas de clientes -->
+    <!-- IMPORTANTE: los textos y nombres de abajo son de ejemplo. Reemplázalos por reseñas reales de tus clientes antes de publicar. -->
+    <section class="section sec-reviews" id="resenas">
+      <div class="content">
+        <div class="reveal">
+          <h2>Lo que dicen nuestros clientes.</h2>
+          <p class="sub">La mejor forma de conocernos es ver cómo les va a otros negocios con su tarjeta.</p>
+        </div>
+
+        <div class="grid stagger">
+          <figure class="card review-card">
+            <span class="rv-stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg></span>
+            <blockquote>Mis clientes ya no anotan mi número a mano: acercan el celular y tienen todo al instante. Se ve profesional y es mucho más rápido.</blockquote>
+            <figcaption>
+              <span class="rv-avatar" aria-hidden="true">A</span>
+              <span class="rv-who"><strong>Nombre del cliente</strong><small>Rubro del negocio</small></span>
+            </figcaption>
+          </figure>
+          <figure class="card review-card">
+            <span class="rv-stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg></span>
+            <blockquote>Cambié mi información sin reimprimir nada. El perfil se actualiza y la misma tarjeta sigue funcionando.</blockquote>
+            <figcaption>
+              <span class="rv-avatar" aria-hidden="true">B</span>
+              <span class="rv-who"><strong>Nombre del cliente</strong><small>Rubro del negocio</small></span>
+            </figcaption>
+          </figure>
+          <figure class="card review-card">
+            <span class="rv-stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg></span>
+            <blockquote>Lo que más me gustó fue que no necesitan instalar nada. Abren el perfil y me escriben directo por WhatsApp.</blockquote>
+            <figcaption>
+              <span class="rv-avatar" aria-hidden="true">C</span>
+              <span class="rv-who"><strong>Nombre del cliente</strong><small>Rubro del negocio</small></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: Preguntas frecuentes -->
+    <section class="section sec-faq" id="faq">
+      <div class="content">
+        <div class="reveal">
+          <h2>Estas son las que más nos preguntan.</h2>
+          <p class="sub">Si te queda otra, nos escribes por WhatsApp y te respondemos.</p>
+        </div>
+        
+        <div class="grid stagger">
+          <div class="card">
+            <h3>¿Funciona en cualquier teléfono?</h3>
+            <p>Sí, en la mayoría de los iPhone y Android con NFC activado. Por si acaso, cada tarjeta incluye un QR de respaldo.</p>
+          </div>
+          <div class="card">
+            <h3>¿El cliente necesita una app?</h3>
+            <p>No. El perfil se abre en el navegador que ya viene en el teléfono, igual que cualquier página.</p>
+          </div>
+          <div class="card">
+            <h3>¿Tiene costos ocultos?</h3>
+            <p>No. El valor de tu tarjeta y tu perfil digital queda claro desde el principio.</p>
+          </div>
+          <div class="card">
+            <h3>¿Hay permanencia obligatoria?</h3>
+            <p>No te atamos a contratos forzosos: tú decides cuándo actualizar, sumar tarjetas o renovar.</p>
+          </div>
+          <div class="card">
+            <h3>¿Sirve para mi rubro?</h3>
+            <p>Si, El sistema se adapta a diversos rubros como por ejemplo en restaurantes ofrece menús, reservas y reseñas; para profesionales independientes y prestadores de servicios, etc.</p>
+          </div>
+          <div class="card">
+            <h3>¿Por qué confiar en nosotros?</h3>
+            <p>Porque somos claros desde el primer mensaje: te damos el valor exacto, sin costos ocultos ni permanencia, y cada tarjeta incluye un QR de respaldo. Además, siempre puedes escribirnos por WhatsApp para resolver tus dudas.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ PUNTO 1 · ¿Por qué pasarme a NFC? ============ -->
-  <section class="section" id="sec-1">
-    <div class="content">
-      <div class="reveal">
-        <h1 style="color: var(--green-dark);">Porque te diferencia del resto, optimiza la distribución de tu información y minimiza la dependencia de medios de impresión.</h1>
-        <p class="sub">El mismo gesto de siempre, con un resultado distinto.</p>
+    <!-- SECCIÓN 7: Contáctanos -->
+    <section class="section" id="contacto">
+      <div class="closing reveal">
+        <h2>¿Te convencimos? Aprovecha y hazte socio junto a nosotros.</h2>
+        <p>Cuéntanos el nombre de tu negocio y qué quieres mostrar. Te respondemos con una propuesta y el valor exacto.</p>
+        <p class="cta-note">Sin formularios ni esperas: escríbenos por WhatsApp y te enviamos el valor exacto de tu tarjeta y tu perfil.</p>
+        
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://wa.me/56965282117?text=Hola%20Q%26V%20Tech%2C%20quiero%20una%20tarjeta%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
+            +56 9 6528 2117
+          </a>
+          <button class="btn btn-ghost" data-goto="0">Volver al inicio</button>
+        </div>
+        
+        <small>© <span id="year">2026</span> Q&amp;V Tech · Tarjetas NFC para negocios</small>
       </div>
-      <div class="grid stagger">
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.6 6.1.7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6.1-.7L12 3Z"/></svg></span>
-          <h3>Impacto inmediato</h3>
-          <p>Te diferencias de la competencia desde el primer contacto con tu cliente.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <h3>Cero errores al compartir datos</h3>
-          <p>Tu información llega completa y correcta, sin números mal copiados ni nombres mal escritos.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></span>
-          <h3>Menos papel</h3>
-          <p>Reemplaza las tarjetas tradicionales por una solución reutilizable que no se moja ni se dobla.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ PUNTO 2 · ¿Cómo funciona? ============ -->
-  <section class="section" id="sec-2">
-    <div class="content">
-      <div class="reveal">
-        <h2>Tu cliente acerca el teléfono y su perfil se abre solo.</h2>
-        <p class="sub">Tres segundos entre tu tarjeta y su pantalla. Sin instalar nada.</p>
-      </div>
-      <div class="grid stagger">
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
-          <h3>Acerca el celular</h3>
-          <p>Tu cliente solo toca la tarjeta NFC con su teléfono. No descarga ninguna aplicación ni escribe direcciones.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/></svg></span>
-          <h3>Se abre tu perfil al instante</h3>
-          <p>Aparece un aviso en pantalla y, al tocarlo, se abre el perfil digital de tu negocio listo para explorar.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span>
-          <h3>Beneficio directo</h3>
-          <p>Generas contactos sin fricción y actualizas tu información cuando quieras, sin papel ni reimpresiones.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
 
-  <!-- ============ PUNTO 3 · ¿Qué incluye mi perfil? ============ -->
-  <section class="section" id="sec-3">
-    <div class="content">
-      <div class="reveal">
-        <h2>Tu identidad, tus enlaces y todo lo que quieras mostrar.</h2>
-        <p class="sub">No es una plantilla genérica: lo armamos con lo que de verdad usas.</p>
-      </div>
-      <div class="grid stagger">
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg></span>
-          <h3>Identidad visual propia</h3>
-          <p>Colores, logo y estilo de tu negocio reflejados en cada detalle del perfil.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span>
-          <h3>Enlaces directos de contacto</h3>
-          <p>WhatsApp, redes sociales, menú y ubicación, todo a un toque de distancia.</p>
-        </div>
-        <div class="card">
-          <span class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-          <h3>Funciona en cualquier teléfono</h3>
-          <p>Nativo en iPhone y Android con NFC activado. Además, cada tarjeta lleva un código QR de respaldo.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="scroll-hint" id="hint" aria-hidden="true">
+    <span>Desliza</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  </div>
 
-  <!-- ============ PUNTO 4 · ¿Y mis redes? ============ -->
-  <section class="section" id="sec-4">
-    <div class="content" style="max-width: 960px;">
-      <div style="text-align: left; margin-bottom: 1rem;">
-        <p style="color: var(--green-mid); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem;">En la página digital</p>
-        <h2 style="text-align: left; max-width: 100%; font-size: clamp(1.4rem, 2.4vw, 2.1rem);">Todos tus canales, en un solo lugar.</h2>
-      </div>
-      <div class="pills stagger" style="justify-content: flex-start;">
-        <span class="pill"><span class="pill-icon-wrap"><img src="Whatsapp.png" alt="WhatsApp" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>WhatsApp</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Instagram.png" alt="Instagram" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Instagram</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="facebook.png" alt="Facebook" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Facebook</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Tiktok.png" alt="TikTok" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>TikTok</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Google_Maps.png" alt="Google Maps" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Google Maps</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Pagina_Web.png" alt="Página web" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Página web</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="Telefono.png" alt="Teléfono" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Teléfono</span>
-        <span class="pill"><span class="pill-icon-wrap"><img src="correo.png" alt="Correo" onerror="this.style.display='none'"><span class="pill-fallback-dot"></span></span>Correo</span>
-      </div>
-      <div style="margin-top: 1.2rem; text-align: left;">
-        <p style="color: var(--muted); font-size: 0.88rem; font-style: italic;">Cada negocio tiene su propia configuración: se muestran solo los canales que ese negocio realmente usa.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PUNTO 5 · Preguntas Frecuentes ============ -->
-  <section class="section" id="sec-5">
-    <div class="content">
-      <div class="reveal">
-        <h2>Estas son las que más nos preguntan.</h2>
-        <p class="sub">Si te queda otra, nos escribes por WhatsApp y te respondemos.</p>
-      </div>
-      <div class="grid stagger">
-        <div class="card">
-          <h3>¿Funciona en cualquier teléfono?</h3>
-          <p>Sí, en la gran mayoría de iPhone y Android con NFC activado. Por seguridad, cada tarjeta incluye un QR impreso de respaldo.</p>
-        </div>
-        <div class="card">
-          <h3>¿El cliente necesita descargar una app?</h3>
-          <p>No. El perfil se abre directamente en el navegador web del teléfono, de forma rápida y sin fricciones.</p>
-        </div>
-        <div class="card">
-          <h3>¿Tiene costos ocultos o mensualidades?</h3>
-          <p>No. El valor de tu tarjeta y la configuración de tu perfil digital es transparente desde el primer momento.</p>
-        </div>
-        <div class="card">
-          <h3>¿Hay permanencia obligatoria?</h3>
-          <p>Ninguna. Tú tienes el control absoluto para actualizar tus enlaces o sumar nuevas tarjetas cuando lo necesites.</p>
-        </div>
-        <div class="card">
-          <h3>¿Sirve para mi tipo de negocio?</h3>
-          <p>¡Totalmente! Se adapta a restaurantes (menús y reservas), profesionales independientes, comercios locales y prestadores de servicios.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PUNTO 6 · ¿Conversamos? ============ -->
-  <section class="section" id="sec-6">
-    <div class="closing reveal">
-      <h2>¿Te convencimos? Aprovecha y hazte socio junto a nosotros.</h2>
-      <p>Cuéntanos el nombre de tu negocio y qué quieres mostrar. Te respondemos con una propuesta y el valor exacto.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://wa.me/56965282117?text=Hola%20Q%26V%20Tech%2C%20quiero%20una%20tarjeta%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>
-          +56 9 6528 2117
-        </a>
-        <button class="btn btn-ghost" data-goto="0" id="btnBackHome">Volver al inicio</button>
-      </div>
-      <small>© <span id="year">2026</span> Q&amp;V Tech · Tarjetas NFC para negocios</small>
-    </div>
-  </section>
-
-</div>
-
-<div class="scroll-hint" id="hint" aria-hidden="true">
-  <span>Desliza</span>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-</div>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Q&V Tech","description":"Tarjetas NFC inteligentes y perfiles digitales para negocios en Chile.","telephone":"+56965282117","areaServed":"CL","logo":"logo.jpg"}
-</script>
-
-<script>
-/* ---------- fondo: genera los trazos diagonales ---------- */
-(function(){
-  var host = document.getElementById('streaks');
-  var styles = ['solid','pale','line','solid','dark','pale','dot','solid','pale','line'];
-  var widths = [28,15,36,10,22,46,13,1,32,18,40,9,26,16,52,12];
-
-  for (var r = 0; r < 7; r++){
-    var track = document.createElement('div');
-    track.className = 'track t' + (r + 1);
-
-    var half = document.createElement('span');
-    half.style.display = 'flex';
-    half.style.alignItems = 'center';
-    half.style.gap = '3.5vmax';
-
-    for (var i = 0; i < 12; i++){
-      var bar = document.createElement('i');
-      var kind = styles[(i + r * 3) % styles.length];
-      bar.className = kind;
-      if (kind !== 'dot'){
-        bar.style.width = widths[(i + r * 5) % widths.length] + 'vmin';
-      }
-      half.appendChild(bar);
-    }
-    track.appendChild(half);
-    track.appendChild(half.cloneNode(true));
-    track.style.animationDelay = (-r * 5) + 's';
-    host.appendChild(track);
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Q&V Tech",
+    "description": "Tarjetas NFC inteligentes y perfiles digitales para negocios en Chile.",
+    "telephone": "+56965282117",
+    "areaServed": "CL",
+    "logo": "images/logo.jpg"
   }
-})();
+  </script>
 
-/* ---------- Efecto de luz interactiva que sigue el cursor ---------- */
-(function(){
-  var light = document.getElementById('cursorLight');
-  if(!light) return;
-  window.addEventListener('mousemove', function(e){
-    light.style.left = e.clientX + 'px';
-    light.style.top = e.clientY + 'px';
-  }, {passive: true});
-})();
-
-/* ---------- navegación + logo estilizado y limpio ---------- */
-(function(){
-  'use strict';
-
-  var wrap         = document.getElementById('wrap');
-  var sections     = document.querySelectorAll('.sections-wrap .section');
-  var dots         = Array.prototype.slice.call(document.querySelectorAll('.dot.nav-dot'));
-  var neonLineFill = document.getElementById('neonLineFill');
-  var genie        = document.getElementById('genie');
-  var hint         = document.getElementById('hint');
-  var total        = sections.length;
-
-  var current = 0, isAnimating = false, idleSeconds = 0;
-  var DUR = 920;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) DUR = 80;
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  var LOGO = '<img src="logo.jpg" alt="Q&V Tech" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{textContent:\'Q&V\',className:\'genie-fallback\'}))">';
-
-  var preguntas = [
-    '',
-    '¿Por qué pasarme a NFC?',
-    '¿Cómo funciona?',
-    '¿Qué incluye mi perfil?',
-    '¿Y todas mis redes?',
-    'Preguntas frecuentes',
-    '¿Conversamos?'
-  ];
-
-  var waHTML =
-    '<a class="genie-wa" href="https://wa.me/56965282117?text=Hola%20Q%26V%20Tech%2C%20quiero%20una%20tarjeta%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">' +
-      '<svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.42-1.36a9.9 9.9 0 0 0 4.62 1.14h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.8-4.17-4.94-4.37-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36h.56c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.27.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.21 1.38.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.3Z"/></svg>' +
-      '<span>+56 9 6528 2117</span>' +
-    '</a>';
-
-  function updateGeniePosition(prevIndex, nextIndex){
-    if (window.innerWidth <= 980) return;
-    genie.classList.remove('reveal-wa');
-    genie.classList.toggle('ask', nextIndex > 0 && nextIndex < total - 1);
-    genie.classList.toggle('contact', nextIndex === total - 1);
-    genie.classList.toggle('is-logo', nextIndex === 0);
-
-    var isCrossingHome = (prevIndex === 0 || nextIndex === 0);
-    if (isCrossingHome && !reduce) {
-      genie.classList.remove('aladdin-travel');
-      void genie.offsetWidth;
-      genie.classList.add('aladdin-travel');
-      setTimeout(function(){
-        genie.classList.remove('aladdin-travel');
-      }, DUR);
-    }
-
-    if (nextIndex === 0) {
-      genie.style.left = '48px';
-      genie.style.top = '30px';
-      genie.style.bottom = 'auto';
-      genie.style.transform = 'none';
-      genie.innerHTML = LOGO;
-    } else if (nextIndex === total - 1) {
-      genie.style.left = '50%';
-      genie.style.top = 'auto';
-      genie.style.bottom = window.innerWidth > 900 ? '46px' : '24px';
-      genie.style.transform = 'translateX(-50%)';
-      genie.innerHTML = '<span class="q-mark">?</span><span class="genie-text">' + preguntas[nextIndex] + '</span>';
-    } else {
-      genie.style.left = '';
-      genie.style.top = '50%';
-      genie.style.bottom = 'auto';
-      genie.style.transform = 'translateY(-50%)';
-      genie.innerHTML = '<span class="q-mark">?</span><span class="genie-text">' + preguntas[nextIndex] + '</span>';
-    }
-  }
-
-  function updateIndicator(prevIndex, nextIndex){
-    if (window.innerWidth <= 980) return;
-    var nextDot = dots[nextIndex];
-    if (!nextDot) return;
-
-    dots.forEach(function(d, idx) {
-      d.classList.toggle('is-current', idx === nextIndex);
-    });
-
-    var targetY = nextDot.offsetTop + (nextDot.offsetHeight / 2);
-    if (neonLineFill) {
-      neonLineFill.style.height = targetY + 'px';
-    }
-  }
-
-  function moveWrap(){
-    if (window.innerWidth <= 980) return;
-    var unit = CSS.supports('height','100dvh') ? 'dvh' : 'vh';
-    wrap.style.transform = 'translate3d(0,-' + (current * 100) + unit + ',0)';
-  }
-
-  function goTo(index){
-    if (window.innerWidth <= 980) {
-      var targetSec = document.getElementById('sec-' + index);
-      if (targetSec) {
-        targetSec.scrollIntoView({ behavior: 'smooth' });
-      }
-      return;
-    }
-    var next = ((index % total) + total) % total;
-    if (isAnimating || next === current) return;
-    isAnimating = true;
-
-    sections[current].classList.remove('is-active');
-    var prevIndex = current;
-    current = next;
-    sections[current].classList.add('is-active');
-
-    moveWrap();
-    updateIndicator(prevIndex, current);
-    updateGeniePosition(prevIndex, current);
-
-    hint.classList.toggle('hide', current !== 0);
-    idle();
-
-    setTimeout(function(){ isAnimating = false; }, DUR);
-  }
-
-  function idle(){ idleSeconds = 0; }
-
-  var wheelLock = false;
-  window.addEventListener('wheel', function(e){
-    if (window.innerWidth <= 980) return;
-    if (Math.abs(e.deltaY) < 6) return;
-    if (wheelLock || isAnimating) return;
-    wheelLock = true;
-    goTo(current + (e.deltaY > 0 ? 1 : -1));
-    setTimeout(function(){ wheelLock = false; }, DUR + 40);
-  }, { passive:true });
-
-  window.addEventListener('keydown', function(e){
-    if (window.innerWidth <= 980) return;
-    var k = e.key;
-    if (k === 'ArrowDown' || k === 'PageDown' || k === ' '){ e.preventDefault(); goTo(current + 1); }
-    else if (k === 'ArrowUp' || k === 'PageUp'){ e.preventDefault(); goTo(current - 1); }
-    else if (k === 'Home'){ e.preventDefault(); goTo(0); }
-    else if (k === 'End'){ e.preventDefault(); goTo(total - 1); }
-  });
-
-  var touchY = null, touchX = null;
-  window.addEventListener('touchstart', function(e){
-    if (window.innerWidth <= 980) return;
-    touchY = e.touches[0].clientY; touchX = e.touches[0].clientX;
-  }, { passive:true });
-
-  window.addEventListener('touchend', function(e){
-    if (window.innerWidth <= 980) return;
-    if (touchY === null) return;
-    var dy = touchY - e.changedTouches[0].clientY;
-    var dx = touchX - e.changedTouches[0].clientX;
-    touchY = null;
-    if (Math.abs(dy) < 55 || Math.abs(dx) > Math.abs(dy)) return;
-
-    var box = sections[current].querySelector('.content, .hero');
-    if (box && box.scrollHeight > box.clientHeight + 4){
-      var atTop = box.scrollTop <= 2;
-      var atEnd = box.scrollTop + box.clientHeight >= box.scrollHeight - 2;
-      if ((dy > 0 && !atEnd) || (dy < 0 && !atTop)) return;
-    }
-    goTo(current + (dy > 0 ? 1 : -1));
-  }, { passive:true });
-
-  dots.forEach(function(d){
-    d.addEventListener('click', function(){
-      var idx = parseInt(d.dataset.index, 10);
-      goTo(idx);
-    });
-  });
-  document.querySelectorAll('[data-goto]').forEach(function(b){
-    b.addEventListener('click', function(){
-      var idx = parseInt(b.dataset.goto, 10);
-      goTo(idx);
-    });
-  });
-
-  function showWa(){
-    if (window.innerWidth <= 980) return;
-    if (current === total - 1) {
-      genie.classList.add('reveal-wa');
-      genie.style.left = '50%';
-      genie.style.top = 'auto';
-      genie.style.bottom = window.innerWidth > 900 ? '46px' : '24px';
-      genie.style.transform = 'translateX(-50%)';
-      genie.innerHTML = waHTML;
-    }
-  }
-
-  function hideWa(){
-    if (window.innerWidth <= 980) return;
-    if (current === total - 1) {
-      if (!genie.classList.contains('reveal-wa')) return;
-      genie.classList.remove('reveal-wa');
-      genie.style.left = '50%';
-      genie.style.top = 'auto';
-      genie.style.bottom = window.innerWidth > 900 ? '46px' : '24px';
-      genie.style.transform = 'translateX(-50%)';
-      genie.innerHTML = '<span class="q-mark">?</span><span class="genie-text">' + preguntas[total-1] + '</span>';
-    }
-  }
-
-  genie.addEventListener('mouseenter', showWa);
-  genie.addEventListener('mouseleave', hideWa);
-  genie.addEventListener('focusin', showWa);
-  genie.addEventListener('click', showWa);
-  document.addEventListener('click', function(e){ if (!genie.contains(e.target) && current === total - 1) hideWa(); });
-
-  setInterval(function(){
-    if (window.innerWidth <= 980) return;
-    idleSeconds++;
-    if (idleSeconds >= 60 && current < total - 1){ goTo(current + 1); }
-  }, 1000);
-
-  ['mousemove','keydown','click','touchstart','wheel'].forEach(function(ev){
-    window.addEventListener(ev, idle, { passive:true });
-  });
-
-  var rt;
-  window.addEventListener('resize', function(){
-    clearTimeout(rt);
-    rt = setTimeout(function(){
-      if (window.innerWidth <= 980) return;
-      wrap.style.transition = 'none';
-      moveWrap(); updateGeniePosition(current, current);
-      if (dots[current]) {
-        var tY = dots[current].offsetTop + (dots[current].offsetHeight / 2);
-        if (neonLineFill) neonLineFill.style.height = tY + 'px';
-      }
-      requestAnimationFrame(function(){ wrap.style.transition = ''; });
-    }, 140);
-  });
-
-  if (window.innerWidth > 980) {
-    updateGeniePosition(0, 0);
-    if (dots[0]) {
-      var initY = dots[0].offsetTop + (dots[0].offsetHeight / 2);
-      if (neonLineFill) neonLineFill.style.height = initY + 'px';
-      dots[0].classList.add('is-current');
-    }
-  }
-})();
-</script>
 </body>
 </html>

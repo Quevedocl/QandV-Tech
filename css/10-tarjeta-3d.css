@@ -1,0 +1,110 @@
+/* =====================================================
+   TARJETA 3D (prefijo qv-)
+   ===================================================== */
+/* ----- TARJETA 3D (prefijo qv-) ----- */
+.hero-right{overflow:visible;}
+.qv-stage{
+  --w:min(280px,30vh);
+  --h:calc(var(--w)*1.6);
+  --r:9%/5.6%;
+  --neon:#6dff7a;
+  position:relative;width:100%;height:calc(var(--h) + 90px);
+  display:grid;place-items:center;perspective:1400px;
+  font-family:'Jost',system-ui,sans-serif;
+}
+.qv-stage *{box-sizing:border-box;}
+.qv-aura{
+  position:absolute;width:min(520px,100%);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(109,255,122,.28) 0%,rgba(109,255,122,.08) 40%,transparent 68%);
+  filter:blur(30px);animation:qvPulse 5s ease-in-out infinite;pointer-events:none;
+}
+@keyframes qvPulse{50%{transform:scale(1.12);opacity:.7}}
+.qv-float{position:relative;transform-style:preserve-3d;animation:qvFloat 6s ease-in-out infinite}
+@keyframes qvFloat{50%{transform:translateY(-14px)}}
+.qv-card{
+  position:relative;width:var(--w);height:var(--h);
+  transform-style:preserve-3d;will-change:transform;cursor:grab;touch-action:pan-y;
+}
+.qv-card.drag{cursor:grabbing}
+.qv-layer,.qv-face{position:absolute;inset:0;border-radius:var(--r)}
+.qv-layer{
+  background:linear-gradient(#1f7a35,#0f3d1e);
+  box-shadow:0 0 14px rgba(109,255,122,.55);
+}
+.qv-face{
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;
+  container-type:size;
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(46,140,70,.35),transparent 60%),
+    linear-gradient(160deg,#0f3d1e 0%,#0a2a15 45%,#05170c 100%);
+  border:1px solid rgba(109,255,122,.75);
+  box-shadow:inset 0 0 30px rgba(109,255,122,.25),inset 0 0 2px rgba(191,245,196,.9);
+  padding:0;display:block;
+}
+.qv-front{transform:translateZ(6px)}
+.qv-back{transform:rotateY(180deg) translateZ(6px)}
+.qv-face::after{
+  content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(115deg,transparent calc(var(--s,50%) - 18%),rgba(190,255,200,.34) var(--s,50%),transparent calc(var(--s,50%) + 18%));
+}
+.qv-face::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.4) 100%);
+}
+svg.qv-circuit{position:absolute;inset:0;width:100%;height:100%;opacity:1}
+.qv-circuit path{fill:none;stroke:var(--neon);stroke-width:.9;stroke-linecap:round;opacity:.75}
+.qv-circuit .pulse{stroke:#d9ffdc;stroke-width:1.4;stroke-dasharray:14 190;animation:qvRun 3.6s linear infinite;filter:drop-shadow(0 0 3px var(--neon));opacity:1}
+.qv-circuit .pulse.b{animation-delay:-1.8s}
+@keyframes qvRun{to{stroke-dashoffset:-204}}
+.qv-circuit circle{fill:#06170c;stroke:var(--neon);stroke-width:1}
+.qv-logo{
+  position:absolute;left:0;right:0;top:36%;text-align:center;
+  font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;line-height:1;
+  font-size:30cqw;letter-spacing:-.02em;
+}
+.qv-logo .q{
+  font-style:italic;
+  background:linear-gradient(135deg,#e9ffe9 0%,#4c5a54 55%,#3fae58 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));
+}
+.qv-logo .amp{font-size:.55em;font-style:italic;color:#7be08a;margin:0 .02em;filter:drop-shadow(0 0 8px rgba(109,255,122,.6))}
+.qv-logo .v{color:#f4fff4;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.qv-tech{
+  position:absolute;left:0;right:0;top:57.5%;text-align:center;
+  font-weight:300;font-size:6.6cqw;letter-spacing:.7em;padding-left:.7em;color:#0f3d1e;
+}
+.qv-nfc{position:absolute;left:0;right:0;top:66%;display:flex;align-items:center;justify-content:center;gap:5cqw}
+.qv-nfc i{display:block;width:17cqw;height:1px;background:linear-gradient(90deg,transparent,var(--neon))}
+.qv-nfc i:last-child{transform:scaleX(-1)}
+.qv-nfc svg{width:8cqw;height:8cqw;overflow:visible}
+.qv-nfc path{fill:none;stroke:var(--neon);stroke-width:2;stroke-linecap:round;animation:qvWave 2s ease-in-out infinite}
+.qv-nfc path:nth-child(2){animation-delay:.2s}.qv-nfc path:nth-child(3){animation-delay:.4s}
+@keyframes qvWave{0%,100%{opacity:.25}50%{opacity:1}}
+.qv-mono{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;
+  font-size:88cqw;color:rgba(109,255,122,.07);
+}
+.qv-chip{
+  position:absolute;left:12cqw;top:30cqw;width:20cqw;height:15cqw;border-radius:2.2cqw;
+  background:linear-gradient(135deg,#d8ffdc,#6fd47e 50%,#2f8a43);
+  box-shadow:0 0 14px rgba(109,255,122,.5);margin:0;
+}
+.qv-chip::before,.qv-chip::after{content:"";position:absolute;background:rgba(5,23,12,.55);inset:auto}
+.qv-chip::before{left:0;right:0;top:50%;height:1px}
+.qv-chip::after{top:0;bottom:0;left:50%;width:1px}
+.qv-brand-b{
+  position:absolute;left:0;right:0;bottom:15cqw;text-align:center;
+  font-weight:300;font-size:6cqw;letter-spacing:.55em;padding-left:.55em;color:#4c5a54;
+}
+.qv-shadow{
+  position:absolute;left:50%;top:calc(50% + var(--h)/2 + 30px);
+  width:calc(var(--w)*1.1);height:30px;transform:translateX(-50%);
+  background:radial-gradient(ellipse,rgba(45,106,79,.45),rgba(0,0,0,0) 70%);filter:blur(10px);pointer-events:none;
+}
+@media (max-width:980px){
+  .qv-stage{--w:min(150px,21vh);}
+}
+@media (prefers-reduced-motion:reduce){.qv-float,.qv-aura,.qv-circuit .pulse,.qv-nfc path{animation:none}}
+

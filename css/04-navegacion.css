@@ -1,0 +1,69 @@
+/* =====================================================
+   NAVEGACIÓN LATERAL: puntos y línea (base)
+   ===================================================== */
+.dots{
+  position:fixed;right:30px;top:50%;
+  transform:translateY(-50%);
+  z-index:80;
+  display:flex;flex-direction:column;align-items:center;
+  gap:18px;padding:0 6px;
+}
+.dots::before{
+  content:'';position:absolute;top:0;bottom:0;left:50%;
+  width:2px;transform:translateX(-50%);
+  background:var(--slate);opacity:.35;z-index:-1;
+}
+
+.neon-line-fill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: var(--green-bright);
+  box-shadow: 0 0 10px var(--green-bright), 0 0 18px var(--green-bright);
+  z-index: 0;
+  transition: height var(--dur) cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 4px;
+}
+
+.dot{
+  position:relative;
+  width:16px;height:16px;border-radius:50%;
+  background:#fff;border:2px solid var(--slate);
+  transition:transform .35s var(--ease), border-color .35s var(--ease), background-color .35s var(--ease), width .35s var(--ease), height .35s var(--ease), box-shadow .35s var(--ease);
+  z-index: 2;
+}
+
+.dot.is-current {
+  width: 28px;
+  height: 28px;
+  background: var(--green-bright);
+  border-color: #ffffff;
+  box-shadow: 0 0 12px var(--green-bright), 0 0 22px var(--green-glow);
+}
+
+.dot.decor{
+  cursor:default;pointer-events:none;
+}
+.dot.nav-dot:hover{transform:scale(1.18);border-color:var(--green-mid);}
+
+.dot.nav-dot::after{
+  content:attr(data-label);
+  position:absolute;right:26px;top:50%;
+  transform:translateY(-50%) translateX(6px);
+  background:var(--green-dark);color:#fff;
+  font-size:.76rem;font-weight:600;line-height:1;
+  white-space:nowrap;padding:7px 11px;border-radius:999px;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s var(--ease), transform .25s var(--ease);
+}
+.dot.nav-dot:hover::after,.dot.nav-dot:focus-visible::after{opacity:1;transform:translateY(-50%) translateX(0);}
+
+@media (max-width:720px){
+  .dots{right:10px;gap:12px;}
+  .dot{width:16px;height:16px;}
+  .dot.is-current { width: 24px; height: 24px; }
+  .dot.nav-dot::after{display:none;}
+}
+

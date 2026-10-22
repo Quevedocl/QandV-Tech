@@ -1,0 +1,47 @@
+/* =====================================================
+   BASE: variables, reset y tipografía
+   ===================================================== */
+
+:root{
+  --white:#ffffff;
+  --green-dark:#0f3d1e;
+  --green-mid:#1d6b2f;
+  --green-bright:#3fae58;
+  --green-soft:#8fe79a;
+  --green-glow:rgba(109,255,122,.55);
+  --slate:#2f3e46;
+  --ink:#16211d;
+  --muted:#4c5a54;
+  --line:rgba(15,61,30,.13);
+
+  --display:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --body:'Karla', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --ease:cubic-bezier(.65,0,.35,1);
+  --dur:.55s;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html,body{
+  height:100%;
+  overflow:hidden;
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+}
+
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.1;font-weight:700;}
+::selection{background:var(--green-bright);color:#fff;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;}
+:focus-visible{outline:2.5px solid var(--green-bright);outline-offset:4px;border-radius:6px;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+
