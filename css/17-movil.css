@@ -162,8 +162,9 @@
   }
   .hero::before,.hero::after{display:none;}
   .hero-right{margin-left:0 !important;order:-1;flex:none;}
-  .qv-stage{--w:84px;height:calc(var(--h) + 8px);}
-  .qv-aura{width:min(220px,100%);}
+  /* La tarjeta ocupa el espacio que sobra: crece en pantallas altas y se achica en las cortas */
+  .qv-stage{--w:clamp(64px,calc((100dvh - 470px) / 1.75),150px);height:calc(var(--h) + 16px);}
+  .qv-aura{width:min(300px,100%);}
   .qv-shadow{display:none;}
   .slogan-box{padding:1rem 1rem 1rem 1.2rem;border-radius:22px;}
   .slogan-box h1{font-size:clamp(1.3rem,6.2vw,1.55rem);line-height:1.12;max-width:none;}
@@ -176,7 +177,6 @@
   /* resto de secciones: no pasan por debajo de los puntos laterales */
   .content,.sec-channels .ch-content,.closing{padding-right:46px;padding-bottom:calc(env(safe-area-inset-bottom) + 90px);}
 }
-@media (max-width:720px) and (orientation:portrait) and (max-height:700px){
-  .qv-stage{--w:54px;}
+@media (max-width:720px) and (orientation:portrait) and (max-height:600px){
   .slogan-box p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
 }
