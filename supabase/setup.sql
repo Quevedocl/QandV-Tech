@@ -1,18 +1,54 @@
--- Pega esto en Supabase > SQL Editor > Run (una sola vez)
-create table if not exists clientes (
+-- Q&V Clientes · configuración de Supabase (se puede ejecutar varias veces sin romper nada)
+-- Seguridad: solo los correos de la tabla "admins" pueden crear/editar/borrar. El público solo LEE clientes activos.
+
+create table if not exists public.admins (
+  email text primary key check (email = lower(email)),
+  created_at timestamptz default now()
+);
+alter table public.admins enable row level security;
+
+create or replace function public.is_admin() returns boolean
+language sql stable security definer set search_path = '' as $$
+  select exists (select 1 from public.admins a where a.email = lower(auth.jwt() ->> 'email'));
+$$;
+
+drop policy if exists "admins read admins" on public.admins;
+create policy "admins read admins" on public.admins for select to authenticated using ((select public.is_admin()));
+
+-- >>> CAMBIA ESTE CORREO por el tuyo (el mismo con el que entras al panel) <<<
+insert into public.admins (email) values (lower('TU_CORREO@ejemplo.cl')) on conflict do nothing;
+
+create table if not exists public.clientes (
   id uuid primary key default gen_random_uuid(),
   creado timestamptz default now(), actualizado timestamptz default now(),
-  slug text unique not null, nombre text not null, logo_url text,
-  whatsapp text, whatsapp_mensaje text, telefono text, correo text,
+  slug text unique not null check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$' and char_length(slug) between 2 and 40),
+  nombre text not null check (char_length(nombre) between 1 and 160),
+  logo_url text, whatsapp text, whatsapp_mensaje text, telefono text, correo text,
   instagram text, facebook text, tiktok text, web text,
-  direccion text, maps_url text, horarios jsonb, activo boolean default true
+  direccion text, maps_url text,
+  horarios jsonb check (horarios is null or jsonb_typeof(horarios) = 'object'),
+  activo boolean default true
 );
-alter table clientes enable row level security;
-create policy "publico lee activos" on clientes for select to anon using (activo = true);
-create policy "dueno todo" on clientes for all to authenticated using (true) with check (true);
+alter table public.clientes enable row level security;
 
-insert into storage.buckets (id, name, public) values ('logos','logos',true) on conflict do nothing;
-create policy "logos publicos" on storage.objects for select using (bucket_id = 'logos');
-create policy "dueno sube logos" on storage.objects for insert to authenticated with check (bucket_id = 'logos');
-create policy "dueno edita logos" on storage.objects for update to authenticated using (bucket_id = 'logos');
-create policy "dueno borra logos" on storage.objects for delete to authenticated using (bucket_id = 'logos');
+drop policy if exists "publico lee clientes activos" on public.clientes;
+create policy "publico lee clientes activos" on public.clientes for select to anon using (activo = true);
+drop policy if exists "admins leen clientes" on public.clientes;
+create policy "admins leen clientes" on public.clientes for select to authenticated using ((select public.is_admin()));
+drop policy if exists "admins crean clientes" on public.clientes;
+create policy "admins crean clientes" on public.clientes for insert to authenticated with check ((select public.is_admin()));
+drop policy if exists "admins editan clientes" on public.clientes;
+create policy "admins editan clientes" on public.clientes for update to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+drop policy if exists "admins borran clientes" on public.clientes;
+create policy "admins borran clientes" on public.clientes for delete to authenticated using ((select public.is_admin()));
+
+-- Logos (bucket público para leer; solo admins suben)
+insert into storage.buckets (id, name, public) values ('client-logos', 'client-logos', true) on conflict do nothing;
+drop policy if exists "admins upload logos" on storage.objects;
+create policy "admins upload logos" on storage.objects for insert to authenticated with check (bucket_id = 'client-logos' and (select public.is_admin()));
+drop policy if exists "admins update logos" on storage.objects;
+create policy "admins update logos" on storage.objects for update to authenticated using (bucket_id = 'client-logos' and (select public.is_admin())) with check (bucket_id = 'client-logos' and (select public.is_admin()));
+drop policy if exists "admins delete logos" on storage.objects;
+create policy "admins delete logos" on storage.objects for delete to authenticated using (bucket_id = 'client-logos' and (select public.is_admin()));
+drop policy if exists "admins list logos" on storage.objects;
+create policy "admins list logos" on storage.objects for select to authenticated using (bucket_id = 'client-logos' and (select public.is_admin()));

@@ -227,12 +227,12 @@
 
 .rubros-t{margin-top:1.6rem;text-align:center;color:#4c5a54;font-size:.9rem}
 .rubros{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:.7rem}
-.rubros li{padding:.5rem 1rem;border-radius:99px;font-weight:600;font-size:.88rem;color:#4c5a54;background:rgba(255,255,255,.08);border:1px solid rgba(160,255,190,.45);backdrop-filter:blur(6px)}
+.rubros li{padding:.5rem 1rem;border-radius:99px;font-weight:600;font-size:.88rem;color:#4c5a54;background:rgba(255,255,255,.6);border:1px solid rgba(160,255,190,.45);}
 .ch-tile:hover{translate:0 -6px;box-shadow:0 18px 36px -12px rgba(109,255,122,.6)}
 .ch-tile{transition:translate .3s,box-shadow .3s}
 .closing .cta-note{font-size:.95rem;max-width:46ch;color:#4c5a54!important}
 
-.section.is-active .grid.stagger > .card{animation:bounceIn .8s cubic-bezier(.215,.61,.355,1) var(--d,.25s) forwards,cardFloat 3.6s ease-in-out calc(var(--d,.25s) + .9s) infinite alternate,cardGlow 3s ease-in-out calc(var(--d,.25s) + .9s) infinite alternate}
+.section.is-active .grid.stagger > .card{animation:bounceIn .8s cubic-bezier(.215,.61,.355,1) var(--d,.25s) forwards,cardFloat 3.6s ease-in-out calc(var(--d,.25s) + .9s) infinite alternate;box-shadow:0 16px 36px -12px rgba(63,255,140,.45)}
 .grid.stagger > .card:nth-child(2){--d:.32s}.grid.stagger > .card:nth-child(3){--d:.39s}
 .card{overflow:hidden}
 .card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.85) 50%,transparent 62%);transform:translateX(-130%);animation:cardShine 5s ease-in-out infinite;animation-delay:calc(var(--d,.25s) * 8)}

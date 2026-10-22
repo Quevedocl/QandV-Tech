@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title id="pageTitle">Perfil — Q&amp;V Tech</title>
 <meta name="theme-color" content="#1b4332">
-<link rel="icon" href="logo.jpg">
-<link rel="apple-touch-icon" href="logo.jpg">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="images/logo.jpg">
+<link rel="apple-touch-icon" href="images/logo.jpg">
  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -222,7 +223,7 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
 </main>
  
 <footer>
-  <span class="badge"><img src="logo.jpg" alt="" onerror="this.style.display='none'">Tarjeta NFC por <b>Q&amp;V Tech</b></span>
+  <span class="badge"><img src="images/logo.jpg" alt="" onerror="this.style.display='none'">Tarjeta NFC por <b>Q&amp;V Tech</b></span>
 </footer>
  
 <script>
@@ -427,7 +428,10 @@ footer{margin-top:30px;text-align:center;position:relative;z-index:1;}
  
   var params = new URLSearchParams(window.location.search);
   var id = params.get('id');
-  var legacy = params.get('d');
+  /* Los enlaces antiguos ?d=... mostraban cualquier dato escrito en la URL (se podían falsificar). Quedan apagados.
+     Si ya tienes tarjetas grabadas con ese formato, cambia a true. */
+  var PERMITIR_ENLACES_ANTIGUOS = false;
+  var legacy = PERMITIR_ENLACES_ANTIGUOS ? params.get('d') : null;
  
   if(id){
     if(UUID_RE.test(id)){ loadById(id); }

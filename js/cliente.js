@@ -1,12 +1,18 @@
 /* Perfil del cliente: ?c=slug  ·  animación de entrada Q&V + enlaces con efecto "inflar" */
 (function () {
+  /* Ruta base del sitio: funciona igual desde /cliente/ que desde la raíz (antes las imágenes se buscaban en cliente/images/) */
+  var BASE = '../';
+  try { BASE = new URL('../', document.currentScript.src).href; } catch (e) {}
   var h = QV.h, page = document.getElementById('page'), sp = document.getElementById('splash');
-  var slug = (new URLSearchParams(location.search).get('c') || '').toLowerCase(), t0 = Date.now(), key = 'qv_splash_' + slug;
-  var visto = false; try { visto = !!sessionStorage.getItem(key); } catch (e) {}
+  var qs = new URLSearchParams(location.search), preview = !!qs.get('preview'), intro = !!qs.get('intro');
+  var slug = (qs.get('c') || '').toLowerCase(), t0 = Date.now(), key = 'qv_splash_' + slug;
+  var visto = preview && !intro; try { visto = visto || (!preview && !!sessionStorage.getItem(key)); } catch (e) {}
+  var hecho = false;
   function cerrar() { sp.classList.add('out'); page.classList.add('ready'); setTimeout(function () { sp.remove(); }, 1000); }
   function listo() {
+    if (hecho) return; hecho = true;
     if (visto) { sp.remove(); page.classList.add('ready'); return; }
-    try { sessionStorage.setItem(key, 1); } catch (e) {}
+    if (!preview) try { sessionStorage.setItem(key, 1); } catch (e) {}
     setTimeout(cerrar, Math.max(0, 2600 - (Date.now() - t0)));
   }
   sp.addEventListener('click', cerrar);
@@ -14,7 +20,7 @@
 
   function tile(l, i) {
     var wa = l.id === 'whatsapp', a = h('a', { class: 'tile' + (wa ? ' wide wa' : ''), href: l.href }, [
-      h('span', { class: 't-i' }, [l.img ? h('img', { src: 'images/' + l.img, alt: '' }) : QV.svg(l.svg)]),
+      h('span', { class: 't-i' }, [l.img ? h('img', { src: BASE + 'images/' + l.img, alt: '' }) : QV.svg(l.svg)]),
       h('span', {}, [h('span', { class: 't-n', text: l.nombre }), h('span', { class: 't-s', text: l.sub })])
     ]);
     a.addEventListener('pointerdown', function () { a.classList.add('press'); });
@@ -29,6 +35,7 @@
   }
 
   function pintar(c) {
+    page.textContent = '';
     document.title = c.nombre + ' — Q&V Tech';
     var kids = [h('div', { class: 'cl-logo' }, [c.logo_url ? h('img', { src: c.logo_url, alt: c.nombre }) : h('b', { text: (c.nombre || '?').trim().charAt(0).toUpperCase() })]), h('h1', { text: c.nombre })];
     var est = QV.estado(c.horarios);
@@ -45,11 +52,20 @@
       }))));
     }
     if ((c.direccion || '').trim()) kids.push(h('div', { class: 'card' }, [h('h2', { text: 'Dirección' }), h('p', { class: 'dir', text: c.direccion })]));
-    kids.push(h('a', { class: 'cl-foot', href: 'index.html' }, [h('img', { src: 'images/logo.jpg', alt: 'Q&V Tech' }), 'Tu perfil digital, por Q&V Tech']));
+    kids.push(h('a', { class: 'cl-foot', href: BASE + 'index.html' }, [h('img', { src: BASE + 'images/logo.jpg', alt: 'Q&V Tech' }), 'Tu perfil digital, por Q&V Tech']));
     kids.forEach(function (k) { page.appendChild(k); });
     listo();
   }
   window.addEventListener('pageshow', function () { document.querySelectorAll('.tile.sel').forEach(function (t) { t.classList.remove('sel'); }); });
+  /* Vista previa dentro del panel maestro: recibe los datos por postMessage (solo del mismo sitio) */
+  if (preview) {
+    window.addEventListener('message', function (e) {
+      if (e.origin !== location.origin || e.source !== window.parent || !e.data || e.data.tipo !== 'qv-preview' || !e.data.cliente) return;
+      pintar(e.data.cliente);
+    });
+    if (window.parent !== window) window.parent.postMessage({ tipo: 'qv-listo' }, location.origin);
+    return;
+  }
   if (!slug) return vacio('Perfil no indicado', 'Falta el nombre del perfil en el enlace.');
   QV.datos.obtenerPublico(slug).then(function (c) { c ? pintar(c) : vacio('No encontramos este perfil', 'El enlace puede estar mal escrito o el perfil está desactivado.'); })
     .catch(function () { vacio('Sin conexión', 'Revisa tu internet y vuelve a escanear.'); });

@@ -95,9 +95,9 @@
     QV.DIAS.forEach(function (x) { d.horarios[x.k] = Object.assign({ abierto: false, desde: '09:00', hasta: '18:00' }, d.horarios[x.k]); });
 
     var frame = h('iframe', { src: '../cliente/?preview=1', title: 'Vista previa del perfil' }), tm;
-    function enviar() { if (frame.contentWindow) frame.contentWindow.postMessage({ tipo: 'qv-preview', cliente: d }, '*'); }
+    function enviar() { if (frame.contentWindow) frame.contentWindow.postMessage({ tipo: 'qv-preview', cliente: d }, location.origin); }
     function cambio() { clearTimeout(tm); tm = setTimeout(enviar, 120); }
-    window.onmessage = function (e) { if (e.source === frame.contentWindow && e.data && e.data.tipo === 'qv-listo') enviar(); };
+    window.onmessage = function (e) { if (e.origin === location.origin && e.source === frame.contentWindow && e.data && e.data.tipo === 'qv-listo') enviar(); };
 
     function inp(k, attrs, ayuda, label) {
       var i = h('input', Object.assign({ type: 'text', value: d[k] || '' }, attrs));

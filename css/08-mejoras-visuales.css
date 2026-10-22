@@ -115,8 +115,7 @@
 
 /* ---- Indicador "Desliza" y cierre ---- */
 .scroll-hint{
-  padding:8px 16px 6px;border-radius:999px;background:rgba(255,255,255,.72);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:8px 16px 6px;border-radius:999px;background:rgba(255,255,255,.9);
   border:1px solid var(--line);box-shadow:0 12px 26px -16px rgba(15,61,30,.55);
 }
 .closing .btn-primary{padding:15px 26px;font-size:1rem;}

@@ -28,7 +28,7 @@ body .content .sub{
 body .ch-title span,body .ch-title em{width:fit-content;}
 body .content .sub{--tg-c:#2aa84d;--tg-d:#47d673;}
 body .slogan-box h1,body .content h1,body .content h2,body .closing h2,body h2.ch-title{
-  filter:drop-shadow(0 0 10px rgba(63,255,122,.28));
+  /* sin filter: drop-shadow aquí obligaba a repintar el título en cada cuadro de la animación */
 }
 @keyframes qvTitleShine{from{background-position:0% 50%;}to{background-position:100% 50%;}}
 @media (prefers-reduced-motion:reduce){

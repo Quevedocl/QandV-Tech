@@ -1,0 +1,21 @@
+/* =====================================================
+   RENDIMIENTO
+   Las 8 secciones están apiladas en la misma página, así que antes TODAS
+   sus animaciones infinitas (brillos, pulsos, sombras, tarjeta 3D…)
+   corrían a la vez aunque solo se vea una. Eso saturaba el navegador y
+   hacía que el fondo se pegara. Ahora solo anima la sección visible.
+   ===================================================== */
+.section:not(.is-active),
+.section:not(.is-active) *,
+.section:not(.is-active) *::before,
+.section:not(.is-active) *::after{
+  animation-play-state:paused !important;
+}
+
+/* Pestaña oculta o ventana en segundo plano: todo el fondo en pausa */
+html.qv-pausa .bg *,
+html.qv-pausa .bg *::before{animation-play-state:paused !important;}
+
+@media (prefers-reduced-motion:reduce){
+  .track,.orb,.decor-circle,.halftone::before{animation:none !important;}
+}

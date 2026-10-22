@@ -16,6 +16,7 @@
     var l=document.createElement('div');
     l.className='qv-layer';
     l.style.transform='translateZ('+i+'px)';
+    if(i===0) l.style.boxShadow='0 0 14px rgba(109,255,122,.55)'; /* solo una capa brilla: 11 sombras era carísimo */
     card.insertBefore(l,card.firstChild);
   }
 

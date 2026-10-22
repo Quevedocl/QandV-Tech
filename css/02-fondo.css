@@ -83,13 +83,14 @@
 
 .streaks{
   position:absolute;
-  width:260%;height:260%;
-  left:-80%;top:-80%;
-  transform:rotate(-35deg);
+  left:50%;top:50%;
+  /* ancho y alto los fija js/fondo.js según la pantalla */
+  transform:translate(-50%,-50%) rotate(-35deg);
   display:flex;flex-direction:column;justify-content:center;
-  gap:3.5vmax;
 }
-.track{display:flex;align-items:center;gap:3.5vmax;width:max-content;will-change:transform;}
+/* El espacio entre piezas va dentro de cada mitad (ver fondo.js): así -50% es exacto y el bucle no salta */
+.track{display:flex;align-items:center;width:max-content;flex:none;will-change:transform;animation:slide 60s linear infinite;backface-visibility:hidden;}
+.track .half{display:flex;align-items:center;flex:none;}
 .track i{
   display:block;
   height:5.5vmax;
@@ -110,13 +111,6 @@
   opacity:0.45;
 }
 
-.t1{animation:slide 38s linear infinite;}
-.t2{animation:slide 50s linear infinite;}
-.t3{animation:slide 32s linear infinite;}
-.t4{animation:slide 58s linear infinite;}
-.t5{animation:slide 42s linear infinite;}
-.t6{animation:slide 48s linear infinite;}
-.t7{animation:slide 34s linear infinite;}
 @keyframes slide{
   from{transform:translate3d(0,0,0);}
   to{transform:translate3d(-50%,0,0);}
