@@ -1,0 +1,223 @@
+/* =====================================================
+   CELULAR (vertical) — REDISEÑO DE LA PÁGINA PRINCIPAL
+   -----------------------------------------------------
+   TODO está dentro de @media (max-width:720px) and (orientation:portrait),
+   así que el computador y la tablet NO cambian en nada.
+
+   Idea: cada sección cabe completa en una pantalla (sin perder información):
+   - tarjetas compactas en fila (icono a la izquierda, texto a la derecha)
+   - "Cómo funciona" vuelve a mostrar la demo animada del teléfono (en miniatura)
+   - reseñas en carrusel horizontal (deslizar de lado)
+   - preguntas frecuentes en acordeón (toca para abrir)
+   - la burbuja de abajo tiene su propia franja: ya no tapa el contenido
+   - se muestran las insignias "Sin apps · Sin permanencia · QR de respaldo"
+   ===================================================== */
+/* Elementos que crea js/movil.js: invisibles fuera del celular */
+.rv-dots,.rv-hint{display:none;}
+
+@media (max-width:720px) and (orientation:portrait){
+
+  :root{
+    --m-left:16px;          /* margen izquierdo */
+    --m-right:38px;         /* espacio reservado para los puntos laterales */
+    --m-top:calc(env(safe-area-inset-top) + 20px);
+    --m-bottom:calc(env(safe-area-inset-bottom) + 84px);   /* franja de la burbuja */
+  }
+
+  /* ---------- Puntos laterales: más finos, pegados al borde ---------- */
+  .dots{right:4px;gap:9px;padding:0 2px;}
+  .dot.nav-dot,.dot.nav-dot.is-current{width:10px;height:10px;}
+  .dot.nav-dot.is-current{width:13px;height:13px;}
+  #dots{padding:26px 6px;}
+
+  /* ---------- Burbuja inferior: compacta y siempre debajo del contenido ---------- */
+  .genie:not(.is-logo){
+    padding:8px 14px 8px 8px;gap:8px;
+    max-width:calc(100vw - 62px);
+  }
+  .genie .q-mark{width:24px;height:24px;font-size:.88rem;}
+  .genie-text{font-size:.84rem;}
+
+  /* ---------- Contenedores de cada sección ---------- */
+  .content,
+  .sec-channels .ch-content{
+    padding:var(--m-top) var(--m-right) var(--m-bottom) var(--m-left);
+    display:flex;flex-direction:column;justify-content:flex-start;
+    /* difumina el borde inferior solo cuando hay más por ver */
+    -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 78px),transparent calc(100% - 66px));
+            mask-image:linear-gradient(to bottom,#000 calc(100% - 78px),transparent calc(100% - 66px));
+  }
+  .content::before,.content::after{content:none;}
+  .content > :first-child,.ch-content > :first-child{margin-top:auto;}
+  .content > :last-child,.ch-content > :last-child{margin-bottom:auto;}
+
+  /* Títulos más contenidos para ganar espacio */
+  .content h2{
+    font-size:clamp(1.3rem,6vw,1.55rem);line-height:1.12;margin:0 auto .45rem;max-width:none;
+  }
+  .content h2::after,.content h1::after{width:44px;height:3px;margin-top:.6rem;}
+  .title-why{font-size:clamp(1.08rem,5vw,1.25rem) !important;line-height:1.18;max-width:none;}
+  .content .sub{font-size:.9rem;line-height:1.4;margin:0 auto .9rem;}
+
+  /* ---------- Tarjetas: fila compacta (icono | texto) ---------- */
+  .grid{gap:.55rem;}
+  .grid.stagger > .card,
+  .section.is-active .grid.stagger > .card{
+    /* sin flote ni brillo móvil: no se pisan entre sí ni se cortan */
+    animation:bounceIn .7s cubic-bezier(.215,.61,.355,1) var(--d,.25s) forwards !important;
+    translate:none;
+    box-shadow:0 10px 24px -14px rgba(15,61,30,.45);
+  }
+  .card::after{display:none;}
+  .card .ico{animation:none;}
+
+  .card{
+    display:grid;grid-template-columns:38px 1fr;column-gap:.8rem;align-items:start;
+    padding:.8rem .9rem;border-radius:16px;
+  }
+  .card .ico{grid-row:1 / span 2;margin:0;width:38px;height:38px;border-radius:12px;}
+  .card h3{font-size:.98rem;margin:0 0 .15rem;line-height:1.2;}
+  .card p{font-size:.84rem;line-height:1.38;margin:0;}
+  /* tarjetas sin icono (preguntas): una sola columna */
+  .card:not(:has(.ico)){display:block;}
+
+  /* ---------- 1 · Por qué NFC: rubros como chips en dos columnas ---------- */
+  .rubros-t{margin-top:1rem;font-size:.82rem;}
+  .rubros{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.5rem;}
+  .rubros li{
+    font-size:.78rem;padding:.45rem .5rem;text-align:center;line-height:1.2;
+    animation:none;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- 2 · Cómo funciona: demo del teléfono en miniatura ---------- */
+  .sec-how .content{display:flex;}
+  .sec-how .grid{grid-template-columns:1fr !important;}
+  .sec-how .card{padding:.8rem .9rem !important;}
+  .sec-how .card p{font-size:.82rem;line-height:1.34;}
+  .sec-how .sub,.sec-how h2{margin-left:auto;margin-right:auto;}
+  .sec-how h2::after{margin-left:auto;margin-right:auto;}
+  .sec-how .sub{margin-bottom:.4rem;}
+  .phone-demo{
+    display:flex;                       /* antes estaba oculto en celular */
+    width:290px;height:430px;
+    margin:-122px auto -122px;          /* el espacio real = 430 × 0.40 */
+    transform:scale(.40);transform-origin:center center;
+    pointer-events:none;
+    flex:none;
+  }
+  /* En pantallas bajitas no cabe: se oculta solo ahí */
+  @media (max-height:780px){
+    .phone-demo{display:none;}
+  }
+
+  /* ---------- 4 · Canales ---------- */
+  .ch-layout{gap:.9rem;}
+  .ch-eyebrow{font-size:.68rem;margin-bottom:.5rem;}
+  .ch-title{font-size:clamp(1.55rem,7.4vw,1.9rem);}
+  .ch-note{margin-top:.5rem;font-size:.8rem;max-width:none;}
+  .ch-stage{padding:.2rem;}
+  .ch-grid{transform:none;gap:.5rem;}
+  .ch-tile,
+  .ch-tile:nth-child(n){rotate:0deg;}
+  .ch-tile{min-height:92px;padding:.65rem .6rem;border-radius:16px;}
+  .ch-ico img,.ch-line,.ch-spark{width:30px;height:30px;}
+  .ch-name{font-size:.8rem;white-space:normal;}
+  .ch-sub{font-size:.66rem;}
+  .ch-fav .ch-sub{display:none;}      /* "Tus canales más usados" no cabe en una celda */
+  .ch-arrow{top:.5rem;right:.5rem;width:22px;height:22px;}
+  .ch-arrow svg{width:11px;height:11px;}
+  .ch-badge{top:.45rem;right:.45rem;min-width:20px;height:20px;font-size:.66rem;}
+  .ch-star{display:none;}
+  /* sin flote vertical en celular (no se pisan entre sí) */
+  .section.is-active .ch-grid.stagger > .ch-tile.ch-fav{
+    animation:bounceIn .8s cubic-bezier(.215,.61,.355,1) var(--d) both !important;
+  }
+  .section.is-active .ch-grid.stagger > .ch-tile:not(.ch-fav){
+    animation:bounceIn .8s cubic-bezier(.215,.61,.355,1) var(--d) both !important;
+  }
+
+  /* ---------- 5 · Reseñas: carrusel horizontal ---------- */
+  .sec-reviews .grid{
+    display:flex !important;flex-direction:row;gap:.7rem;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    margin:0 calc(var(--m-right) * -1) 0 calc(var(--m-left) * -1);
+    padding:.3rem var(--m-right) .6rem var(--m-left);
+    scroll-padding-left:var(--m-left);
+    scrollbar-width:none;
+  }
+  .sec-reviews .grid::-webkit-scrollbar{display:none;}
+  .sec-reviews .review-card{
+    flex:0 0 min(84%,310px);scroll-snap-align:start;
+    display:flex;flex-direction:column;gap:.7rem;padding:1rem;
+  }
+  .review-card blockquote{font-size:.9rem;line-height:1.5;}
+  .rv-stars svg{width:16px;height:16px;}
+  /* indicador "1 · 2 · 3" (lo crea js/movil.js) */
+  .rv-dots{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:.2rem;}
+  .rv-dots i{width:7px;height:7px;border-radius:50%;background:rgba(15,61,30,.22);transition:width .25s,background .25s;}
+  .rv-dots i.on{width:20px;border-radius:5px;background:var(--green-bright);}
+  .rv-hint{display:block;text-align:center;font-size:.72rem;color:var(--muted);margin-top:.35rem;}
+
+  /* ---------- 6 · Preguntas frecuentes: acordeón ---------- */
+  .sec-faq .grid{gap:.45rem;}
+  .sec-faq .card{padding:.75rem .9rem;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .sec-faq .card h3{
+    display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+    font-size:.95rem;margin:0;
+  }
+  .sec-faq .card h3::after{
+    content:'';flex:none;width:9px;height:9px;margin-right:3px;
+    border-right:2.2px solid var(--green-mid);border-bottom:2.2px solid var(--green-mid);
+    transform:rotate(45deg) translateY(-2px);transition:transform .25s;
+  }
+  .sec-faq .card.is-open h3::after{transform:rotate(-135deg) translateY(-1px);}
+  .sec-faq .card p{display:none;margin-top:.5rem;font-size:.86rem;line-height:1.45;}
+  .sec-faq .card.is-open p{display:block;animation:faqIn .25s ease-out;}
+  .sec-faq .card.is-open{border-color:rgba(63,174,88,.55);}
+  @keyframes faqIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+
+  /* ---------- 7 · Cierre ---------- */
+  .closing{
+    padding:var(--m-top) var(--m-right) var(--m-bottom) var(--m-left);
+    justify-content:flex-start;
+  }
+  .closing::before,.closing::after{content:'';display:block;flex:1 0 0;}
+  .closing h2{font-size:clamp(1.45rem,6.6vw,1.75rem);max-width:none;}
+  .closing p{font-size:.9rem;margin-top:.8rem;line-height:1.45;}
+  .closing .cta-note{font-size:.84rem;}
+  .closing .hero-actions{margin-top:1.2rem;}
+  .closing .btn-primary{padding:14px 18px !important;font-size:1rem !important;}
+  .closing small{margin-top:1rem;font-size:.74rem;}
+
+  /* ---------- 0 · Portada: se recuperan las insignias ---------- */
+  .hero{
+    padding:calc(env(safe-area-inset-top) + 58px) var(--m-right) var(--m-bottom) var(--m-left);
+    gap:10px;
+  }
+  .qv-stage{--w:clamp(70px,calc((100dvh - 560px) / 1.75),150px);}
+  .slogan-box{padding:1rem 1rem 1rem 1.2rem;}
+  .slogan-box h1{font-size:clamp(1.3rem,6.2vw,1.55rem);}
+  .slogan-box p{font-size:.86rem;line-height:1.42;}
+  .hero-badges{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem .55rem;
+    margin-top:.7rem;font-size:.7rem;
+  }
+  .hero-badges li::before{width:16px;height:16px;font-size:.56rem;}
+  .hero .hero-actions .btn-ghost{min-height:42px;}
+}
+
+/* Móvil vertical de pantalla corta (iPhone SE, etc.): la portada compacta */
+@media (max-width:720px) and (orientation:portrait) and (max-height:700px){
+  .hero{padding-top:calc(env(safe-area-inset-top) + 52px);gap:6px;}
+  .hero-badges{display:none;}
+  .slogan-box p{-webkit-line-clamp:3;}
+  .content h2{font-size:1.25rem;}
+  .title-why{font-size:1rem !important;}
+  .content .sub{margin-bottom:.6rem;font-size:.85rem;}
+  .card{padding:.6rem .75rem;}
+  .card h3{font-size:.9rem;}
+  .card p{font-size:.78rem;line-height:1.32;}
+  .rubros-t{margin-top:.6rem;}
+  .rubros li{padding:.3rem .4rem;font-size:.72rem;}
+}
