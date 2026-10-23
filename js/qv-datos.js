@@ -48,9 +48,17 @@
     /* Lectura pública (la usa la página del cliente) */
     obtenerPublico: function (slug) {
       if (!remoto) return Promise.resolve(leer().filter(function (c) { return c.slug === slug && c.activo !== false; })[0] || null);
-      return fetch(URL_ + '/rest/v1/clientes?select=*&limit=1&activo=eq.true&slug=eq.' + encodeURIComponent(slug), { headers: { apikey: KEY } })
-        .then(function (r) { if (!r.ok) throw new Error('red'); return r.json(); })
-        .then(function (a) { return a[0] || null; });
+      /* Pide UN solo perfil mediante la función segura get_cliente (la lista completa de clientes ya no es pública).
+         Si la función aún no existe en Supabase, usa el método anterior para no romper nada. */
+      var antiguo = function () {
+        return fetch(URL_ + '/rest/v1/clientes?select=*&limit=1&activo=eq.true&slug=eq.' + encodeURIComponent(slug), { headers: { apikey: KEY } })
+          .then(function (r) { if (!r.ok) throw new Error('red'); return r.json(); })
+          .then(function (a) { return a[0] || null; });
+      };
+      return fetch(URL_ + '/rest/v1/rpc/get_cliente', { method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_slug: String(slug || '') }) })
+        .then(function (r) { if (!r.ok) throw new Error('rpc'); return r.json(); })
+        .then(function (a) { return (Array.isArray(a) ? a[0] : a) || null; })
+        .catch(function (e) { return e && e.message === 'rpc' ? antiguo() : Promise.reject(e); });
     },
 
     /* Tema de festividad de la página principal (tabla site_config, clave "tema") */
