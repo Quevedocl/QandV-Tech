@@ -3,10 +3,10 @@
   var h = QV.h, app = document.getElementById('app'), tt = document.getElementById('toast'), D = QV.datos, tm;
   function toast(m) { tt.textContent = m; tt.classList.add('on'); clearTimeout(tm); tm = setTimeout(function () { tt.classList.remove('on'); }, 2400); }
   function limpiar() { app.innerHTML = ''; window.scrollTo(0, 0); }
-  function url(slug) { return new URL('cliente.html?c=' + slug, location.href).href; }
+  function url(slug) { return new URL('../cliente/?c=' + slug, location.href).href; }
   function campo(l, id, v, o) { o = o || {}; return h('label', { class: o.full ? 'full' : '' }, [l, h('input', { type: o.type || 'text', id: id, value: v || '', placeholder: o.ph || '', autocomplete: 'off' }), o.hint ? h('span', { class: 'hint', text: o.hint }) : null]); }
   function cabecera(s) {
-    return h('div', { class: 'ad-top' }, [h('img', { src: 'images/logo.jpg', alt: 'Q&V' }), h('div', {}, [h('h1', { text: 'Panel de clientes' }), h('small', { text: s.email + (D.remoto ? '' : ' · modo demostración') })]), h('span', { class: 'sp' }),
+    return h('div', { class: 'ad-top' }, [h('img', { src: '../images/logo.jpg', alt: 'Q&V' }), h('div', {}, [h('h1', { text: 'Panel de clientes' }), h('small', { text: s.email + (D.remoto ? '' : ' · modo demostración') })]), h('span', { class: 'sp' }),
       h('button', { class: 'btn2 g', text: 'Salir', onclick: function () { D.salir().then(login); } })]);
   }
 
@@ -17,7 +17,7 @@
       ev.preventDefault(); e.textContent = '';
       D.entrar(em.querySelector('input').value.trim(), pw.querySelector('input').value).then(function (s) { panel(s); }).catch(function (x) { e.textContent = x.message; });
     } }, [em, pw, e, h('button', { class: 'btn2', type: 'submit', text: 'Entrar' })]);
-    app.appendChild(h('div', { class: 'panel login' }, [h('img', { src: 'images/logo.jpg', alt: 'Q&V Tech' }), h('h1', { text: 'Acceso privado' }), D.remoto ? null : h('p', { class: 'hint', text: 'Modo demostración: usa cualquier correo y la clave "demo".' }), f]));
+    app.appendChild(h('div', { class: 'panel login' }, [h('img', { src: '../images/logo.jpg', alt: 'Q&V Tech' }), h('h1', { text: 'Acceso privado' }), D.remoto ? null : h('p', { class: 'hint', text: 'Modo demostración: usa cualquier correo y la clave "demo".' }), f]));
   }
 
   function panel(s) {
@@ -71,7 +71,7 @@
     } });
     var prev = h('button', { class: 'btn2 g', type: 'button', text: 'Vista previa', onclick: function () {
       if (!elegido) return; var id = elegido === 'auto' ? QVTemas.resolver({ modo: 'auto' }) : elegido;
-      window.open(new URL('index.html?tema=' + id, location.href).href, '_blank', 'noopener');
+      window.open(new URL('../?tema=' + id, location.href).href, '_blank', 'noopener');
     } });
     function pintar() {
       tiles.forEach(function (b) { var on = b._v === elegido; b.classList.toggle('sel', on); b.setAttribute('aria-checked', on ? 'true' : 'false'); });
@@ -114,7 +114,7 @@
       a.addEventListener('input', function () { x.desde = a.value; }); b.addEventListener('input', function () { x.hasta = b.value; });
       row.appendChild(h('label', {}, [cb, d.n])); row.appendChild(a); row.appendChild(b); return row;
     });
-    var nom = campo('Nombre del negocio', 'nombre', c.nombre, { full: true }), slugF = campo('Enlace del perfil', 'slug', c.slug, { full: true, hint: 'Se usa en la dirección: cliente.html?c=este-nombre' });
+    var nom = campo('Nombre del negocio', 'nombre', c.nombre, { full: true }), slugF = campo('Enlace del perfil', 'slug', c.slug, { full: true, hint: 'Se usa en la dirección: cliente/?c=este-nombre' });
     nom.querySelector('input').addEventListener('input', function (e) { if (!tocoSlug) slugF.querySelector('input').value = QV.slugify(e.target.value); });
     slugF.querySelector('input').addEventListener('input', function () { tocoSlug = true; });
     var act = h('input', { type: 'checkbox', id: 'activo' }); act.checked = c.activo !== false;

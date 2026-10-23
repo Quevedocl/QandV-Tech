@@ -53,6 +53,7 @@
     }
     if ((c.direccion || '').trim()) kids.push(h('div', { class: 'card' }, [h('h2', { text: 'Dirección' }), h('p', { class: 'dir', text: c.direccion })]));
     kids.push(h('a', { class: 'cl-foot', href: BASE + 'index.html' }, [h('img', { src: BASE + 'images/logo.jpg', alt: 'Q&V Tech' }), 'Tu perfil digital, por Q&V Tech']));
+    kids.push(h('a', { class: 'cl-legal', href: BASE + 'privacidad/', text: 'Política de privacidad' }));
     kids.forEach(function (k) { page.appendChild(k); });
     listo();
   }

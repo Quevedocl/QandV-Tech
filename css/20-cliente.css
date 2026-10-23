@@ -49,3 +49,5 @@ html,body{height:auto;overflow:auto;min-height:100%}
 @media(prefers-reduced-motion:reduce){.splash,.page{transition:none}.tile.sel{animation:none;transform:scale(1.06)}}
 
 html,body{touch-action:manipulation;}
+
+.cl-legal{display:block;margin:14px auto 6px;font-size:.72rem;color:#7d8d86;text-decoration:underline;text-underline-offset:3px}

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /maestro/
+Disallow: /cliente/
+Disallow: /perfil.html
+Disallow: /admin/

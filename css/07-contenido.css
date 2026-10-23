@@ -126,3 +126,7 @@
 @media (max-width:720px){.scroll-hint{bottom:14px;font-size:.72rem;}}
 
 
+
+/* Enlace discreto a la política de privacidad (pie de la última sección) */
+.closing small .legal-link{color:#4c6b5a !important;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;font-weight:600}
+.closing small .legal-link:hover{color:#1d6b2f !important}
