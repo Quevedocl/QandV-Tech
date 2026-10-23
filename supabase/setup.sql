@@ -32,7 +32,13 @@ create table if not exists public.clientes (
 alter table public.clientes enable row level security;
 
 drop policy if exists "publico lee clientes activos" on public.clientes;
-create policy "publico lee clientes activos" on public.clientes for select to anon using (activo = true);
+-- (La lectura pública ya no es sobre la tabla completa: el público pide un perfil con get_cliente)
+create or replace function public.get_cliente(p_slug text)
+returns setof public.clientes
+language sql stable security definer set search_path = ''
+as $$ select * from public.clientes where slug = lower(p_slug) and activo = true limit 1; $$;
+revoke all on function public.get_cliente(text) from public;
+grant execute on function public.get_cliente(text) to anon, authenticated;
 drop policy if exists "admins leen clientes" on public.clientes;
 create policy "admins leen clientes" on public.clientes for select to authenticated using ((select public.is_admin()));
 drop policy if exists "admins crean clientes" on public.clientes;
@@ -43,7 +49,7 @@ drop policy if exists "admins borran clientes" on public.clientes;
 create policy "admins borran clientes" on public.clientes for delete to authenticated using ((select public.is_admin()));
 
 -- Logos (bucket público para leer; solo admins suben)
-insert into storage.buckets (id, name, public) values ('client-logos', 'client-logos', true) on conflict do nothing;
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types) values ('client-logos', 'client-logos', true, 1048576, array['image/png','image/jpeg','image/webp']) on conflict (id) do update set file_size_limit = excluded.file_size_limit, allowed_mime_types = excluded.allowed_mime_types;
 drop policy if exists "admins upload logos" on storage.objects;
 create policy "admins upload logos" on storage.objects for insert to authenticated with check (bucket_id = 'client-logos' and (select public.is_admin()));
 drop policy if exists "admins update logos" on storage.objects;
