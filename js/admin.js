@@ -93,11 +93,27 @@
     return card;
   }
 
+  /* Tira plegable: título + resumen + flecha; al tocar se despliega hacia abajo */
+  function acordeon(titulo, hijos, o) {
+    o = o || {};
+    var abierto = !!o.abierto, pill = h('span', { class: 'acd-pill' }), card = h('div', { class: 'acd' + (abierto ? ' abierto' : '') });
+    function estado() { card.classList.toggle('abierto', abierto); head.setAttribute('aria-expanded', abierto ? 'true' : 'false'); }
+    var head = h('button', { class: 'acd-head', type: 'button', 'aria-expanded': abierto ? 'true' : 'false', onclick: function () { abierto = !abierto; estado(); } },
+      [h('span', { class: 'acd-t', text: titulo }), pill, h('span', { class: 'acd-flecha', 'aria-hidden': 'true' })]);
+    card.appendChild(head);
+    card.appendChild(h('div', { class: 'acd-body' }, [h('div', { class: 'acd-inner' }, hijos)]));
+    function res() { var t = o.resumen ? o.resumen() : ''; pill.textContent = t || ''; }
+    card._res = res; card._abrir = function () { abierto = true; estado(); };
+    card.addEventListener('input', res); card.addEventListener('change', res);
+    setTimeout(res, 0);
+    return card;
+  }
+
   function editor(s, c) {
     limpiar(); app.appendChild(cabecera(s));
     var hor = JSON.parse(JSON.stringify(c.horarios || QV.horariosBase())), logo = c.logo_url || '', tocoSlug = !!c.id, err = h('p', { class: 'err' });
-    var pv = h('div', { class: 'pv' }), file = h('input', { type: 'file', accept: 'image/*', style: 'display:none' });
-    function verLogo() { pv.innerHTML = ''; if (logo) pv.appendChild(h('img', { src: logo, alt: '' })); else pv.textContent = 'Sin logo'; }
+    var aLogo, pv = h('div', { class: 'pv' }), file = h('input', { type: 'file', accept: 'image/*', style: 'display:none' });
+    function verLogo() { pv.innerHTML = ''; if (logo) pv.appendChild(h('img', { src: logo, alt: '' })); else pv.textContent = 'Sin logo'; if (aLogo) aLogo._res(); }
     verLogo();
     file.addEventListener('change', function () {
       if (!file.files[0]) return; toast('Subiendo logo…');
@@ -117,25 +133,26 @@
     var nom = campo('Nombre del negocio', 'nombre', c.nombre, { full: true }), slugF = campo('Enlace del perfil', 'slug', c.slug, { full: true, hint: 'Se usa en la dirección: cliente/?c=este-nombre' });
     nom.querySelector('input').addEventListener('input', function (e) { if (!tocoSlug) slugF.querySelector('input').value = QV.slugify(e.target.value); });
     slugF.querySelector('input').addEventListener('input', function () { tocoSlug = true; });
+    function llenos(ids) { var n = 0; ids.forEach(function (i) { if (get(i)) n++; }); return n ? n + '/' + ids.length : ''; }
+    var aDatos = acordeon('Datos del negocio', [h('div', { class: 'grid2' }, [nom, slugF])], { abierto: true });
+    aLogo = acordeon('Logo', [h('div', { class: 'logo-ed' }, [pv, h('div', {}, [h('button', { class: 'btn2 g', type: 'button', text: 'Subir logo', onclick: function () { file.click(); } }), ' ', h('button', { class: 'btn2 g', type: 'button', text: 'Quitar', onclick: function () { logo = ''; verLogo(); } }), h('p', { class: 'hint', text: 'Opcional. Sin logo se muestra la inicial del negocio.' })]), file])], { resumen: function () { return logo ? 'Con logo' : 'Sin logo'; } });
+    var idsC = ['whatsapp', 'telefono', 'whatsapp_mensaje', 'correo'], idsR = ['instagram', 'facebook', 'tiktok', 'web'];
+    var aContacto = acordeon('Contacto', [h('div', { class: 'grid2' }, [campo('WhatsApp', 'whatsapp', c.whatsapp, { ph: '9 1234 5678' }), campo('Teléfono', 'telefono', c.telefono, { ph: '9 1234 5678' }), campo('Mensaje de WhatsApp', 'whatsapp_mensaje', c.whatsapp_mensaje, { full: true, ph: 'Hola, quiero hacer un pedido' }), campo('Correo', 'correo', c.correo, { type: 'email', full: true })])], { resumen: function () { return llenos(idsC); } });
+    var aRedes = acordeon('Redes y web', [h('div', { class: 'grid2' }, [campo('Instagram', 'instagram', c.instagram, { ph: '@usuario o enlace' }), campo('Facebook', 'facebook', c.facebook, { ph: 'usuario o enlace' }), campo('TikTok', 'tiktok', c.tiktok, { ph: '@usuario o enlace' }), campo('Página web', 'web', c.web, { ph: 'www.negocio.cl' })])], { resumen: function () { return llenos(idsR); } });
+    var aUbic = acordeon('Ubicación', [h('div', { class: 'grid2' }, [campo('Dirección', 'direccion', c.direccion, { full: true })])], { resumen: function () { return get('direccion') ? 'Completo' : ''; } });
+    var aHor = acordeon('Horarios', [h('div', {}, dias)], { resumen: function () { var n = QV.DIAS.filter(function (d) { return hor[d.k] && hor[d.k].abierto; }).length; return n + (n === 1 ? ' día' : ' días'); } });
     var act = h('input', { type: 'checkbox', id: 'activo' }); act.checked = c.activo !== false;
     var f = h('form', { class: 'panel', onsubmit: function (ev) {
       ev.preventDefault(); err.textContent = '';
       var o = { id: c.id, nombre: get('nombre'), slug: QV.slugify(get('slug')), logo_url: logo || null, activo: act.checked, horarios: hor };
-      ['whatsapp', 'whatsapp_mensaje', 'telefono', 'correo', 'instagram', 'facebook', 'tiktok', 'web', 'direccion', 'maps_url'].forEach(function (k) { o[k] = get(k) || null; });
-      if (!o.nombre || !o.slug) { err.textContent = 'Falta el nombre del negocio.'; return; }
+      ['whatsapp', 'whatsapp_mensaje', 'telefono', 'correo', 'instagram', 'facebook', 'tiktok', 'web', 'direccion'].forEach(function (k) { o[k] = get(k) || null; });
+      o.maps_url = null; /* el mapa se arma siempre desde la dirección */
+      if (!o.nombre || !o.slug) { err.textContent = 'Falta el nombre del negocio.'; aDatos._abrir(); return; }
       D.guardar(o).then(function (r) { toast('Guardado'); panel(s); }).catch(function (x) { err.textContent = x.message; });
     } }, [
       h('h2', { class: 'sec', text: c.id ? 'Editar cliente' : 'Nuevo cliente', style: 'margin-top:0' }),
-      h('div', { class: 'grid2' }, [nom, slugF]),
-      h('h3', { class: 'sec', text: 'Logo' }), h('div', { class: 'logo-ed' }, [pv, h('div', {}, [h('button', { class: 'btn2 g', type: 'button', text: 'Subir logo', onclick: function () { file.click(); } }), ' ', h('button', { class: 'btn2 g', type: 'button', text: 'Quitar', onclick: function () { logo = ''; verLogo(); } }), h('p', { class: 'hint', text: 'Opcional. Sin logo se muestra la inicial del negocio.' })]), file]),
-      h('h3', { class: 'sec', text: 'Contacto' }),
-      h('div', { class: 'grid2' }, [campo('WhatsApp', 'whatsapp', c.whatsapp, { ph: '9 1234 5678' }), campo('Teléfono', 'telefono', c.telefono, { ph: '9 1234 5678' }), campo('Mensaje de WhatsApp', 'whatsapp_mensaje', c.whatsapp_mensaje, { full: true, ph: 'Hola, quiero hacer un pedido' }), campo('Correo', 'correo', c.correo, { type: 'email', full: true })]),
-      h('h3', { class: 'sec', text: 'Redes y web' }),
-      h('div', { class: 'grid2' }, [campo('Instagram', 'instagram', c.instagram, { ph: '@usuario o enlace' }), campo('Facebook', 'facebook', c.facebook, { ph: 'usuario o enlace' }), campo('TikTok', 'tiktok', c.tiktok, { ph: '@usuario o enlace' }), campo('Página web', 'web', c.web, { ph: 'www.negocio.cl' })]),
-      h('h3', { class: 'sec', text: 'Ubicación' }),
-      h('div', { class: 'grid2' }, [campo('Dirección', 'direccion', c.direccion, { full: true }), campo('Enlace de Google Maps', 'maps_url', c.maps_url, { full: true, hint: 'Opcional. Si lo dejas vacío se usa la dirección.' })]),
-      h('h3', { class: 'sec', text: 'Horarios' }), h('div', {}, dias),
-      h('label', { style: 'display:flex;flex-direction:row;align-items:center;gap:8px;margin-top:18px' }, [act, 'Perfil activo (visible al escanear)']),
+      aDatos, aLogo, aContacto, aRedes, aUbic, aHor,
+      h('label', { class: 'acd-activo' }, [act, 'Perfil activo (visible al escanear)']),
       err, h('div', { class: 'acc' }, [h('button', { class: 'btn2', type: 'submit', text: 'Guardar' }), h('button', { class: 'btn2 g', type: 'button', text: 'Cancelar', onclick: function () { panel(s); } })])
     ]);
     app.appendChild(f);
