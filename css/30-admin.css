@@ -78,3 +78,18 @@ html,body{touch-action:manipulation;-webkit-touch-callout:none;}
 .tema-head .sec{font-family:var(--display);font-weight:700;color:var(--green-dark);letter-spacing:-.01em}
 .tema-head .tema-pill{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .tema-head .sec{overflow:hidden;text-overflow:ellipsis;font-size:1rem}
+
+/* ---- Editor de cliente: tiras plegables ---- */
+.acd{margin-top:10px;border-radius:16px;background:rgba(255,255,255,.9);border:1px solid var(--line);overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.acd.abierto{border-color:var(--green-bright);box-shadow:0 12px 26px -20px rgba(15,61,30,.45)}
+.acd-head{display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;text-align:left;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.acd-t{flex:1;min-width:0;font-family:var(--display);font-weight:700;font-size:1rem;color:var(--green-dark);letter-spacing:-.01em}
+.acd-pill{flex:none;padding:.25rem .6rem;border-radius:99px;font-size:.7rem;font-weight:700;background:rgba(63,174,88,.14);color:var(--green-mid);white-space:nowrap}
+.acd-pill:empty{display:none}
+.acd-flecha{flex:none;width:9px;height:9px;border-right:2.5px solid var(--green-dark);border-bottom:2.5px solid var(--green-dark);transform:rotate(45deg) translateY(-2px);transition:transform .3s}
+.acd.abierto .acd-flecha{transform:rotate(-135deg) translateY(-2px)}
+.acd-body{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .35s ease,visibility 0s .35s}
+.acd.abierto .acd-body{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .35s ease,visibility 0s}
+.acd-inner{overflow:hidden;min-height:0;padding:0 16px;opacity:0;transition:opacity .25s}
+.acd.abierto .acd-inner{opacity:1;padding-bottom:16px}
+.acd-activo{display:flex;flex-direction:row;align-items:center;gap:8px;margin-top:16px;padding:0 4px}
